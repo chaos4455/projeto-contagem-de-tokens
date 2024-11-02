@@ -94,7 +94,7 @@ Este projeto está licenciado sob a Licença MIT.
 
 **Arquiteto:** Elias Andrade
 **Status:** Beta
-**Versão:** 0.0.0.3
+**Versão:** 0.0.0.4
 **Data:** 02/11/2024
 
 ## 📋 Sumário
