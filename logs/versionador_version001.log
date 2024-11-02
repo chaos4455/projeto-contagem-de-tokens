@@ -1,0 +1,2 @@
+[2024-11-02 13:35:59] ❌ Erro ao gerar indicadores: type object 'datetime.datetime' has no attribute 'datetime'
+[2024-11-02 13:35:59] ✅ Arquivo 'gerador_vetorizador_continuo_PROMETHEUS.py' versionado para 'gerador_vetorizador_continuo_PROMETHEUS-work--revision-0001.py'

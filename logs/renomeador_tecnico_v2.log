@@ -1,0 +1,60 @@
+2024-11-02 13:51:29,397 - WARNING - Arquivo não encontrado: automacao_organiza_projeto_restaura_backup_v1_ATLAS.py
+2024-11-02 13:51:29,399 - WARNING - Arquivo não encontrado: backup_projeto_JANUS.py
+2024-11-02 13:51:29,399 - WARNING - Arquivo não encontrado: banco_tokens_HERMES.py
+2024-11-02 13:51:29,400 - WARNING - Arquivo não encontrado: contador_tokens_menu_THOTH.py
+2024-11-02 13:51:29,401 - WARNING - Arquivo não encontrado: documentacao-projeto-automation-v1_CLIO.py
+2024-11-02 13:51:29,401 - WARNING - Arquivo não encontrado: documentacao-projeto-automation-v2-gemini-powered_MINERVA.py
+2024-11-02 13:51:29,402 - WARNING - Arquivo não encontrado: gerador-dic-texto-yaml-v1_CALLIOPE.py
+2024-11-02 13:51:29,403 - WARNING - Arquivo não encontrado: gerador_vetorizador_continuo_PROMETHEUS.py
+2024-11-02 13:51:29,404 - WARNING - Arquivo não encontrado: gerador_yaml_embeddings-prompt-v2_ORPHEUS.py
+2024-11-02 13:51:29,406 - WARNING - Arquivo não encontrado: gerador_yaml_embeddings_APOLLO.py
+2024-11-02 13:51:29,408 - WARNING - Arquivo não encontrado: gerador_yaml_embeddings_stream_v1-cria-contexto_ATHENA.py
+2024-11-02 13:51:29,409 - WARNING - Arquivo não encontrado: gerador_yaml_embeddings_stream_v1-cria-lista-palavras_ISIS.py
+2024-11-02 13:51:29,410 - WARNING - Arquivo não encontrado: limpar_duplicados_avancado_PERSEUS.py
+2024-11-02 13:51:29,411 - WARNING - Arquivo não encontrado: remover_duplicados_HERCULES.py
+2024-11-02 13:51:29,412 - WARNING - Arquivo não encontrado: restaurar_backup_CHRONOS.py
+2024-11-02 13:51:29,413 - WARNING - Arquivo não encontrado: restaura_backup_versionado_MNEMOSYNE.py
+2024-11-02 13:51:29,415 - WARNING - Arquivo não encontrado: testa-banco-vetor-ele_HEPHAESTUS.py
+2024-11-02 13:51:29,416 - WARNING - Arquivo não encontrado: yaml-parser-vector-database-increment-v1_THESEUS.py
+2024-11-02 13:51:29,418 - WARNING - Arquivo não encontrado: yaml_to_vectors_DAEDALUS.py
+2024-11-02 13:51:29,418 - WARNING - Arquivo não encontrado: zipar_yamls_VULCAN.py
+2024-11-02 13:52:32,573 - INFO - Backup criado: automation_file_organization_backup_manager_ATLAS_backup_20241102_135232.py
+2024-11-02 13:52:32,579 - INFO - Arquivo renomeado com sucesso: automation_file_organization_backup_manager_ATLAS.py -> tool.automation.file_organization_manager_ATLAS.py
+2024-11-02 13:52:32,581 - INFO - Backup criado: project_backup_version_control_system_JANUS_backup_20241102_135232.py
+2024-11-02 13:52:32,583 - INFO - Arquivo renomeado com sucesso: project_backup_version_control_system_JANUS.py -> tool.backup.project_version_controller_JANUS.py
+2024-11-02 13:52:32,585 - INFO - Backup criado: token_database_management_system_HERMES_backup_20241102_135232.py
+2024-11-02 13:52:32,586 - INFO - Arquivo renomeado com sucesso: token_database_management_system_HERMES.py -> db.manager.token_database_controller_HERMES.py
+2024-11-02 13:52:32,588 - INFO - Backup criado: token_counter_interface_manager_THOTH_backup_20241102_135232.py
+2024-11-02 13:52:32,597 - INFO - Arquivo renomeado com sucesso: token_counter_interface_manager_THOTH.py -> tool.analyzer.token_counter_interface_THOTH.py
+2024-11-02 13:52:32,600 - INFO - Backup criado: project_documentation_generator_v1_CLIO_backup_20241102_135232.py
+2024-11-02 13:52:32,634 - INFO - Arquivo renomeado com sucesso: project_documentation_generator_v1_CLIO.py -> generator.docs.project_documentation_builder_CLIO.py
+2024-11-02 13:52:32,636 - INFO - Backup criado: ai_powered_documentation_generator_v2_MINERVA_backup_20241102_135232.py
+2024-11-02 13:52:32,640 - INFO - Arquivo renomeado com sucesso: ai_powered_documentation_generator_v2_MINERVA.py -> generator.docs.ai_documentation_engine_MINERVA.py
+2024-11-02 13:52:32,643 - INFO - Backup criado: yaml_text_dictionary_generator_CALLIOPE_backup_20241102_135232.py
+2024-11-02 13:52:32,645 - INFO - Arquivo renomeado com sucesso: yaml_text_dictionary_generator_CALLIOPE.py -> processor.yaml.dictionary_text_generator_CALLIOPE.py
+2024-11-02 13:52:32,646 - INFO - Backup criado: continuous_vector_embedding_generator_PROMETHEUS_backup_20241102_135232.py
+2024-11-02 13:52:32,648 - INFO - Arquivo renomeado com sucesso: continuous_vector_embedding_generator_PROMETHEUS.py -> processor.vector.continuous_embedding_engine_PROMETHEUS.py
+2024-11-02 13:52:32,650 - INFO - Backup criado: yaml_prompt_embedding_processor_v2_ORPHEUS_backup_20241102_135232.py
+2024-11-02 13:52:32,652 - INFO - Arquivo renomeado com sucesso: yaml_prompt_embedding_processor_v2_ORPHEUS.py -> processor.yaml.prompt_embedding_generator_ORPHEUS.py
+2024-11-02 13:52:32,654 - INFO - Backup criado: yaml_embedding_generation_system_APOLLO_backup_20241102_135232.py
+2024-11-02 13:52:32,655 - INFO - Arquivo renomeado com sucesso: yaml_embedding_generation_system_APOLLO.py -> processor.yaml.embedding_core_system_APOLLO.py
+2024-11-02 13:52:32,659 - INFO - Backup criado: yaml_context_stream_processor_v1_ATHENA_backup_20241102_135232.py
+2024-11-02 13:52:32,661 - INFO - Arquivo renomeado com sucesso: yaml_context_stream_processor_v1_ATHENA.py -> processor.yaml.context_stream_engine_ATHENA.py
+2024-11-02 13:52:32,663 - INFO - Backup criado: yaml_wordlist_stream_generator_v1_ISIS_backup_20241102_135232.py
+2024-11-02 13:52:32,665 - INFO - Arquivo renomeado com sucesso: yaml_wordlist_stream_generator_v1_ISIS.py -> processor.yaml.wordlist_stream_processor_ISIS.py
+2024-11-02 13:52:32,746 - INFO - Backup criado: advanced_duplicate_cleaner_system_PERSEUS_backup_20241102_135232.py
+2024-11-02 13:52:32,749 - INFO - Arquivo renomeado com sucesso: advanced_duplicate_cleaner_system_PERSEUS.py -> util.cleaner.advanced_duplicate_remover_PERSEUS.py
+2024-11-02 13:52:32,750 - INFO - Backup criado: duplicate_file_removal_manager_HERCULES_backup_20241102_135232.py
+2024-11-02 13:52:32,752 - INFO - Arquivo renomeado com sucesso: duplicate_file_removal_manager_HERCULES.py -> util.cleaner.duplicate_file_handler_HERCULES.py
+2024-11-02 13:52:32,754 - INFO - Backup criado: backup_restoration_controller_CHRONOS_backup_20241102_135232.py
+2024-11-02 13:52:32,756 - INFO - Arquivo renomeado com sucesso: backup_restoration_controller_CHRONOS.py -> tool.backup.restoration_controller_CHRONOS.py
+2024-11-02 13:52:32,759 - INFO - Backup criado: versioned_backup_recovery_system_MNEMOSYNE_backup_20241102_135232.py
+2024-11-02 13:52:32,762 - INFO - Arquivo renomeado com sucesso: versioned_backup_recovery_system_MNEMOSYNE.py -> tool.backup.version_recovery_system_MNEMOSYNE.py
+2024-11-02 13:52:32,763 - INFO - Backup criado: vector_database_testing_framework_HEPHAESTUS_backup_20241102_135232.py
+2024-11-02 13:52:32,766 - INFO - Arquivo renomeado com sucesso: vector_database_testing_framework_HEPHAESTUS.py -> tool.tester.vector_database_validator_HEPHAESTUS.py
+2024-11-02 13:52:32,767 - INFO - Backup criado: incremental_yaml_vector_db_parser_THESEUS_backup_20241102_135232.py
+2024-11-02 13:52:32,769 - INFO - Arquivo renomeado com sucesso: incremental_yaml_vector_db_parser_THESEUS.py -> processor.db.incremental_vector_parser_THESEUS.py
+2024-11-02 13:52:32,770 - INFO - Backup criado: yaml_vector_conversion_engine_DAEDALUS_backup_20241102_135232.py
+2024-11-02 13:52:32,775 - INFO - Arquivo renomeado com sucesso: yaml_vector_conversion_engine_DAEDALUS.py -> processor.vector.yaml_vectorization_engine_DAEDALUS.py
+2024-11-02 13:52:32,777 - INFO - Backup criado: yaml_compression_utility_VULCAN_backup_20241102_135232.py
+2024-11-02 13:52:32,779 - INFO - Arquivo renomeado com sucesso: yaml_compression_utility_VULCAN.py -> util.compression.yaml_archiver_VULCAN.py

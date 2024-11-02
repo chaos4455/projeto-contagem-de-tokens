@@ -1,0 +1,40 @@
+2024-11-02 13:33:43,034 - Nome adicionado com sucesso: automacao_organiza_projeto_restaura_backup_v1.py -> ----ATLAS----
+2024-11-02 13:33:43,037 - Nome adicionado com sucesso: backup_projeto.py -> ----JANUS----
+2024-11-02 13:33:43,039 - Nome adicionado com sucesso: banco_tokens.py -> ----HERMES----
+2024-11-02 13:33:43,041 - Nome adicionado com sucesso: contador_tokens_menu.py -> ----THOTH----
+2024-11-02 13:33:43,043 - Nome adicionado com sucesso: documentacao-projeto-automation-v1.py -> ----CLIO----
+2024-11-02 13:33:43,047 - Nome adicionado com sucesso: documentacao-projeto-automation-v2-gemini-powered.py -> ----MINERVA----
+2024-11-02 13:33:43,049 - Nome adicionado com sucesso: gerador-dic-texto-yaml-v1.py -> ----CALLIOPE----
+2024-11-02 13:33:43,051 - Nome adicionado com sucesso: gerador_vetorizador_continuo.py -> ----PROMETHEUS----
+2024-11-02 13:33:43,054 - Nome adicionado com sucesso: gerador_yaml_embeddings-prompt-v2.py -> ----ORPHEUS----
+2024-11-02 13:33:43,056 - Nome adicionado com sucesso: gerador_yaml_embeddings.py -> ----APOLLO----
+2024-11-02 13:33:43,058 - Nome adicionado com sucesso: gerador_yaml_embeddings_stream_v1-cria-contexto.py -> ----ATHENA----
+2024-11-02 13:33:43,060 - Nome adicionado com sucesso: gerador_yaml_embeddings_stream_v1-cria-lista-palavras.py -> ----ISIS----
+2024-11-02 13:33:43,062 - Nome adicionado com sucesso: limpar_duplicados_avancado.py -> ----PERSEUS----
+2024-11-02 13:33:43,064 - Nome adicionado com sucesso: remover_duplicados.py -> ----HERCULES----
+2024-11-02 13:33:43,065 - Nome adicionado com sucesso: restaurar_backup.py -> ----CHRONOS----
+2024-11-02 13:33:43,070 - Nome adicionado com sucesso: restaura_backup_versionado.py -> ----MNEMOSYNE----
+2024-11-02 13:33:43,072 - Nome adicionado com sucesso: testa-banco-vetor-ele.py -> ----HEPHAESTUS----
+2024-11-02 13:33:43,074 - Nome adicionado com sucesso: yaml-parser-vector-database-increment-v1.py -> ----THESEUS----
+2024-11-02 13:33:43,076 - Nome adicionado com sucesso: yaml_to_vectors.py -> ----DAEDALUS----
+2024-11-02 13:33:43,077 - Nome adicionado com sucesso: zipar_yamls.py -> ----VULCAN----
+2024-11-02 13:35:05,628 - Arquivo renomeado: automacao_organiza_projeto_restaura_backup_v1.py -> automacao_organiza_projeto_restaura_backup_v1_ATLAS.py
+2024-11-02 13:35:05,630 - Arquivo renomeado: backup_projeto.py -> backup_projeto_JANUS.py
+2024-11-02 13:35:05,632 - Arquivo renomeado: banco_tokens.py -> banco_tokens_HERMES.py
+2024-11-02 13:35:05,634 - Arquivo renomeado: contador_tokens_menu.py -> contador_tokens_menu_THOTH.py
+2024-11-02 13:35:05,637 - Arquivo renomeado: documentacao-projeto-automation-v1.py -> documentacao-projeto-automation-v1_CLIO.py
+2024-11-02 13:35:05,640 - Arquivo renomeado: documentacao-projeto-automation-v2-gemini-powered.py -> documentacao-projeto-automation-v2-gemini-powered_MINERVA.py
+2024-11-02 13:35:05,642 - Arquivo renomeado: gerador-dic-texto-yaml-v1.py -> gerador-dic-texto-yaml-v1_CALLIOPE.py
+2024-11-02 13:35:05,647 - Arquivo renomeado: gerador_vetorizador_continuo.py -> gerador_vetorizador_continuo_PROMETHEUS.py
+2024-11-02 13:35:05,650 - Arquivo renomeado: gerador_yaml_embeddings-prompt-v2.py -> gerador_yaml_embeddings-prompt-v2_ORPHEUS.py
+2024-11-02 13:35:05,655 - Arquivo renomeado: gerador_yaml_embeddings.py -> gerador_yaml_embeddings_APOLLO.py
+2024-11-02 13:35:05,662 - Arquivo renomeado: gerador_yaml_embeddings_stream_v1-cria-contexto.py -> gerador_yaml_embeddings_stream_v1-cria-contexto_ATHENA.py
+2024-11-02 13:35:05,666 - Arquivo renomeado: gerador_yaml_embeddings_stream_v1-cria-lista-palavras.py -> gerador_yaml_embeddings_stream_v1-cria-lista-palavras_ISIS.py
+2024-11-02 13:35:05,675 - Arquivo renomeado: limpar_duplicados_avancado.py -> limpar_duplicados_avancado_PERSEUS.py
+2024-11-02 13:35:05,678 - Arquivo renomeado: remover_duplicados.py -> remover_duplicados_HERCULES.py
+2024-11-02 13:35:05,680 - Arquivo renomeado: restaurar_backup.py -> restaurar_backup_CHRONOS.py
+2024-11-02 13:35:05,681 - Arquivo renomeado: restaura_backup_versionado.py -> restaura_backup_versionado_MNEMOSYNE.py
+2024-11-02 13:35:05,684 - Arquivo renomeado: testa-banco-vetor-ele.py -> testa-banco-vetor-ele_HEPHAESTUS.py
+2024-11-02 13:35:05,686 - Arquivo renomeado: yaml-parser-vector-database-increment-v1.py -> yaml-parser-vector-database-increment-v1_THESEUS.py
+2024-11-02 13:35:05,689 - Arquivo renomeado: yaml_to_vectors.py -> yaml_to_vectors_DAEDALUS.py
+2024-11-02 13:35:05,692 - Arquivo renomeado: zipar_yamls.py -> zipar_yamls_VULCAN.py
