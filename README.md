@@ -82,15 +82,61 @@ O projeto segue uma arquitetura modular, organizada em diferentes módulos para 
 
 A comunicação entre os módulos é feita através de uma interface bem definida, permitindo a substituição de componentes sem afetar o funcionamento do sistema como um todo.  O design segue os princípios SOLID para garantir a manutenibilidade e a escalabilidade do código.
 
+![Cursor_mvmaoYHBLG](https://github.com/user-attachments/assets/737aa609-f539-49dd-8135-4b0c60f74481)
 
-## ⚙️ Instalação
+![Cursor_Df7tQrj21A](https://github.com/user-attachments/assets/245b3ff5-902b-47fa-84d3-be4f4200c7e9)
 
-1. **Clone o repositório:** `git clone <URL_DO_REPOSITORIO>`
-2. **Crie um ambiente virtual (recomendado):** `python3 -m venv .venv`
-3. **Ative o ambiente virtual:** `.venv\Scripts\activate` (Windows)
-4. **Instale as dependências:** `pip install -r requirements.txt`
-5. **(Opcional) Configure a API Key do Google Gemini:**  Adicione sua chave de API no arquivo `config.yaml`.
+![Cursor_YgJPNCky0X](https://github.com/user-attachments/assets/45dfe03e-bd7b-4669-aaa8-12cba53edd6b)
 
+![Cursor_yE7siYz8tb](https://github.com/user-attachments/assets/2879f4db-c98b-4af1-8f01-ce5ad7f48890)
+
+![Cursor_J37Yg5HPpS](https://github.com/user-attachments/assets/4bf36e23-a87f-403c-a0a6-87fb964d8ecd)
+
+![Cursor_tbGFu8YfAX](https://github.com/user-attachments/assets/1465df9c-cc8d-4dfe-9cb1-73179ea90f7e)
+
+![Cursor_EDfjSB1EXx](https://github.com/user-attachments/assets/2385bea4-8b7a-4ef6-b694-60265c51774d)
+
+![Cursor_AJORiyMeec](https://github.com/user-attachments/assets/672c7fdd-368e-471e-ba0e-9ca3f20e6777)
+
+![Cursor_bPdAl3i8a1](https://github.com/user-attachments/assets/47e92718-8f99-418c-af99-c888e17207c2)
+
+![Cursor_0zTjXWxVMF](https://github.com/user-attachments/assets/47d10a7c-b53d-4a9b-9cbf-47f80d915ee4)
+
+![Cursor_NrFpgAv6vu](https://github.com/user-attachments/assets/50d8bf54-0d3d-487c-a992-0812abbc3a53)
+
+![Cursor_x2nTwEHCAn](https://github.com/user-attachments/assets/c79f4cd7-c8af-49b2-9ae8-e9e2aa3df688)
+
+![Cursor_iSzOSpcTHu](https://github.com/user-attachments/assets/a50b220a-0768-44af-b2a0-81b7d9b392a6)
+
+![Cursor_Dhv29Ht5K5](https://github.com/user-attachments/assets/5833b98f-0eb0-4198-be0d-863fa7750be0)
+
+![Cursor_ZIyXfk8i9g](https://github.com/user-attachments/assets/2b1e136c-ae6e-4b0e-805f-ca0b8c3d2fc4)
+
+![Cursor_VLyZvswGOw](https://github.com/user-attachments/assets/9074d452-06fb-44a2-a595-888008ed23e6)
+
+![Cursor_fxzXRcfiOV](https://github.com/user-attachments/assets/32152b15-1e8b-4a63-b001-b864ef2195e3)
+
+![Cursor_EgiVmqIsSz](https://github.com/user-attachments/assets/961f8c2f-7b8d-49d7-9d43-e25736764356)
+
+![Cursor_OjBywR8RJ3](https://github.com/user-attachments/assets/a22a2caa-8a29-4dfe-a378-b109273eb0f0)
+
+![Cursor_1PDjZOHXM9](https://github.com/user-attachments/assets/ff99b80a-d0d1-4207-82ba-7a59a75864ac)
+
+![Cursor_He8dFagem3](https://github.com/user-attachments/assets/9eba389a-bd47-4834-83c4-3964110f682a)
+
+![Cursor_baHA9OCOSE](https://github.com/user-attachments/assets/f2943b38-2fbb-474d-9e67-489ae241e6bb)
+
+![Cursor_euDOSJgsSN](https://github.com/user-attachments/assets/830f0499-0013-4dab-9db2-dfbe1b1c0241)
+
+![Cursor_y4ykB5cXRH](https://github.com/user-attachments/assets/ccd860fd-b1ef-4856-b119-3888ab71f8c8)
+
+![Cursor_57e2JgBSKT](https://github.com/user-attachments/assets/6dfbf009-7fc9-4769-81a6-4ebdcfb46d73)
+
+![Cursor_s84ZZ1zWM0](https://github.com/user-attachments/assets/108146c6-d0bd-45f8-9548-a21a94f85391)
+
+![Cursor_qpgN6rRJ0l](https://github.com/user-attachments/assets/b3ba0834-f650-4ab6-9616-644788fad911)
+
+![Cursor_a3FUNFT526](https://github.com/user-attachments/assets/7e760811-58e7-4944-a2b7-5ea885c450a1)
 
 ## 🎬 Como Usar
 
