@@ -782,3 +782,5 @@ if __name__ == "__main__":
         console.print("\n[yellow]Programa encerrado pelo usuário[/yellow]")
     except Exception as e:
         console.print(f"[red]Erro crítico: {e}[/red]")
+
+# ----PROMETHEUS----

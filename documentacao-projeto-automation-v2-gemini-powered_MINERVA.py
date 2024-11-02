@@ -456,3 +456,5 @@ if __name__ == "__main__":
 
     doc = DocumentacaoAutomatizadaAvancada()
     asyncio.run(doc.executar())
+
+# ----MINERVA----

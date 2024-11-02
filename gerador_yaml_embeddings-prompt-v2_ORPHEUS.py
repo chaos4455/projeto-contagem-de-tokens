@@ -192,3 +192,5 @@ if __name__ == "__main__":
         console.print(f"[red]Erro inesperado: {str(e)}[/red]")
     finally:
         sys.exit(0)
+
+# ----ORPHEUS----

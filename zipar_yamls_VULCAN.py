@@ -67,4 +67,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         console.print("\n[yellow]Operação cancelada pelo usuário.[/yellow]")
     except Exception as e:
-        console.print(f"[red]Erro inesperado: {str(e)}[/red]") 
+        console.print(f"[red]Erro inesperado: {str(e)}[/red]")
+
+# ----VULCAN----

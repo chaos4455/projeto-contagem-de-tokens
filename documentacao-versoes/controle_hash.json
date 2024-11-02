@@ -18,5 +18,7 @@
     "testa-banco-vetor-ele.py": "575c179e50b1756a323e1d8780c8267dcd211df57eb22e4b7d6eca3401a528a4",
     "yaml-parser-vector-database-increment-v1.py": "57434c1270ac8c5a62d017b47f56c3b08a083eaf43a2055b8bbcadb9b113aa95",
     "yaml_to_vectors.py": "3f825d0abbd28fb8d151be7b10b857fdcbe18787ae2dd654a791a43cde501118",
-    "zipar_yamls.py": "de3ccb5500c9ed327125de282f85ce56a6d3b75f3a6fd41d791191890a37bc87"
+    "zipar_yamls.py": "de3ccb5500c9ed327125de282f85ce56a6d3b75f3a6fd41d791191890a37bc87",
+    "gerador_vetorizador_continuo-work--revision-0001.py": "91f6779abe115bcf0b2be1fb24d0cb96f0f5aa5bf46d1a0c7de402e93fd1224e",
+    "versionador.py": "8635d5e13d4b1c09631102fa9adda582c49b6a3c0c23123f261fd96741ca7112"
 }

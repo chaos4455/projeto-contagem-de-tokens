@@ -279,3 +279,5 @@ if __name__ == "__main__":
         vectorizer.process_directory('generated-yaml-text-to-embedding')
     except Exception as e:
         print(f"Erro crítico: {e}")
+
+# ----DAEDALUS----

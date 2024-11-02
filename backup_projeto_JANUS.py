@@ -209,3 +209,5 @@ if __name__ == "__main__":
     except Exception as e:
         console.print(f"{EMOJI['erro']} [red]Erro inesperado: {str(e)}[/red]")
         logging.exception(f"Erro inesperado: {e}")
+
+# ----JANUS----

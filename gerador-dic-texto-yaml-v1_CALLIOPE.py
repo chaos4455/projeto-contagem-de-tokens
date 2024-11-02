@@ -152,3 +152,5 @@ if __name__ == "__main__":
         print("❗Processo interrompido pelo usuário.")
     except Exception as e:
         print(f"❗Erro inesperado: {e}")
+
+# ----CALLIOPE----
