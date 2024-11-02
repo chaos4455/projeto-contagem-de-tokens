@@ -1,4 +1,4 @@
-# 🤖 Projeto de Geração de Embeddings com IA para RAG v0.0.0.4
+# 🤖 Projeto de Geração de Embeddings com IA para RAG v0.0.0.5
 
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
@@ -8,7 +8,7 @@
 
 ## 📋 Índice
 - [Sobre o Projeto](#sobre-o-projeto)
-- [Novidades da Versão 0.0.0.4](#novidades-da-versão-00004)
+- [Novidades da Versão 0.0.0.5](#novidades-da-versão-00005)
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Arquitetura](#arquitetura)
@@ -48,15 +48,16 @@
 
 Este projeto está licenciado sob a Licença MIT.
 
-# 🚀 Projeto de Automação e Análise de Embeddings v0.0.0.4
+# 🚀 Projeto de Automação e Análise de Embeddings v0.0.0.5
 
 **Arquiteto:** Elias Andrade  
 **Status:** Beta  
-**Versão:** 0.0.0.4  
+**Versão:** 0.0.0.5  
 **Data:** 02/11/2024
-# 🚀 Projeto de Automação e Análise de Embeddings v0.0.0.3
 
-# ⚡ Processamento Assíncrono v0.0.0.4
+# 🚀 Projeto de Automação e Análise de Embeddings v0.0.0.5
+
+# ⚡ Processamento Assíncrono v0.0.0.5
 
 ## 🔄 Pipeline Assíncrono
 
@@ -94,7 +95,7 @@ Este projeto está licenciado sob a Licença MIT.
 
 **Arquiteto:** Elias Andrade
 **Status:** Beta
-**Versão:** 0.0.0.4
+**Versão:** 0.0.0.5
 **Data:** 02/11/2024
 
 ## 📋 Sumário
@@ -110,10 +111,11 @@ Este projeto está licenciado sob a Licença MIT.
 ## 🎯 Visão Geral
 Sistema integrado de última geração para processamento, análise e geração de embeddings textuais, utilizando modelos avançados de IA (BERT/Transformers) com pipeline completo de automação, backup e organização. Desenvolvido para suportar sistemas RAG (Retrieval-Augmented Generation) de alta performance.  Este projeto visa otimizar o processo de criação e utilização de embeddings, desde a ingestão de dados até a sua utilização em aplicações downstream.
 
-### 🆕 Novidades da Versão 0.0.0.3
-...
-- 📈 Analytics avançado com KPIs personalizados v2:  O sistema agora permite a definição de KPIs personalizados, permitindo que os usuários monitorem as métricas mais relevantes para suas necessidades.  Um exemplo seria a criação de um KPI para medir a taxa de sucesso na recuperação de informações relevantes.
-- 🗃️ Gestão otimizada de arquivos e backups:  O sistema agora gerencia os arquivos e backups de forma mais eficiente, utilizando técnicas de compressão e organização para reduzir o espaço de armazenamento e melhorar o desempenho.  Um exemplo seria a utilização de um sistema de versionamento para os backups.
+### 🆕 Novidades da Versão 0.0.0.5
+- Atualização do número da versão para 0.0.0.5 em todo o README.md.
+- Adição de uma seção "Scripts do Projeto" descrevendo os principais scripts Python.
+- Melhorias na clareza e organização do texto em várias seções.
+- Atualização da seção "Changelog Detalhado" para incluir a versão 0.0.0.5.
 
 
 ## 🔧 Componentes Principais
@@ -232,7 +234,7 @@ Sistema integrado de última geração para processamento, análise e geração 
    - Diagramas ASCII art
 
 
-# 🏗️ Arquitetura do Sistema v0.0.0.3
+# 🏗️ Arquitetura do Sistema v0.0.0.5
 
 ## 🎯 Visão Arquitetural v2
 
@@ -265,16 +267,16 @@ Sistema integrado de última geração para processamento, análise e geração 
 - 🔍 Auditoria em Tempo Real
 
 
-## 🆕 Novidades da Versão 0.0.0.4
+## 🆕 Novidades da Versão 0.0.0.5
 
-- 🤖 **Integração Google Gemini API**: Suporte avançado para geração de embeddings
-- ⚡ **Processamento Assíncrono Aprimorado**: Melhor performance e escalabilidade
-- 📊 **Sistema de Logs Estruturados**: Monitoramento detalhado
-- 🔄 **Versionamento Automático**: Controle de versões da documentação
-- 🛠️ **Tratamento de Erros Robusto**: Sistema de retry e fallback
-- 🧮 **Analytics Avançado**: Novos KPIs e métricas personalizadas
+- Atualização do número da versão para 0.0.0.5 em todo o README.md.
+- Adição de uma seção "Scripts do Projeto" descrevendo os principais scripts Python.  Esta seção inclui descrições detalhadas de cada script, incluindo suas funcionalidades principais e as bibliotecas utilizadas.
+- Melhorias na clareza e organização do texto em várias seções.  O texto foi revisado para melhorar a legibilidade e a clareza, tornando a documentação mais fácil de entender.
+- Atualização da seção "Changelog Detalhado" para incluir a versão 0.0.0.5, descrevendo as mudanças realizadas nesta versão.  A descrição inclui a atualização do número da versão, a adição da seção "Scripts do Projeto", e as melhorias na clareza e organização do texto.
+- Atualização da seção "Tecnologias Utilizadas" para refletir as bibliotecas utilizadas em cada script.
 
-# ⚡ Processamento Assíncrono v0.0.0.4
+
+# ⚡ Processamento Assíncrono v0.0.0.5
 
 ## 🔄 Pipeline Assíncrono
 
@@ -316,6 +318,15 @@ Este projeto é uma solução avançada para geração de embeddings vetoriais u
 
 ## 📜 Changelog Detalhado
 
+### 🎯 Versão 0.0.0.5 (02/11/2024) ![Status](https://img.shields.io/badge/status-current-brightgreen)
+
+#### 📝 Atualizações
+- Atualização do número da versão para 0.0.0.5 em todo o README.md.
+- Adição de uma seção "Scripts do Projeto" descrevendo os principais scripts Python.
+- Melhorias na clareza e organização do texto em várias seções.
+- Atualização da seção "Changelog Detalhado" para incluir a versão 0.0.0.5.
+
+
 ### 🎯 Versão 0.0.0.4 (02/11/2024) ![Status](https://img.shields.io/badge/status-current-brightgreen)
 
 #### 🤖 Integrações
@@ -352,7 +363,7 @@ Este projeto é uma solução avançada para geração de embeddings vetoriais u
 
 ### 🎯 Versão 0.0.0.2 (31/10/2024) ![Status](https://img.shields.io/badge/status-deprecated-yellow)
 
-#### 🛠️ Funcionalidades Base
+#### 🛠 Funcionalidades Base
 - 📝 Processamento YAML básico
 - 💾 Armazenamento SQLite
 - 🔄 Backup simples
@@ -452,6 +463,14 @@ Este projeto é uma solução avançada para geração de embeddings vetoriais u
 - **Asyncio:** Biblioteca para programação assíncrona, otimizando o processamento de dados.
 - **Threading e Multiprocessing:** Técnicas de processamento paralelo para acelerar o processamento.
 - **SQLite:** Banco de dados para armazenamento persistente de embeddings (opcional, para cache).
+- **inquirer:** Biblioteca utilizada no script `contador_tokens_menu.py` para criar menus interativos.
+- **colorama:** Biblioteca utilizada no script `contador_tokens_menu.py` para colorir a saída do console.
+- **matplotlib:** Biblioteca utilizada no script `contador_tokens_menu.py` para gerar gráficos.
+- **scipy:** Biblioteca utilizada no script `contador_tokens_menu.py` para cálculos científicos, como a similaridade de cosseno.
+- **jsonschema:** Biblioteca utilizada para validação de schema YAML.
+- **fuzzywuzzy:** Biblioteca utilizada para detecção de duplicados.
+- **gzip/bz2:** Bibliotecas utilizadas para compressão de backups.
+- **logging:** Biblioteca utilizada para logs estruturados.
 
 
 ## 🏗 Arquitetura
