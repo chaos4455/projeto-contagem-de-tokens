@@ -11,7 +11,14 @@
 - [Tecnologias](#tecnologias)
 
 ## 🎯 Visão Geral
-Sistema integrado para geração, processamento e análise de embeddings textuais usando modelos de IA avançados (BERT, Transformers) com automação completa de backup e organização.
+Sistema integrado de última geração para processamento, análise e geração de embeddings textuais, utilizando modelos avançados de IA (BERT/Transformers) com pipeline completo de automação, backup e organização. Desenvolvido para suportar sistemas RAG (Retrieval-Augmented Generation) de alta performance.
+
+### 🆕 Novidades da Versão 0.0.0.2
+- 🚀 Otimização do processamento assíncrono
+- 📊 Novo dashboard de métricas em tempo real
+- 🔄 Sistema aprimorado de backup automático
+- 🤖 Integração com Google PaLM/Gemini
+- 📈 Analytics avançado com KPIs personalizados
 
 ## 🎯 Objetivos
 1. Gerar embeddings textuais de alta qualidade
@@ -49,3 +56,77 @@ Sistema integrado para geração, processamento e análise de embeddings textuai
 - [ ] Banco vetorial
 - [ ] API REST
 - [ ] Interface web
+
+## 🏢 Nova Estrutura do Sistema
+
+### 🔄 Pipeline Principal
+1. 📥 **Entrada Aprimorada**
+   - Suporte expandido para YAML
+   - Validação avançada de dados
+   - Pré-processamento otimizado
+
+2. 🧮 **Core Processing v2**
+   - Motor BERT/Transformers atualizado
+   - Stream Processing paralelo
+   - Cache inteligente de tokens
+
+3. 📤 **Output & Storage 2.0**
+   - Sistema de backup incremental
+   - Compressão adaptativa
+   - Logs estruturados com métricas
+
+### 🛠️ Novos Componentes
+- 🤖 Integração PaLM/Gemini
+- 📊 Dashboard Rich CLI 2.0
+- 🔄 Stream Processor Otimizado
+
+## 💻 Requisitos do Sistema
+
+### 🔧 Hardware Recomendado
+- 🔲 CPU: 6+ cores (antes 4+)
+- 💾 RAM: 16GB+ (antes 8GB+)
+- 💽 SSD: 512GB+ (antes 256GB+)
+
+### 📚 Software
+- 🐍 Python 3.11+
+- 🤖 CUDA 11.8+ (recomendado)
+- 🌐 Conexão internet estável
+
+## 📊 Sistema de Métricas v2
+
+### 🎯 KPIs Principais
+- ⚡ Velocidade de processamento/token
+- 🎯 Precisão dos embeddings
+- 📈 Taxa de compressão de backup
+- 🔄 Latência de stream processing
+
+### 📉 Monitoramento Avançado
+- 🔍 Análise em tempo real
+- 📊 Gráficos interativos
+- 🚨 Sistema de alertas
+
+## 🗺️ Roadmap Atualizado
+
+### Q1 2024
+- 🎯 Interface web beta
+- 🔄 API REST v1
+- 📊 Banco vetorial inicial
+
+### Q2 2024
+- 🌐 Suporte multi-idioma expandido
+- ☁️ Integração cloud
+- 🤖 IA adaptativa v2
+
+## 📝 Notas Adicionais
+
+- 👨‍💻 **Arquiteto Responsável:** Elias Andrade
+- 📍 **Localização:** Maringá, Paraná
+- 🏢 **Empresa:** Replika AI
+- 📅 **Data:** 02/11/2024
+- 🔖 **Versão:** 0.0.0.2
+
+### ⚠️ Observações
+- Sistema em beta ativo
+- Documentação em constante atualização
+- Feedback da comunidade sendo incorporado
+- Testes de performance em andamento

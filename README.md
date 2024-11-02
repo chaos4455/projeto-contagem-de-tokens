@@ -14,6 +14,7 @@
 - [Contribuição](#contribuição)
 - [Licença](#licença)
 - [Scripts do Projeto](#scripts-do-projeto)
+- [Notas de Versão](#notas-de-versão)
 
 
 ## 🎯 Sobre o Projeto
@@ -189,3 +190,9 @@ Este script gera arquivos YAML usando a API do Google Gemini em modo de streamin
 - **Monitoramento de Recursos:** Monitora o uso de CPU, memória e GPU (se disponível) em tempo real.
 - **Painel de Estatísticas:** Exibe um painel interativo com estatísticas de processamento, incluindo contagem de tokens, palavras, tempo de processamento, uso de recursos e outras métricas.
 - **Métricas Avançadas:** Calcula métricas como densidade semântica, diversidade lexical e outras métricas relevantes para análise de texto.
+
+## 📝 Notas de Versão
+
+### Versão 0.0.0.2 (01/01/2024 07:33)
+
+- **Atualizações:**  Esta versão inclui todas as alterações realizadas desde o início do projeto até a data de 01/01/2024 07:33.  Uma análise completa do código-fonte é necessária para detalhar as mudanças específicas.  [Inserir aqui um detalhamento das mudanças, se possível].
