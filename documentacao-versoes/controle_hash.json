@@ -1,0 +1,22 @@
+{
+    "automacao_organiza_projeto_restaura_backup_v1.py": "a73a611a4f12fb9d2eb375b59aa37cad3b02b6396643c8d263252fcb65f4d8d1",
+    "backup_projeto.py": "d4a8b4844e9ef937ac3d7d2afb3f54dd31c7278f72541e1164ff18e8a0ad3a1f",
+    "banco_tokens.py": "899398114ab3fdfcb7e2ddb7a627037088ec005c8863aa67e31d1fc657e4da37",
+    "contador_tokens_menu.py": "076e57ed42bc1c19f1e64893012c56704eb722903518c8d0e8348a062a907986",
+    "documentacao-projeto-automation-v1.py": "bcf8d14f81dda8ade2d7ed049757575b388c4e2d7dd253904271045af29de5e9",
+    "documentacao-projeto-automation-v2-gemini-powered.py": "cb461025ad22c443ac4b4c7051930373bf6f0377500f513cd83a974083ddf48c",
+    "gerador-dic-texto-yaml-v1.py": "062c031d0b13eeb9af443f370ad5fdbf38cc5815c11ff9c08c9518a9eccd4b56",
+    "gerador_vetorizador_continuo.py": "a62daed6e1693b9283528811b3a4854657376b2d6139d4aa9834fc62ff75990c",
+    "gerador_yaml_embeddings-prompt-v2.py": "7b823647289177e713cc611d43cd287ec0f420d92811c4fa77b0b233d903bac5",
+    "gerador_yaml_embeddings.py": "5f7798e970cbe9809def6bfab7f37b3ffc75ae966e29b8a9f327601ff33d870f",
+    "gerador_yaml_embeddings_stream_v1-cria-contexto.py": "e2fbc6ba5528847413ae55e634facfeb5ebb57fe76af340def402984b369e758",
+    "gerador_yaml_embeddings_stream_v1-cria-lista-palavras.py": "6392ec4c0ad840b3c4b2f2b5065a3935f2c1a8515413dcea0e2a493a48b61379",
+    "limpar_duplicados_avancado.py": "7172a245ba0458a4ffe012da99b94854c9c33778da7e77cdb7f42fe096d6f2e5",
+    "remover_duplicados.py": "971b00430a05a06f7cdb2b41640467f56be0299cf63a65b4bcca1605d7fa3dbb",
+    "restaurar_backup.py": "05f55319dc79b4a895c2cfdf1f6b44f6d0aac149333258e43a1615cd76bc9490",
+    "restaura_backup_versionado.py": "a91d15650aa64c5232029347934eea8a92688a345f1576077051bf541e71d535",
+    "testa-banco-vetor-ele.py": "575c179e50b1756a323e1d8780c8267dcd211df57eb22e4b7d6eca3401a528a4",
+    "yaml-parser-vector-database-increment-v1.py": "57434c1270ac8c5a62d017b47f56c3b08a083eaf43a2055b8bbcadb9b113aa95",
+    "yaml_to_vectors.py": "3f825d0abbd28fb8d151be7b10b857fdcbe18787ae2dd654a791a43cde501118",
+    "zipar_yamls.py": "de3ccb5500c9ed327125de282f85ce56a6d3b75f3a6fd41d791191890a37bc87"
+}

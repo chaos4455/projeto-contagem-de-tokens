@@ -12,6 +12,8 @@ from rich.layout import Layout
 from rich.live import Live
 from rich.panel import Panel
 import yaml
+import json
+import locale
 
 
 console = Console()
@@ -22,11 +24,20 @@ class DocumentacaoAutomatizadaAvancada:
         self.pasta_raiz = Path(".")
         self.pasta_docs = Path("documentacao-automatizada")
         self.pasta_versoes = Path("documentacao-versoes")
-        self.pasta_docs.mkdir(exist_ok=True)
         self.pasta_versoes.mkdir(exist_ok=True)
         self.setup_logging()
         self.configurar_ia()
         self.executor = ThreadPoolExecutor()
+        self.arquivo_controle = self.pasta_versoes / "controle_hash.json"
+        self.hashes_anteriores = self.carregar_hashes()
+        # Configurar locale para português
+        try:
+            locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+        except:
+            try:
+                locale.setlocale(locale.LC_ALL, 'Portuguese_Brazil.1252')
+            except:
+                logging.warning("Não foi possível configurar locale para português")
 
     def configurar_ia(self):
         try:
@@ -81,7 +92,13 @@ class DocumentacaoAutomatizadaAvancada:
         try:
             async with aiofiles.open(arquivo, "r", encoding="utf-8") as f:
                 conteudo = await f.read()
-            return {"nome": arquivo.name, "caminho": str(arquivo), "conteudo": conteudo, "tipo": "python"}
+            return {
+                "nome": arquivo.name, 
+                "caminho": str(arquivo), 
+                "conteudo": conteudo,
+                "codigo_fonte": conteudo, 
+                "tipo": "python"
+            }
         except Exception as e:
             logging.error(f"Erro ao ler arquivo Python {arquivo}: {e}")
             return None
@@ -193,11 +210,14 @@ class DocumentacaoAutomatizadaAvancada:
             return None
 
     def obter_proxima_versao(self, nome_arquivo):
-        arquivos_existentes = list(self.pasta_versoes.glob(f"{nome_arquivo.stem}_v*.md"))
+        pasta_arquivo = self.pasta_versoes / nome_arquivo.stem
+        pasta_arquivo.mkdir(exist_ok=True)
+        
+        arquivos_existentes = list(pasta_arquivo.glob(f"v*.md"))
         if not arquivos_existentes:
             return "0001"
 
-        versoes = [int(arquivo.stem.split("_v")[-1]) for arquivo in arquivos_existentes]
+        versoes = [int(arquivo.stem.replace('v', '')) for arquivo in arquivos_existentes]
         return f"{max(versoes) + 1:04d}"
 
     async def listar_arquivos_python(self):
@@ -207,13 +227,56 @@ class DocumentacaoAutomatizadaAvancada:
                 arquivos_py.append(arquivo.name)
         return arquivos_py
 
+    def formatar_data_hora_extenso(self):
+        agora = datetime.now()
+        
+        # Formatar data
+        dia = agora.strftime("%d")
+        mes = agora.strftime("%B").lower()
+        ano = agora.strftime("%Y")
+        dia_semana = agora.strftime("%A").lower()
+        
+        # Formatar hora
+        hora = agora.strftime("%H")
+        minuto = agora.strftime("%M")
+        
+        texto_data_hora = (
+            f"Documentação gerada em {dia_semana}, {dia} de {mes} de {ano} "
+            f"às {hora} horas e {minuto} minutos"
+        )
+        
+        return texto_data_hora
+
     async def analisar_arquivo_com_ia(self, nome_arquivo):
         max_tentativas = 3
         tentativa = 0
         
+        arquivo_path = self.pasta_raiz / nome_arquivo
+        arquivo_info = await self.ler_arquivo_python(arquivo_path)
+        data_hora_extenso = self.formatar_data_hora_extenso()
+        
+        if not arquivo_info:
+            logging.error(f"Não foi possível ler o arquivo {nome_arquivo}")
+            return None
+        
         while tentativa < max_tentativas:
             try:
                 prompt = f"""
+                {data_hora_extenso}
+                
+                Analise o seguinte arquivo Python e gere uma documentação técnica detalhada.
+                
+                Nome do arquivo: {arquivo_info['nome']}
+                Caminho: {arquivo_info['caminho']}
+                
+                CÓDIGO FONTE COMPLETO:
+                ```python
+                {arquivo_info['codigo_fonte']}
+                ```
+
+                Use a data e hora informada acima no início da documentação e em qualquer 
+                referência temporal ao longo do documento.
+
                 crie as documentações bem longas, detalhadas, use icones, emojis, use badges e shields 
                 use muita shield e badges coloridas em tudo, estilizadas
                 estilize o markdown com css e js, use tudo colorido e rico e bonito
@@ -221,9 +284,22 @@ class DocumentacaoAutomatizadaAvancada:
                 fale de mim e fale em primeira pessoa, elias andrade - evolução it - 
                 entenda o codigo fonte, documente e fale bem téncico bem arrogante
                 seja detalhado e cubra o minucioso pra mostrar conhecimento
-                Gere uma documentação técnica detalhada em Markdown para o arquivo Python: {nome_arquivo}
 
+
+                sempre faça citações de musicas  e de filmes a ver com tecnologia, com ia, com automação, 
+                sempre gere a documentação com sua perosnalidade
+
+                sempre comente a documentação do ponto de vista de uma persona
+
+                mas crie como sendo eu autentico e meu alter ego encapsulado pela ia
+
+                eu gosto muito de filmes, de coisas antigas, nostalgias, sempre cite coisas assim, de contexto de coisas de filmes
+                de coisas da cultura pos, pra dar contexto ao que está sendo feito e suas qualidades técnicas, as minhas qualidades em desenvolver tal projeto, etc
+                sempre ressalte meu expertise, me venda profissionalmente e me ssustente, de forma sucinta, ser parecer forçado
+
+                
                 A documentação deve incluir:
+                - Data e hora da geração da documentação
                 - Visão geral e propósito do arquivo
                 - Descrição detalhada de cada classe e método
                 - Fluxo de execução principal
@@ -233,15 +309,26 @@ class DocumentacaoAutomatizadaAvancada:
                 - Possíveis melhorias e recomendações
                 - Análise de segurança e performance (se aplicável)
 
+
+                sempre link os repos reais
+                https://github.com/chaos4455
+                https://github.com/evolucaoit
+                https://github.com/replika-ai-solutions
+                meu linkedin https://www.linkedin.com/in/itilmgf/ - 
+
+                meus contatos oeliasandrade@gmail.com whatsapp 44 9 8859-7116
+
                 Formato esperado:
                 # Documentação Técnica: {nome_arquivo}
-
+                
+                > {data_hora_extenso}
+                
                 ## Visão Geral
                 [Sua análise aqui]
-
+                
                 ## Estrutura e Componentes
                 [Sua análise aqui]
-
+                
                 [Continue com as demais seções...]
                 """
 
@@ -252,35 +339,98 @@ class DocumentacaoAutomatizadaAvancada:
                 tentativa += 1
                 logging.error(f"Tentativa {tentativa} falhou para {nome_arquivo}: {e}")
                 if tentativa < max_tentativas:
-                    await asyncio.sleep(2)  # Espera 2 segundos antes de tentar novamente
+                    await asyncio.sleep(2)
                 else:
                     logging.error(f"Todas as tentativas falharam para {nome_arquivo}")
                     return None
 
+    def carregar_hashes(self):
+        try:
+            if self.arquivo_controle.exists():
+                with open(self.arquivo_controle, 'r', encoding='utf-8') as f:
+                    return json.load(f)
+            return {}
+        except Exception as e:
+            logging.error(f"Erro ao carregar hashes: {e}")
+            return {}
+
+    def salvar_hashes(self):
+        try:
+            with open(self.arquivo_controle, 'w', encoding='utf-8') as f:
+                json.dump(self.hashes_anteriores, f, indent=4)
+        except Exception as e:
+            logging.error(f"Erro ao salvar hashes: {e}")
+
+    def calcular_hash_arquivo(self, caminho):
+        try:
+            with open(caminho, 'rb') as f:
+                conteudo = f.read()
+                return hashlib.sha256(conteudo).hexdigest()
+        except Exception as e:
+            logging.error(f"Erro ao calcular hash: {e}")
+            return None
+
     async def processar_fila_documentacao(self):
         console.print("[bold blue]🚀 Iniciando processamento da fila de documentação...[/]")
-
         arquivos = await self.listar_arquivos_python()
+        arquivos_processados = []
 
         for arquivo in arquivos:
             try:
-                proxima_versao = self.obter_proxima_versao(Path(arquivo))
-                nome_doc = f"{Path(arquivo).stem}_v{proxima_versao}.md"
-                caminho_doc = self.pasta_versoes / nome_doc
+                arquivo_path = Path(arquivo)
+                hash_atual = self.calcular_hash_arquivo(arquivo_path)
+                
+                if not hash_atual:
+                    continue
 
-                console.print(f"[yellow]📝 Processando: {arquivo}[/]")
+                # Verifica se o arquivo foi modificado
+                if (arquivo not in self.hashes_anteriores or 
+                    self.hashes_anteriores[arquivo] != hash_atual):
+                    
+                    pasta_arquivo = self.pasta_versoes / arquivo_path.stem
+                    pasta_arquivo.mkdir(exist_ok=True)
+                    
+                    proxima_versao = self.obter_proxima_versao(arquivo_path)
+                    nome_doc = f"v{proxima_versao}.md"
+                    caminho_doc = pasta_arquivo / nome_doc
 
-                documentacao = await self.analisar_arquivo_com_ia(arquivo)
+                    console.print(f"[yellow]📝 Processando: {arquivo} (Modificado)[/]")
 
-                if documentacao:
-                    await self.escrever_arquivo(caminho_doc, documentacao)
-                    console.print(f"[green]✅ Documentação gerada: {nome_doc}[/]")
+                    documentacao = await self.analisar_arquivo_com_ia(arquivo)
 
-                await asyncio.sleep(2)
+                    if documentacao:
+                        await self.escrever_arquivo(caminho_doc, documentacao)
+                        metadata = {
+                            "versao": proxima_versao,
+                            "data_criacao": datetime.now().isoformat(),
+                            "arquivo_original": str(arquivo_path),
+                            "hash_arquivo": hash_atual,
+                            "autor": "Elias Andrade - Evolução IT"
+                        }
+                        await self.escrever_metadata(
+                            pasta_arquivo / f"v{proxima_versao}_metadata.yaml", 
+                            metadata
+                        )
+                        
+                        # Atualiza o hash no controle
+                        self.hashes_anteriores[arquivo] = hash_atual
+                        arquivos_processados.append(arquivo)
+                        
+                        console.print(f"[green]✅ Nova versão gerada: {pasta_arquivo}/{nome_doc}[/]")
+                else:
+                    console.print(f"[blue]ℹ️ Arquivo não modificado: {arquivo}[/]")
+
+                await asyncio.sleep(1)
 
             except Exception as e:
                 logging.error(f"Erro ao processar {arquivo}: {e}")
                 continue
+
+        if arquivos_processados:
+            self.salvar_hashes()
+            console.print(f"[green]✅ {len(arquivos_processados)} arquivos processados[/]")
+        else:
+            console.print("[yellow]ℹ️ Nenhum arquivo necessitou atualização[/]")
 
     async def escrever_arquivo(self, caminho, conteudo):
         try:
@@ -288,6 +438,13 @@ class DocumentacaoAutomatizadaAvancada:
                 await f.write(conteudo)
         except Exception as e:
             logging.error(f"Erro ao escrever arquivo {caminho}: {e}")
+
+    async def escrever_metadata(self, caminho, metadata):
+        try:
+            async with aiofiles.open(caminho, "w", encoding="utf-8") as f:
+                await f.write(yaml.dump(metadata, allow_unicode=True))
+        except Exception as e:
+            logging.error(f"Erro ao escrever metadata {caminho}: {e}")
 
     async def executar(self):
         console.print("[bold blue]🚀 Iniciando documentação automatizada...[/]")

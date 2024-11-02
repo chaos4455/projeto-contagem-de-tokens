@@ -1,25 +1,173 @@
-# 🤖 Projeto de Geração de Embeddings com IA para RAG
+# 🤖 Projeto de Geração de Embeddings com IA para RAG v0.0.0.4
+
+[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
+[![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Status](https://img.shields.io/badge/status-beta-yellow)]()
+[![Documentação](https://img.shields.io/badge/docs-auto%20generated-green)]()
 
 ## 📋 Índice
 - [Sobre o Projeto](#sobre-o-projeto)
+- [Novidades da Versão 0.0.0.4](#novidades-da-versão-00004)
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Arquitetura](#arquitetura)
+- [Pipeline de Processamento](#pipeline-de-processamento)
 - [Instalação](#instalação)
 - [Como Usar](#como-usar)
 - [Configuração](#configuração)
 - [Métricas e Monitoramento](#métricas-e-monitoramento)
-- [Solução de Problemas (Troubleshooting)](#solução-de-problemas-troubleshooting)
-- [Perguntas Frequentes (FAQ)](#perguntas-frequentes-faq)
+- [Solução de Problemas](#solução-de-problemas)
+- [FAQ](#faq)
 - [Contribuição](#contribuição)
 - [Licença](#licença)
-- [Scripts do Projeto](#scripts-do-projeto)
-- [Notas de Versão](#notas-de-versão)
+- [Contato](#contato)
 
+
+## 📊 Métricas e Monitoramento
+
+- **Performance**: Tempo de processamento, taxa de throughput
+- **Recursos**: CPU, RAM, GPU utilization
+- **Qualidade**: Densidade semântica, precisão dos embeddings
+- **Cache**: Hit rate, tamanho, eficiência
+- **Tokens**: Contagem, distribuição, custos
+
+## 👥 Contato
+
+**Elias Andrade - Evolução IT**
+- Email: oeliasandrade@gmail.com
+- LinkedIn: https://www.linkedin.com/in/itilmgf/
+- WhatsApp: (11) 9 8859-7116
+
+### Repositórios
+- Pessoal: https://github.com/chaos4455
+- Empresa: https://github.com/evolucaoit
+- IA/Automação: https://github.com/replika-ai-solutions
+
+## 📄 Licença
+
+Este projeto está licenciado sob a Licença MIT.
+
+# 🚀 Projeto de Automação e Análise de Embeddings v0.0.0.4
+
+**Arquiteto:** Elias Andrade  
+**Status:** Beta  
+**Versão:** 0.0.0.4  
+**Data:** 02/11/2024
+
+## 🆕 Novidades da Versão 0.0.0.4
+
+- 🤖 Integração com Google Gemini API
+- ⚡ Processamento assíncrono aprimorado
+- 📊 Sistema de logs estruturados
+- 🔄 Versionamento automático de documentação
+- 🛠️ Tratamento de erros robusto
+
+### 🌟 Destaques Técnicos
+
+- **Gemini Integration**: Implementação da API Gemini Pro para análise avançada de código
+- **Async/Await**: Otimização do processamento paralelo
+- **Error Handling**: Sistema robusto de tratamento de erros com retry
+- **Logging**: Sistema de logs estruturados com rotação de arquivos
+
+## 🔄 Pipeline de Documentação v2
+
+1. **Coleta de Dados**
+   - Análise de arquivos Python
+   - Análise de estruturas de banco de dados
+   - Processamento de markdown existente
+
+2. **Processamento**
+   - Análise com IA (Gemini)
+   - Geração de documentação técnica
+   - Versionamento automático
+
+3. **Saída**
+   - Markdown rico e estilizado
+   - Badges e shields dinâmicos
+   - Diagramas ASCII art
+
+# 🏗️ Arquitetura do Sistema v0.0.0.3
+
+## 🎯 Visão Arquitetural v2
+
+### 🔄 Fluxo Principal do Sistema
+1. 📥 **Entrada de Dados v2**
+   - 📝 Validação YAML avançada
+   - ⚙️ Configurações dinâmicas
+   - 🎚️ Parâmetros adaptativos
+
+2. 🧮 **Processamento Central v3**
+   - 🤖 Motor de IA otimizado
+   - 🔄 Stream Processing paralelo
+   - 📊 Análise preditiva de tokens
+
+3. 📤 **Saída e Armazenamento v2**
+   - 💾 Backup Incremental Inteligente
+   - 📁 Organização Hierárquica
+   - 📝 Logs Estruturados
+
+### 🛠️ Novos Componentes v2
+- 🧹 Sistema de Limpeza Avançada
+- 📊 Métricas em Tempo Real
+- 🔄 Backup Incremental v2
+- 🤖 Integração PaLM/Gemini v2
+
+### 🔒 Segurança v2
+- 🔐 Encriptação Avançada
+- 🏷️ Versionamento Seguro v2
+- 📝 Logs Protegidos
+- 🔍 Auditoria em Tempo Real
+
+
+## 🆕 Novidades da Versão 0.0.0.4
+
+- 🤖 **Integração Google Gemini API**: Suporte avançado para geração de embeddings
+- ⚡ **Processamento Assíncrono Aprimorado**: Melhor performance e escalabilidade
+- 📊 **Sistema de Logs Estruturados**: Monitoramento detalhado
+- 🔄 **Versionamento Automático**: Controle de versões da documentação
+- 🛠️ **Tratamento de Erros Robusto**: Sistema de retry e fallback
+- 🧮 **Analytics Avançado**: Novos KPIs e métricas personalizadas
+
+# ⚡ Processamento Assíncrono v0.0.0.4
+
+## 🔄 Pipeline Assíncrono
+
+### 📥 Entrada
+- Leitura assíncrona de arquivos
+- Processamento paralelo de múltiplos arquivos
+- Queue management
+
+### 🔄 Processamento
+- Análise IA com retry
+- Geração de documentação paralela
+- Controle de concorrência
+
+### 📤 Saída
+- Escrita assíncrona de arquivos
+- Versionamento automático
+- Gestão de backups
+
+## 🎯 Melhorias Implementadas
+
+### ⚡ Performance
+- ThreadPoolExecutor para processamento paralelo
+- Controle de taxa de requisições
+- Otimização de memória
+
+### 🛠️ Error Handling
+- Retry automático com backoff
+- Logging estruturado
+- Recuperação de falhas
+
+### 📊 Monitoramento
+- Métricas de performance
+- Logs detalhados
+- Status de processamento em tempo real 
 
 ## 🎯 Sobre o Projeto
 
-Este projeto é uma solução avançada para geração de embeddings vetoriais utilizando Inteligência Artificial, especialmente projetado para alimentar sistemas RAG (Retrieval-Augmented Generation). O sistema processa documentos em YAML, gera embeddings utilizando modelos BERT e oferece uma interface rica para visualização e análise de métricas em tempo real.  Ele foi desenvolvido com foco em eficiência, escalabilidade e facilidade de uso, permitindo o processamento de grandes conjuntos de dados de forma eficiente.
+Este projeto é uma solução avançada para geração de embeddings vetoriais utilizando IA, especialmente projetado para alimentar sistemas RAG (Retrieval-Augmented Generation). O sistema processa documentos em YAML, gera embeddings utilizando modelos BERT e oferece uma interface rica para visualização e análise de métricas em tempo real.  Ele foi desenvolvido com foco em eficiência, escalabilidade e facilidade de uso, permitindo o processamento de grandes conjuntos de dados de forma eficiente.
 
 ### 🌟 Principais Características
 
@@ -172,7 +320,7 @@ O sistema monitora e exibe as seguintes métricas:
 - **Densidade semântica média:** Densidade semântica média dos embeddings gerados.
 
 
-## 🐞 Solução de Problemas (Troubleshooting)
+## 🐞 Solução de Problemas
 
 - **Erro de importação de bibliotecas:** Certifique-se de ter instalado todas as dependências listadas em `requirements.txt`.
 - **Erro de conexão com a API do Google Gemini:** Verifique sua chave de API e sua conexão com a internet.
@@ -195,7 +343,6 @@ Contribuições são bem-vindas!  Por favor, abra um pull request com suas alter
 ## 📄 Licença
 
 Este projeto está licenciado sob a Licença MIT.
-
 ## 📜 Scripts do Projeto
 
 Esta seção descreve os scripts Python principais do projeto:
@@ -242,3 +389,4 @@ Este script gera arquivos YAML usando a API do Google Gemini em modo de streamin
 ### Versão 0.0.0.2 (01/01/2024 07:33)
 
 - **Atualizações:**  Esta versão inclui todas as alterações realizadas desde o início do projeto até a data de 01/01/2024 07:33.  Uma análise completa do código-fonte é necessária para detalhar as mudanças específicas.  [Inserir aqui um detalhamento das mudanças, se possível].
+
