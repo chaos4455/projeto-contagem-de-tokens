@@ -1,0 +1,39 @@
+2024-11-02 10:20:14,703 - ERROR - Erro no processamento:
+Tipo: ValueError
+Mensagem: setting an array element with a sequence.
+Palavra: devops
+2024-11-02 10:47:24,309 - ERROR - Erro no processamento:
+Tipo: NameError
+Mensagem: name 'prompt' is not defined
+Palavra: devosp
+Traceback (most recent call last):
+  File "f:\MEGASYNC\projeto contagem de tokens\gerador_vetorizador_continuo.py", line 673, in processar_palavra
+    yaml_content = self.get_gemini_response(prompt)
+                                            ^^^^^^
+NameError: name 'prompt' is not defined
+2024-11-02 10:47:29,630 - ERROR - Erro no processamento:
+Tipo: NameError
+Mensagem: name 'prompt' is not defined
+Palavra: devops
+Traceback (most recent call last):
+  File "f:\MEGASYNC\projeto contagem de tokens\gerador_vetorizador_continuo.py", line 673, in processar_palavra
+    yaml_content = self.get_gemini_response(prompt)
+                                            ^^^^^^
+NameError: name 'prompt' is not defined
+2024-11-02 10:49:10,420 - ERROR - Erro ao atualizar display: 'ProcessingStats' object has no attribute 'batch_size'
+2024-11-02 10:49:10,421 - ERROR - Erro no processamento:
+Tipo: NameError
+Mensagem: name 'prompt' is not defined
+Palavra: devops
+Traceback (most recent call last):
+  File "f:\MEGASYNC\projeto contagem de tokens\gerador_vetorizador_continuo.py", line 562, in processar_palavra
+    yaml_content = self.get_gemini_response(prompt)
+                                            ^^^^^^
+NameError: name 'prompt' is not defined
+2024-11-02 10:49:10,425 - ERROR - Erro ao atualizar display: 'ProcessingStats' object has no attribute 'batch_size'
+2024-11-02 11:22:05,081 - ERROR - Erro ao atualizar display: 'ProcessingStats' object has no attribute 'update_tempo'
+2024-11-02 11:22:05,081 - ERROR - Erro no processamento:
+Tipo: AttributeError
+Mensagem: 'ProcessingStats' object has no attribute 'update_tempo'
+Palavra: devops
+2024-11-02 11:22:05,081 - ERROR - Erro ao atualizar display: 'ProcessingStats' object has no attribute 'update_tempo'

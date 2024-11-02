@@ -24,6 +24,9 @@ import emoji
 from datetime import timedelta
 import asyncio
 import logging
+import psutil
+from collections import Counter, defaultdict
+from rich.align import Align
 
 # Configure logging
 logging.basicConfig(filename='app.log', level=logging.ERROR, 
@@ -39,46 +42,168 @@ NOME_MODELO = "gemini-1.5-flash"
 class YAMLVectorizer:
     def __init__(self):
         # Inicializa BERT
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        self.model = BertModel.from_pretrained('bert-base-uncased')
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model.to(self.device)
-        self.model.eval()
+        try:
+            self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+            self.model = BertModel.from_pretrained('bert-base-uncased')
+            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+            self.model.to(self.device)
+            self.model.eval()
+        except Exception as e:
+            logging.error(f"Erro ao inicializar BERT: {e}")
+            raise RuntimeError("Falha na inicialização do modelo BERT.")
 
 class ProcessingStats:
     def __init__(self):
         self.reset()
         
     def reset(self):
+        # Métricas de Palavras
         self.total_palavras = 0
-        self.palavras_unicas = 0
         self.palavras_processadas = 0
+        self.palavras_unicas = 0
+        self.palavras_repetidas = 0
         self.palavras_novas = 0
-        self.tempo_processamento = timedelta()
+        self.palavras_existentes = 0
+        self.palavras_por_segundo = 0
+        self.historico_palavras = []
+        
+        # Métricas de Tokens
+        self.total_tokens = 0
+        self.tokens_unicos = 0
+        self.tokens_por_palavra = 0
+        self.tokens_por_segundo = 0
+        self.historico_tokens = []
+        self.distribuicao_tokens = defaultdict(int)
+        
+        # Métricas de Tempo
+        self.tempo_inicio = time.time()
+        self.tempo_processamento = 0
+        self.tempo_ia = 0
+        self.tempo_vetorizacao = 0
+        self.tempo_banco = 0
+        self.tempo_tokenizacao = 0
+        
+        # Métricas de Pipeline
+        self.etapa_atual = ""
+        self.sub_etapa = ""
+        self.progresso_etapa = 0
+        self.historico_etapas = []
+        
+        # Métricas de Qualidade
+        self.taxa_sucesso = 0
+        self.taxa_erro = 0
         self.falhas = 0
-        self.inicio = time.time()
+        self.erros_por_tipo = defaultdict(int)
+        
+        # Métricas de Vetores
+        self.dimensoes_vetor = 768  # BERT default
+        self.media_magnitude = 0
+        self.max_magnitude = 0
+        self.min_magnitude = 0
+        self.densidade_vetores = 0
+        
+        # Estatísticas Linguísticas
+        self.tamanho_medio_palavra = 0
+        self.palavras_por_categoria = defaultdict(int)
+        self.prefixos_comuns = Counter()
+        self.sufixos_comuns = Counter()
+        
+        # Cache e Performance
+        self.cache_hits = 0
+        self.cache_misses = 0
+        self.latencia_media = 0
+        
+        # Métricas de Sistema
+        self.uso_cpu = 0
+        self.uso_ram = 0
+        self.threads_ativos = 0
+        self.tamanho_db_mb = 0
+        self.em_processamento = 0
+        self.palavras_na_fila = 0
+        self.precisao = 0
         
     def update_tempo(self):
-        self.tempo_processamento = timedelta(seconds=int(time.time() - self.inicio))
+        """Atualiza métricas relacionadas ao tempo"""
+        tempo_atual = time.time()
+        self.tempo_processamento = tempo_atual - self.tempo_inicio
+        if self.palavras_processadas > 0:
+            self.palavras_por_segundo = self.palavras_processadas / max(1, self.tempo_processamento)
+            self.tokens_por_segundo = self.total_tokens / max(1, self.tempo_processamento)
+    
+    def update_system_metrics(self):
+        """Atualiza métricas do sistema"""
+        self.uso_cpu = psutil.cpu_percent()
+        self.uso_ram = psutil.virtual_memory().percent
+        self.threads_ativos = len(psutil.Process().threads())
+        try:
+            self.tamanho_db_mb = Path('vectors_continuo.db').stat().st_size / (1024 * 1024)
+        except:
+            self.tamanho_db_mb = 0
+            
+    def update_vector_metrics(self, vector):
+        """Atualiza métricas relacionadas aos vetores"""
+        if vector is not None:
+            magnitude = np.linalg.norm(vector)
+            self.media_magnitude = (self.media_magnitude * self.palavras_processadas + magnitude) / (self.palavras_processadas + 1)
+            self.max_magnitude = max(self.max_magnitude, magnitude)
+            self.min_magnitude = min(self.min_magnitude, magnitude) if self.min_magnitude > 0 else magnitude
+            
+    def update_bert_metrics(self, palavra):
+        """Atualiza métricas relacionadas ao BERT"""
+        self.tamanho_medio_palavra = ((self.tamanho_medio_palavra * (self.palavras_processadas - 1)) + len(palavra)) / self.palavras_processadas
+        
+        # Atualiza prefixos e sufixos comuns
+        if len(palavra) > 2:
+            self.prefixos_comuns[palavra[:2]] += 1
+            self.sufixos_comuns[palavra[-2:]] += 1
 
-# Variáveis globais para estatísticas
-global_stats = ProcessingStats()
+    def registrar_etapa(self, etapa: str, sub_etapa: str = ""):
+        self.etapa_atual = etapa
+        self.sub_etapa = sub_etapa
+        self.historico_etapas.append({
+            'etapa': etapa,
+            'sub_etapa': sub_etapa,
+            'timestamp': datetime.now(),
+            'metricas': self.get_snapshot()
+        })
+        
+    def get_snapshot(self):
+        return {
+            'palavras_processadas': self.palavras_processadas,
+            'tokens_processados': self.total_tokens,
+            'tempo_decorrido': time.time() - self.tempo_inicio,
+            'taxa_processamento': self.palavras_por_segundo
+        }
 
 class GeradorVetorizadorContinuo:
-    def __init__(self):
-        # Inicializa BERT
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        self.model = BertModel.from_pretrained('bert-base-uncased')
-        self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model.to(self.device)
-        self.model.eval()
-        
-        # Inicializa banco
-        self.setup_database()
-        
-        self.stats = ProcessingStats()
+    def __init__(self, stats: ProcessingStats):
+        try:
+            # Inicializa BERT com tratamento de erro
+            self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+            self.model = BertModel.from_pretrained('bert-base-uncased')
+            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+            self.model.to(self.device)
+            self.model.eval()
+        except Exception as e:
+            logging.error(f"Erro ao inicializar BERT: {e}")
+            raise RuntimeError("Falha na inicialização do modelo BERT.")
+
+        # Inicializa banco com retry
+        retry_count = 3
+        while retry_count > 0:
+            try:
+                self.setup_database()
+                break
+            except sqlite3.Error as e:
+                retry_count -= 1
+                logging.error(f"Tentativa {3-retry_count} de conectar ao banco falhou: {e}")
+                if retry_count == 0:
+                    raise RuntimeError("Falha na conexão com o banco de dados após múltiplas tentativas.")
+
+        self.stats = stats
+        self.stats.reset()
         self.layout = self.setup_layout()
-        
+
     def setup_database(self):
         self.conn = sqlite3.connect('vectors_continuo.db')
         self.conn.execute('''
@@ -191,182 +316,293 @@ class GeradorVetorizadorContinuo:
         return '\n'.join(formatted_lines)
 
     def setup_layout(self):
+        """Configura o layout responsivo"""
         layout = Layout()
-        layout.split_column(
-            Layout(name="header"),
-            Layout(name="main"),
-            Layout(name="footer")
-        )
-        layout["main"].split_row(
-            Layout(name="stats"),
-            Layout(name="progress"),
-            Layout(name="metrics"),
-            Layout(name="status")
-        )
-        return layout
         
-    def create_stats_panel(self):
-        table = Table.grid()
-        table.add_row(
-            emoji.emojize(":hourglass_flowing_sand:"),
-            f"Tempo: {self.stats.tempo_processamento}"
+        # Divide em duas linhas
+        layout.split(
+            Layout(name="top", ratio=1),
+            Layout(name="bottom", ratio=1)
         )
-        table.add_row(
-            emoji.emojize(":input_numbers:"),
-            f"Total Palavras: {self.stats.total_palavras}"
+        
+        # Divide cada linha em duas colunas
+        layout["top"].split_row(
+            Layout(name="processamento", ratio=1),
+            Layout(name="performance", ratio=1)
         )
-        return Panel(table, title="Estatísticas", border_style="blue")
+        
+        layout["bottom"].split_row(
+            Layout(name="recursos", ratio=1),
+            Layout(name="metricas", ratio=1)
+        )
+        
+        return layout
 
-    def create_progress_panel(self):
-        table = Table.grid()
-        table.add_row(
-            emoji.emojize(":check_mark_button:"),
-            f"Processadas: {self.stats.palavras_processadas}"
+    def create_processamento_panel(self):
+        table = Table.grid(padding=(0, 1))
+        table.add_column(justify="right", style="cyan")
+        table.add_column(justify="left", style="white")
+        
+        rows = [
+            ("🔢 Total", f"{self.stats.total_palavras:,}"),
+            ("✅ Processadas", f"{self.stats.palavras_processadas:,}"),
+            ("⏳ Em Processo", f"{self.stats.em_processamento:,}"),
+            ("📤 Na Fila", f"{self.stats.palavras_na_fila:,}"),
+            ("🆕 Novas", f"{self.stats.palavras_novas:,}"),
+            ("🔄 Repetidas", f"{self.stats.palavras_repetidas:,}")
+        ]
+        
+        for label, value in rows:
+            table.add_row(label, value)
+        
+        return Panel(
+            Align.center(table),
+            title="[bold blue]Processamento[/bold blue]",
+            border_style="blue",
+            padding=(1, 2)
         )
-        table.add_row(
-            emoji.emojize(":new_button:"),
-            f"Novas: {self.stats.palavras_novas}"
-        )
-        return Panel(table, title="Progresso", border_style="green")
 
-    def create_metrics_panel(self):
-        table = Table.grid()
-        taxa_sucesso = ((self.stats.palavras_processadas - self.stats.falhas) / 
-                       max(self.stats.palavras_processadas, 1)) * 100
-        table.add_row(
-            emoji.emojize(":chart_increasing:"),
-            f"Taxa Sucesso: {taxa_sucesso:.1f}%"
+    def create_performance_panel(self):
+        table = Table.grid(padding=(0, 1))
+        table.add_column(justify="right", style="green")
+        table.add_column(justify="left", style="white")
+        
+        tempo_str = str(timedelta(seconds=int(self.stats.tempo_processamento)))
+        rows = [
+            ("⏱️ Tempo", tempo_str),
+            ("🚀 Palavras/s", f"{self.stats.palavras_por_segundo:.1f}"),
+            ("🔤 Tokens/s", f"{self.stats.tokens_por_segundo:.1f}"),
+            ("📈 Sucesso", f"{self.stats.taxa_sucesso:.1f}%"),
+            ("⚡ Velocidade", f"{self.stats.palavras_por_segundo * 60:.0f}/min"),
+            ("🎯 Precisão", f"{self.stats.precisao:.1f}%")
+        ]
+        
+        for label, value in rows:
+            table.add_row(label, value)
+        
+        return Panel(
+            Align.center(table),
+            title="[bold green]Performance[/bold green]",
+            border_style="green",
+            padding=(1, 2)
         )
-        table.add_row(
-            emoji.emojize(":cross_mark:"),
-            f"Falhas: {self.stats.falhas}"
+
+    def create_recursos_panel(self):
+        table = Table.grid(padding=(0, 1))
+        table.add_column(justify="right", style="yellow")
+        table.add_column(justify="left", style="white")
+        
+        rows = [
+            ("💻 CPU", f"{self.stats.uso_cpu:.1f}%"),
+            ("🧠 RAM", f"{self.stats.uso_ram:.1f}%"),
+            ("⚙️ Threads", f"{self.stats.threads_ativos}"),
+            ("💾 DB", f"{self.stats.tamanho_db_mb:.1f}MB"),
+            ("📊 Cache", f"{self.stats.cache_hits}/{self.stats.cache_misses}"),
+            ("⚡ Latência", f"{self.stats.latencia_media:.2f}ms")
+        ]
+        
+        for label, value in rows:
+            table.add_row(label, value)
+        
+        return Panel(
+            Align.center(table),
+            title="[bold yellow]Recursos[/bold yellow]",
+            border_style="yellow",
+            padding=(1, 2)
         )
-        return Panel(table, title="Métricas", border_style="yellow")
+
+    def create_metricas_panel(self):
+        table = Table.grid(padding=(0, 1))
+        table.add_column(justify="right", style="magenta")
+        table.add_column(justify="left", style="white")
+        
+        rows = [
+            ("📊 Tokens", f"{self.stats.total_tokens:,}"),
+            ("🔤 Únicos", f"{self.stats.tokens_unicos:,}"),
+            ("⚠️ Erros", f"{self.stats.falhas}"),
+            ("📏 Média", f"{self.stats.tamanho_medio_palavra:.1f}"),
+            ("📈 Magnitude", f"{self.stats.media_magnitude:.2f}"),
+            ("🔍 Densidade", f"{self.stats.densidade_vetores:.2f}")
+        ]
+        
+        for label, value in rows:
+            table.add_row(label, value)
+        
+        return Panel(
+            Align.center(table),
+            title="[bold magenta]Métricas[/bold magenta]",
+            border_style="magenta",
+            padding=(1, 2)
+        )
 
     def create_status_panel(self, status: str):
-        # Adiciona timestamp ao status
-        timestamp = datetime.now().strftime("%H:%M:%S")
-        status_with_time = f"[{timestamp}]\n{status}"
-        return Panel(status_with_time, title="Status Atual", border_style="purple")
+        table = Table.grid()
+        table.add_row(emoji.emojize(":clock:"), f"Timestamp: {datetime.now().strftime('%H:%M:%S')}")
+        table.add_row(emoji.emojize(":memo:"), f"Status: {status}")
+        table.add_row(emoji.emojize(":brain:"), f"Modelo: {NOME_MODELO}")
+        table.add_row(emoji.emojize(":high_voltage:"), f"Device: {self.device}")
+        table.add_row(emoji.emojize(":input_numbers:"), f"Tokens Total: {self.stats.total_tokens}")
+        table.add_row(emoji.emojize(":card_index_dividers:"), f"Tokens Únicos: {self.stats.tokens_unicos}")
+        table.add_row(emoji.emojize(":chart_increasing:"), f"Tokens/Palavra: {self.stats.tokens_por_palavra:.2f}")
+        table.add_row(emoji.emojize(":bar_chart:"), f"Token Max/Min: {self.stats.tokens_max}/{self.stats.tokens_min}")
+        table.add_row(emoji.emojize(":chart_with_upwards_trend:"), f"Token Média: {self.stats.tokens_media:.2f}")
+        table.add_row(emoji.emojize(":stopwatch:"), f"Tempo/Token: {self.stats.tempo_tokenizacao/max(self.stats.total_tokens, 1):.3f}s")
+        table.add_row(emoji.emojize(":rocket:"), f"Tokens/s: {self.stats.tokens_por_segundo:.1f}")
+        table.add_row(emoji.emojize(":gear:"), f"Batch Size: {self.stats.batch_size}")
+        return Panel(table, title="Status Atual", border_style="purple")
 
     def update_display(self, status: str, live: Live):
-        self.stats.update_tempo()
-        self.layout["header"].update(
-            Panel("Gerador e Vetorizador Contínuo de Palavras", style="bold cyan")
-        )
-        self.layout["main"]["stats"].update(self.create_stats_panel())
-        self.layout["main"]["progress"].update(self.create_progress_panel())
-        self.layout["main"]["metrics"].update(self.create_metrics_panel())
-        self.layout["main"]["status"].update(self.create_status_panel(status))
-        live.update(self.layout)
+        try:
+            self.stats.update_tempo()
+            self.stats.update_system_metrics()
+            
+            # Atualiza os painéis com alinhamento centralizado
+            self.layout["processamento"].update(self.create_processamento_panel())
+            self.layout["performance"].update(self.create_performance_panel())
+            self.layout["recursos"].update(self.create_recursos_panel())
+            self.layout["metricas"].update(self.create_metricas_panel())
+            
+            # Atualiza o display com o novo layout
+            live.update(self.layout)
+            
+        except Exception as e:
+            logging.error(f"Erro ao atualizar display: {e}")
+            raise
 
     def process_yaml_to_df(self, yaml_content: str) -> pd.DataFrame:
         palavras = self.extract_words(yaml_content)
         self.stats.total_palavras = len(palavras)
         self.stats.palavras_unicas = len(set(palavras))
-        
         df = pd.DataFrame(list(palavras), columns=['word'])
+        df['vector'] = ''
         df['vector'] = df['word'].apply(self.generate_embedding)
         return df
 
     async def processar_palavra(self, palavra_inicial: str):
-        df = None  # Initialize df outside the try block
         with Live(self.layout, refresh_per_second=4) as live:
             try:
-                # 1. Preparação
-                self.stats.reset()
-                self.update_display("Iniciando novo processamento...", live)
-                await asyncio.sleep(1)
-
-                # 2. Gerando prompt
-                self.update_display("Preparando prompt para IA...", live)
+                # 1. Inicialização
+                self.stats.registrar_etapa("Inicialização")
+                inicio = time.time()
+                self.stats.tempo_inicio = inicio
+                
+                # 2. Geração IA
+                self.stats.registrar_etapa("IA", "Gerando prompt")
                 prompt = f"""
-                Gere uma lista de palavras relacionadas a '{palavra_inicial}' no seguinte formato YAML exato:
-
+                Gere uma lista YAML técnica de palavras relacionadas a '{palavra_inicial}'.
+                
+                Requisitos:
+                - Gere exatamente 500 palavras técnicas relacionadas
+                - Inclua sinônimos e termos técnicos
+                - Evite repetições
+                - Use apenas palavras únicas
+                
+                Formato:
                 lista_palavras:
                 - palavra1
                 - palavra2
-                - palavra3
-
-                Importante:
-                - Use apenas o formato acima
-                - Cada palavra deve estar em uma nova linha
-                - Cada linha deve começar com hífen e espaço
-                - Não inclua outros elementos ou formatação
-                - Não use caracteres especiais
-                - Use apenas palavras simples
+                ...
                 """
-                await asyncio.sleep(1)
-
-                # 3. Obtendo resposta da IA
-                self.update_display("Aguardando resposta da IA...", live)
-                yaml_content = self.get_gemini_response(prompt)
-                if not yaml_content:
-                    self.update_display("Erro: IA não retornou conteúdo válido", live)
-                    self.stats.falhas += 1
-                    await asyncio.sleep(2)
-                    return
-
-                await asyncio.sleep(1)
-
-                # 4. Extraindo palavras do YAML
-                self.update_display("Extraindo palavras do YAML...", live)
-                palavras = self.extract_words(yaml_content)
-                if not palavras:
-                    self.stats.falhas += 1
-                    self.update_display("Erro ao extrair palavras do YAML", live)
-                    await asyncio.sleep(2)
-                    return
-
-                self.stats.total_palavras = len(palavras)
-                self.stats.palavras_unicas = len(set(palavras))
-                await asyncio.sleep(1)
-
-                # 5. Criando DataFrame
-                self.update_display("Criando DataFrame com palavras...", live)
-                df = pd.DataFrame(list(palavras), columns=['word'])
-                await asyncio.sleep(1)
-
-                # 6. Gerando embeddings
-                self.update_display("Gerando embeddings para cada palavra...", live)
-                for idx, row in df.iterrows():
-                    self.stats.palavras_processadas += 1
-                    self.update_display(f"Gerando embedding para: {row['word']}", live)
-                    df.at[idx, 'vector'] = self.generate_embedding(row['word'])
-                    await asyncio.sleep(0.1)
-
-                # 7. Salvando no banco
-                self.update_display("Salvando vetores no banco de dados...", live)
-                cursor = self.conn.cursor()
                 
-                for _, row in df.iterrows():
-                    try:
-                        exists = cursor.execute(
-                            'SELECT 1 FROM word_vectors WHERE word = ?', 
-                            (row['word'],)
-                        ).fetchone()
+                self.stats.registrar_etapa("IA", "Obtendo resposta")
+                tempo_ia_inicio = time.time()
+                yaml_content = self.get_gemini_response(prompt)
+                self.stats.tempo_ia = time.time() - tempo_ia_inicio
+                
+                # 3. Processamento de Palavras
+                self.stats.registrar_etapa("Processamento", "Extração de palavras")
+                palavras_relacionadas = self.extract_words(yaml_content)
+                todas_palavras = {palavra_inicial} | palavras_relacionadas
+                
+                self.stats.total_palavras = len(todas_palavras)
+                self.stats.palavras_unicas = len(set(todas_palavras))
+                self.stats.palavras_repetidas = len(todas_palavras) - self.stats.palavras_unicas
+                
+                # 4. Processamento Individual
+                for palavra in todas_palavras:
+                    self.stats.registrar_etapa("Processamento", f"Palavra: {palavra}")
+                    
+                    # 4.1 Tokenização
+                    tempo_token_inicio = time.time()
+                    tokens = self.tokenizer.tokenize(palavra)
+                    self.stats.tempo_tokenizacao += time.time() - tempo_token_inicio
+                    
+                    # Atualiza métricas de tokens
+                    self.stats.total_tokens += len(tokens)
+                    self.stats.tokens_unicos = len(set(tokens))
+                    self.stats.tokens_por_palavra = len(tokens)
+                    self.stats.distribuicao_tokens[len(tokens)] += 1
+                    
+                    # 4.2 Vetorização
+                    tempo_vetor_inicio = time.time()
+                    vector = self.generate_embedding(palavra)
+                    self.stats.tempo_vetorizacao += time.time() - tempo_vetor_inicio
+                    
+                    if vector is not None:
+                        # Atualiza métricas de vetores
+                        magnitude = np.linalg.norm(vector)
+                        self.stats.media_magnitude = (self.stats.media_magnitude * self.stats.palavras_processadas + magnitude) / (self.stats.palavras_processadas + 1)
+                        self.stats.max_magnitude = max(self.stats.max_magnitude, magnitude)
+                        self.stats.min_magnitude = min(self.stats.min_magnitude, magnitude) if self.stats.min_magnitude > 0 else magnitude
                         
-                        if exists is None:
-                            self.stats.palavras_novas += 1
-                            cursor.execute(
-                                'INSERT INTO word_vectors (word, vector, palavra_origem) VALUES (?, ?, ?)',
-                                (row['word'], row['vector'].tobytes(), palavra_inicial)
-                            )
-                            self.update_display(f"Salvando: {row['word']}", live)
-                    except Exception as e:
-                        self.stats.falhas += 1
-                        self.update_display(f"Erro ao salvar: {row['word']}: {e}", live)
+                        # 4.3 Salvamento
+                        tempo_banco_inicio = time.time()
+                        vector_bytes = vector.tobytes()
+                        self.conn.execute(
+                            'INSERT OR REPLACE INTO word_vectors (word, vector, palavra_origem) VALUES (?, ?, ?)',
+                            (palavra, vector_bytes, palavra_inicial)
+                        )
+                        self.conn.commit()
+                        self.stats.tempo_banco += time.time() - tempo_banco_inicio
+                    
+                    # Atualiza estatísticas
+                    self.stats.palavras_processadas += 1
+                    self.stats.palavras_por_segundo = self.stats.palavras_processadas / (time.time() - inicio)
+                    self.stats.tokens_por_segundo = self.stats.total_tokens / (time.time() - inicio)
+                    
+                    # Atualiza display
+                    self.update_display(f"Processando: {palavra}", live)
                     await asyncio.sleep(0.1)
-
-                # 8. Finalizando
-                self.conn.commit()
-                self.update_display("Processamento concluído com sucesso!", live)
-                await asyncio.sleep(2)
-
+                
+                # 5. Finalização e Relatório
+                self.stats.registrar_etapa("Finalização", "Gerando relatório")
+                self.gerar_relatorio_final()
+                
             except Exception as e:
                 self.stats.falhas += 1
-                self.update_display(f"Erro no processamento: {str(e)}", live)
-                await asyncio.sleep(2)
+                self.stats.erros_por_tipo[type(e).__name__] += 1
+                logging.error(f"Erro no processamento:\nTipo: {type(e).__name__}\nMensagem: {str(e)}\nPalavra: {palavra_inicial}")
+                self.update_display(f"Erro: {str(e)}", live)
+
+    def gerar_relatorio_final(self):
+        console = Console()
+        console.print("\n[bold cyan]Relatório Final de Processamento[/bold cyan]")
+        
+        # Métricas de Palavras
+        console.print("\n[yellow]Métricas de Palavras:[/yellow]")
+        console.print(f"Total de palavras: {self.stats.total_palavras}")
+        console.print(f"Palavras únicas: {self.stats.palavras_unicas}")
+        console.print(f"Palavras repetidas: {self.stats.palavras_repetidas}")
+        console.print(f"Taxa de processamento: {self.stats.palavras_por_segundo:.2f} palavras/s")
+        
+        # Métricas de Tokens
+        console.print("\n[yellow]Métricas de Tokens:[/yellow]")
+        console.print(f"Total de tokens: {self.stats.total_tokens}")
+        console.print(f"Tokens únicos: {self.stats.tokens_unicos}")
+        console.print(f"Média de tokens por palavra: {self.stats.tokens_por_palavra:.2f}")
+        console.print(f"Taxa de tokenização: {self.stats.tokens_por_segundo:.2f} tokens/s")
+        
+        # Métricas de Tempo
+        console.print("\n[yellow]Métricas de Tempo:[/yellow]")
+        console.print(f"Tempo total: {timedelta(seconds=int(self.stats.tempo_processamento))}")
+        console.print(f"Tempo IA: {timedelta(seconds=int(self.stats.tempo_ia))}")
+        console.print(f"Tempo vetorização: {timedelta(seconds=int(self.stats.tempo_vetorizacao))}")
+        console.print(f"Tempo banco: {timedelta(seconds=int(self.stats.tempo_banco))}")
+        
+        # Histórico de Etapas
+        console.print("\n[yellow]Histórico de Processamento:[/yellow]")
+        for etapa in self.stats.historico_etapas:
+            console.print(f"{etapa['timestamp'].strftime('%H:%M:%S')} - {etapa['etapa']} - {etapa['sub_etapa']}")
 
 def configurar_geracao(temperatura=0.8, top_p=0.95, top_k=64, max_tokens=8096):
     return {
@@ -380,29 +616,26 @@ def configurar_geracao(temperatura=0.8, top_p=0.95, top_k=64, max_tokens=8096):
 async def main():
     console.print("[bold cyan]Gerador e Vetorizador Contínuo de Palavras[/bold cyan]")
     console.print("[yellow]Digite 'sair' para encerrar o programa[/yellow]")
-    
-    processador = GeradorVetorizadorContinuo()
+    stats = ProcessingStats()
+    processador = GeradorVetorizadorContinuo(stats)
     
     while True:
-        palavras = input("\nDigite as palavras separadas por vírgula para processar (ou 'sair'): ").strip().lower().split(',')
-        if palavras == ['sair']:
+        palavra = input("\nDigite uma palavra para processar (ou 'sair'): ").strip().lower()
+        if palavra == 'sair':
             break
-        
-        if palavras:
-            tasks = [processador.processar_palavra(palavra.strip()) for palavra in palavras]
-            await asyncio.gather(*tasks) # Aguardando as corrotinas
+        if palavra:
+            # Processa uma palavra por vez
+            await processador.processar_palavra(palavra)
         else:
             console.print("[red]Entrada inválida![/red]")
-
-    # Imprime estatísticas globais ao final
-    global_stats.update_tempo()
+    
+    stats.update_tempo()
     console.print(f"\nEstatísticas Globais:")
-    console.print(f"Tempo total: {global_stats.tempo_processamento}")
-    console.print(f"Total de palavras: {global_stats.total_palavras}")
-    console.print(f"Palavras únicas: {global_stats.palavras_unicas}")
-    console.print(f"Palavras processadas: {global_stats.palavras_processadas}")
-    console.print(f"Novas palavras: {global_stats.palavras_novas}")
-    console.print(f"Falhas: {global_stats.falhas}")
+    console.print(f"Tempo total: {timedelta(seconds=int(stats.tempo_processamento))}")
+    console.print(f"Total de palavras: {stats.total_palavras}")
+    console.print(f"Palavras processadas: {stats.palavras_processadas}")
+    console.print(f"Novas palavras: {stats.palavras_novas}")
+    console.print(f"Falhas: {stats.falhas}")
 
 
 if __name__ == "__main__":
