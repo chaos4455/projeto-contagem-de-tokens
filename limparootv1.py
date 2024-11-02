@@ -5,6 +5,7 @@ from pathlib import Path
 def criar_pastas():
     Path("logs").mkdir(exist_ok=True)
     Path("zip").mkdir(exist_ok=True)
+    Path("json").mkdir(exist_ok=True)
 
 def gerar_novo_nome(caminho_destino, nome_arquivo):
     nome_base = os.path.splitext(nome_arquivo)[0]
@@ -29,6 +30,8 @@ def mover_arquivos():
                 pasta_destino = 'logs'
             elif arquivo.endswith('.zip'):
                 pasta_destino = 'zip'
+            elif arquivo.endswith('.json'):
+                pasta_destino = 'json'
             else:
                 continue
             

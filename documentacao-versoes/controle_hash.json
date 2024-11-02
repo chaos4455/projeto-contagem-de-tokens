@@ -4,7 +4,7 @@
     "database-structure-export-v1.py": "2d5abcb9a699f5bdf299e93413cc5cfc4018dc0cab071e2b5408a6bd2905b907",
     "db.manager.token_database_controller_HERMES.py": "624d17fdce5af37398c4a63e358c595834703c342a711e09ed04a6c3e4183140",
     "extract_vectors.py": "98165ec5d12a0329fe8e7928f02a8cdc7f069aab2cb9a13743a5cbca13e383e6",
-    "generator.docs.ai_documentation_engine_MINERVA.py": "8053ea4e566eef27fb7cddfd31e4a2011a33c79e3e65027cfbcdf554eb4dc6d2",
+    "generator.docs.ai_documentation_engine_MINERVA.py": "3955f449bb4bb27bab4112781f961b6c6a71c697783f35d73d6bccb1f321ea16",
     "generator.docs.project_documentation_builder_CLIO.py": "5c57003d321d94e22e88a76143244c106a4a4fb3fd8ff6fe0fc14256cb474aee",
     "gerador_vetorizador_continuo_PROMETHEUS-work--revision-0001.py": "122cfcb49875769bbda7a5cb8985dea54bbfc81db13d9b6847a6a36591f4870f",
     "limparootv1.py": "43c63106f29ca1d92a3bdfc529096f601d5488f0e150d974ce0e1c34b967b9db",
@@ -28,5 +28,9 @@
     "util.cleaner.advanced_duplicate_remover_PERSEUS.py": "53596226a94e00799497a6faa434cdc6abbc4699b9541b6b539fc3f9e86c447b",
     "util.cleaner.duplicate_file_handler_HERCULES.py": "92d7782cf7d0b5769cd59b65d3371777dbfad7d7a4c9cc536426a23fb52071a9",
     "util.compression.yaml_archiver_VULCAN.py": "d71abaca9a7c51a7c2c19cd3d7329b33c7a85de0d2abb25486bc8a61572ce4a6",
-    "versionador.py": "8635d5e13d4b1c09631102fa9adda582c49b6a3c0c23123f261fd96741ca7112"
+    "versionador.py": "8635d5e13d4b1c09631102fa9adda582c49b6a3c0c23123f261fd96741ca7112",
+    "analytics.visualization.vector_metrics_ATLAS.py": "2aa178118e06d87ebdeab216c7b70674ce97ea52d918b5125abcd924c2354ec5",
+    "api.vector.continuous_service_HERMES.py": "8df97df1fded6dd6aa622585e96ca39f19e3a27334267e61700bf9571b127741",
+    "tool.tester.api_vector_validator_APOLLO.py": "be91134d5fdd60278b23aae011461cd808da23bacba2e33e99039175d36f04aa",
+    "tool.tester.api_vector_validator_APOLLO_v2.py": "b8aefd68058d317625e37f2d845ff5d9666be67eb7194286e4a4f931fb3ea797"
 }

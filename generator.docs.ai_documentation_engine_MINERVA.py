@@ -247,6 +247,30 @@ class DocumentacaoAutomatizadaAvancada:
         
         return texto_data_hora
 
+    async def obter_ultima_versao_doc(self, nome_arquivo):
+        pasta_arquivo = self.pasta_versoes / Path(nome_arquivo).stem
+        if not pasta_arquivo.exists():
+            return None
+            
+        arquivos_existentes = list(pasta_arquivo.glob("v*.md"))
+        if not arquivos_existentes:
+            return None
+            
+        versoes = [(arquivo, int(arquivo.stem.replace('v', ''))) 
+                   for arquivo in arquivos_existentes 
+                   if not arquivo.name.endswith('_metadata.yaml')]
+                   
+        if not versoes:
+            return None
+            
+        ultima_versao = max(versoes, key=lambda x: x[1])[0]
+        try:
+            async with aiofiles.open(ultima_versao, 'r', encoding='utf-8') as f:
+                return await f.read()
+        except Exception as e:
+            logging.error(f"Erro ao ler última versão: {e}")
+            return None
+
     async def analisar_arquivo_com_ia(self, nome_arquivo):
         max_tentativas = 3
         tentativa = 0
@@ -254,6 +278,18 @@ class DocumentacaoAutomatizadaAvancada:
         arquivo_path = self.pasta_raiz / nome_arquivo
         arquivo_info = await self.ler_arquivo_python(arquivo_path)
         data_hora_extenso = self.formatar_data_hora_extenso()
+        
+        # Obtém a documentação anterior se existir
+        doc_anterior = await self.obter_ultima_versao_doc(nome_arquivo)
+        contexto_anterior = """
+        
+        Documentação anterior do arquivo:
+        ```markdown
+        {}
+        ```
+        
+        Analise as mudanças necessárias em relação à versão anterior e mantenha a consistência.
+        """.format(doc_anterior) if doc_anterior else ""
         
         if not arquivo_info:
             logging.error(f"Não foi possível ler o arquivo {nome_arquivo}")
@@ -263,6 +299,7 @@ class DocumentacaoAutomatizadaAvancada:
             try:
                 prompt = f"""
                 {data_hora_extenso}
+                {contexto_anterior}
                 
                 Analise o seguinte arquivo Python e gere uma documentação técnica detalhada.
                 
@@ -273,7 +310,7 @@ class DocumentacaoAutomatizadaAvancada:
                 ```python
                 {arquivo_info['codigo_fonte']}
                 ```
-
+                
                 Use a data e hora informada acima no início da documentação e em qualquer 
                 referência temporal ao longo do documento.
 
