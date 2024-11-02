@@ -41,7 +41,7 @@ def get_user_inputs():
 
 def get_gemini_response(prompt):
     try:
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-flash')
         
         system_prompt = """Gere um YAML técnico e detalhado para embeddings com:
         1. Vocabulário específico do domínio
