@@ -1,0 +1,138 @@
+```yaml
+palavras_relacionadas:
+  Tecnologia:
+    - containerização
+    - virtualização
+    - contêineres
+    - imagem de contêiner
+    - orquestração de contêineres
+    - plataforma de contêineres
+    - microsserviços
+    - infraestrutura como código
+    - DevOps
+    - CI/CD
+    - Kubernetes
+    - Docker Compose
+    - Docker Swarm
+    - Dockerfile
+    - Docker Hub
+    - registrador de imagens
+    - contêineres leves
+    - isolamento de processos
+    - compartilhamento de recursos
+    - virtualização de sistema operacional
+    - virtualização de nível de processo
+  Conceitos:
+    - portabilidade
+    - escalabilidade
+    - consistência
+    - agilidade
+    - replicação
+    - disponibilidade
+    - segurança
+    - isolamento
+    - compartilhamento
+    - versionamento
+    - automação
+    - gerenciamento de dependências
+    - otimização de recursos
+  Aplicações:
+    - desenvolvimento de software
+    - implantação de aplicativos
+    - testes de software
+    - desenvolvimento de microsserviços
+    - gerenciamento de infraestrutura
+    - automação de tarefas
+    - integração contínua
+    - entrega contínua
+    - desenvolvimento ágil
+    - cloud computing
+    - plataformas de servidor sem servidor
+    - desenvolvimento de aplicações distribuídas
+  Ferramentas e Linguagens:
+    - Docker CLI
+    - Docker API
+    - Docker Engine
+    - Docker Desktop
+    - Docker Machine
+    - Docker Compose
+    - Docker Swarm
+    - Kubernetes
+    - Ansible
+    - Terraform
+    - Python
+    - Go
+    - Java
+    - Node.js
+    - Ruby
+  Linguagem:
+    - Dockerfile
+    - Docker Compose YAML
+    - Kubernetes YAML
+    - comandos Docker
+    - scripts de automação
+  Comunidade:
+    - DockerCon
+    - Docker Meetup
+    - Docker Community Forum
+    - Docker Blog
+    - Docker Documentation
+    - Docker GitHub
+    - Docker Stack Overflow
+    - Docker Reddit
+  Problemas:
+    - segurança de contêineres
+    - gerenciamento de recursos de contêineres
+    - otimização de desempenho de contêineres
+    - escalabilidade de contêineres
+    - manutenção de contêineres
+    - depuração de contêineres
+  Soluções:
+    - Docker Security Scanning
+    - Docker Bench for Security
+    - Docker Compose Optimization
+    - Docker Swarm Clustering
+    - Docker Logging and Monitoring
+    - Docker Debugging Tools
+  Comparação:
+    - LXC
+    - LXD
+    - Vagrant
+    - VirtualBox
+    - VMware
+    - AWS ECS
+    - Azure Container Instances
+    - Google Kubernetes Engine
+    - Podman
+    - CRI-O
+    - rkt
+  Outras:
+    - Docker Hub
+    - Docker Registry
+    - Docker Desktop
+    - Docker Cloud
+    - Docker Enterprise
+    - Docker Compose
+    - Docker Swarm
+    - Docker Machine
+    - Docker Notary
+    - Docker Content Trust
+    - Docker Buildx
+    - Docker Secret
+    - Docker Network
+    - Docker Volume
+    - Docker Exec
+    - Docker Run
+    - Docker Stop
+    - Docker Start
+    - Docker Restart
+    - Docker Kill
+    - Docker Ps
+    - Docker Images
+    - Docker Pull
+    - Docker Push
+    - Docker Login
+    - Docker Logout
+    - Docker Version
+    - Docker Info
+```

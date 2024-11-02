@@ -149,8 +149,11 @@ class StreamStats:
         if not self.metrics.token_frequency:
             return 0
         
-        # Baseado em entropia e distribuição de frequência
+        # Adicionar verificação para evitar divisão por zero
         total_tokens = sum(self.metrics.token_frequency.values())
+        if total_tokens == 0:
+            return 0
+        
         probabilities = [count/total_tokens for count in self.metrics.token_frequency.values()]
         entropy = -sum(p * np.log2(p) for p in probabilities)
         return entropy
@@ -194,7 +197,9 @@ class StreamStats:
         stats_table.add_row(f"{EMOJI['letra']} Caracteres", f"{self.caracteres:,}")
         stats_table.add_row(f"{EMOJI['palavra']} Palavras", f"{self.palavras:,}")
         stats_table.add_row(f"{EMOJI['token']} Tokens BERT", f"{self.tokens_bert:,}")
-        stats_table.add_row("🔄 Tokens/s", f"{self.tokens_bert/(time.time()-self.inicio):.1f}")
+        tempo_decorrido = max(time.time() - self.inicio, 0.001)  # Evita divisão por zero
+        tokens_por_segundo = self.tokens_bert/tempo_decorrido if tempo_decorrido > 0 else 0
+        stats_table.add_row("🔄 Tokens/s", f"{tokens_por_segundo:.1f}")
         stats_table.add_row("🎯 Token Uniqueness", f"{self.token_stats['unique_ratio']:.2%}")
         stats_table.add_row("📊 Complexity Score", f"{self.token_stats['complexity_score']:.2f}")
         stats_table.add_row("📏 Avg Token Length", f"{self.token_stats['avg_length']:.1f}")
@@ -230,7 +235,8 @@ class StreamStats:
         advanced_table.add_row("🧮 Semantic Density", f"{self.metrics.semantic_density:.2f}")
         advanced_table.add_row("🔄 Token Diversity", f"{self.metrics.token_diversity:.2f}")
         advanced_table.add_row("⚡ Processing Rate", f"{self.chars_por_segundo:.1f} c/s")
-        advanced_table.add_row("📊 Vocab Coverage", f"{len(self.palavras_unicas)/self.palavras:.1%}")
+        vocab_coverage = (len(self.palavras_unicas)/self.palavras if self.palavras > 0 else 0)
+        advanced_table.add_row("📊 Vocab Coverage", f"{vocab_coverage:.1%}")
         
         layout["right"].update(Panel(
             advanced_table,
@@ -332,16 +338,34 @@ async def processar_iteracoes(palavra_inicial):
         
         # Template do prompt
         prompt = f"""
+
+                inicia a listra de palavra depois do topico lista_palavras no yaml
+        crie o mais longo completo e detalhado possivel, com o maximo de palavras possivel, referentes ao tema.
+        
+        Gere um YAML técnico e detalhado para embeddings com:
+1 palavra por linha, 1 palavra chave por linha, o maximo de palavras possivel, referentes a palavra chave.
+        use tecnicas de semanticas e verossimilhança para gerar o vocabulario.
+        use as tecnicas de maximo verossimilhança para gerar o vocabulario.
+        use a linguagem mais tecnica possivel.
+        use a tecnica de tokenizacao wordpiece.
+        use a tecnica de stemming.
+        use a tecnica de lematizacao.
+        use a tecnica de remocao de stopwords.
+        use a tecnica de normalizacao de texto.
+        Seja extremamente técnico e específico.
+
+crie o mais longo completo e detalhado possivel, com o maximo de palavras possivel, referentes ao tema.
+                 inicia a listra de palavra depois do topico lista_palavras no yaml
+        
+                Objetivo: Gerar yaml com listra de palavras que depois serão usadas em tecnicas de embedding e vocabulário relacionado para machine learning para criar vetores de embeedings
+                
+
         responda bem longo altamente completo a lista e abrangente o maximo de palavras possivel para a palavra chave '{palavra_inicial}'
-        Baseado na palavra-chave '{palavra_inicial}', gere um YAML técnico e detalhado para embeddings.
+        Baseado na palavra-chave '{palavra_inicial}', gere um YAML  para embeddings.
         O YAML deve incluir:
         - Palavras-chave relacionadas
         - Sinônimos e variações
-        - Contextos de uso
-        - Métricas e parâmetros
-        - Configurações técnicas
-        
-        Formate o YAML de forma estruturada e hierárquica.
+        formate o yaml em lista estruturada
         Iteração atual: {i+1} de {total_iteracoes}
         """
         

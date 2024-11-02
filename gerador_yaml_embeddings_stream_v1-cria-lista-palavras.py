@@ -97,83 +97,6 @@ class TokenBatch:
     timestamp: float
     batch_id: int
 
-class BertProcessor:
-    """Processador BERT Multi-threaded"""
-    def __init__(self, num_threads: int = 4):
-        self.num_threads = num_threads
-        self.input_queue = asyncio.Queue()
-        self.output_queue = asyncio.Queue()
-        self.token_stats = defaultdict(int)
-        self.batch_size = 32
-        self.executor = ThreadPoolExecutor(max_workers=num_threads)
-        self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-        self.processing = True
-        self.stats_lock = asyncio.Lock()
-        self.batch_buffer = []
-        
-    async def process_batch(self, batch: List[TokenBatch]):
-        """Processa um batch de textos"""
-        try:
-            # Tokenização paralela
-            texts = [b.text for b in batch]
-            
-            def tokenize_text(text):
-                tokens = self.bert_tokenizer.tokenize(text)
-                ids = self.bert_tokenizer.convert_tokens_to_ids(tokens)
-                return tokens, ids
-            
-            # Executa tokenização em threads
-            results = await asyncio.get_event_loop().run_in_executor(
-                self.executor,
-                lambda: list(map(tokenize_text, texts))
-            )
-            
-            # Processa resultados
-            async with self.stats_lock:
-                for (tokens, ids), batch_item in zip(results, batch):
-                    stats = {
-                        'num_tokens': len(tokens),
-                        'unique_tokens': len(set(tokens)),
-                        'subwords': sum(1 for t in tokens if t.startswith('##')),
-                        'special': sum(1 for t in tokens if t in self.bert_tokenizer.special_tokens_map.values()),
-                        'max_len': max(len(t) for t in tokens) if tokens else 0,
-                        'avg_len': np.mean([len(t) for t in tokens]) if tokens else 0
-                    }
-                    
-                    # Atualiza estatísticas globais
-                    for k, v in stats.items():
-                        self.token_stats[k] += v
-                    
-                    # Atualiza frequências
-                    for token in tokens:
-                        self.token_stats[f'freq_{token}'] += 1
-                    
-                    # Coloca resultado na fila de saída
-                    await self.output_queue.put((batch_item.batch_id, stats))
-            
-        except Exception as e:
-            console.print(f"[red]Erro no processamento do batch: {e}[/red]")
-
-    async def process_queue(self):
-        """Processa a fila de entrada"""
-        while self.processing:
-            try:
-                # Coleta batch
-                self.batch_buffer = []
-                while len(self.batch_buffer) < self.batch_size:
-                    try:
-                        item = await asyncio.wait_for(self.input_queue.get(), timeout=0.1)
-                        self.batch_buffer.append(item)
-                    except asyncio.TimeoutError:
-                        break
-                
-                if self.batch_buffer:
-                    await self.process_batch(self.batch_buffer)
-                    
-            except Exception as e:
-                console.print(f"[red]Erro no processamento da fila: {e}[/red]")
-                await asyncio.sleep(0.1)
-
 class AdvancedMetrics:
     def __init__(self):
         try:
@@ -308,14 +231,6 @@ class StreamStats:
             console.print("[yellow]⚠️ Token Counter: DESATIVADO - BERT não será utilizado[/yellow]")
             self.bert_tokenizer = None
 
-        # Inicialização do processador BERT multi-thread
-        if TOKEN_COUNTER:
-            self.bert_processor = BertProcessor(num_threads=4)
-            self.batch_id = 0
-            self.pending_results = {}
-            asyncio.create_task(self.bert_processor.process_queue())
-            console.print("[green]🚀 BERT Multi-threaded inicializado![/green]")
-
         self.system_monitor = SystemMonitor()
 
         # Adicionar atributos faltantes
@@ -404,27 +319,23 @@ class StreamStats:
             console.print(f"[yellow]Erro ao atualizar estatísticas: {e}[/yellow]")
 
     async def processar_tokens_bert(self, texto: str):
-        """Processa tokens BERT de forma assíncrona"""
-        if not TOKEN_COUNTER or not self.bert_processor:
+        """Processa tokens BERT de forma síncrona"""
+        if not TOKEN_COUNTER or not self.bert_tokenizer:
             return
             
         try:
-            # Cria batch
-            batch = TokenBatch(
-                text=texto,
-                timestamp=time.time(),
-                batch_id=self.batch_id
-            )
-            self.batch_id += 1
+            tokens = self.bert_tokenizer.tokenize(texto)
+            stats = {
+                'num_tokens': len(tokens),
+                'unique_tokens': len(set(tokens)),
+                'subwords': sum(1 for t in tokens if t.startswith('##')),
+                'special': sum(1 for t in tokens if t in self.bert_tokenizer.special_tokens_map.values()),
+                'max_len': max(len(t) for t in tokens) if tokens else 0,
+                'avg_len': np.mean([len(t) for t in tokens]) if tokens else 0
+            }
             
-            # Adiciona à fila de processamento
-            await self.bert_processor.input_queue.put(batch)
+            self.atualizar_estatisticas_bert(stats)
             
-            # Processa resultados disponíveis
-            while not self.bert_processor.output_queue.empty():
-                batch_id, stats = await self.bert_processor.output_queue.get()
-                self.atualizar_estatisticas_bert(stats)
-                
         except Exception as e:
             console.print(f"[yellow]Erro ao processar tokens BERT: {e}[/yellow]")
 
@@ -523,10 +434,7 @@ class StreamStats:
             header = Panel(
                 Align.center(
                     Text.assemble(
-                        (f"🚀 Multi-Thread BERT ", "bold cyan"),
-                        (f"| ⚡ Threads: {self.bert_processor.num_threads} ", "green"),
-                        (f"| 📦 Batch: {len(self.bert_processor.batch_buffer)}/{self.bert_processor.batch_size} ", "yellow"),
-                        (f"| 🔄 Queue: {self.bert_processor.input_queue.qsize()} ", "blue"),
+                        (f"🚀 BERT Processor ", "bold cyan"),
                         (f"| ⏱️ {tempo_formatado}", "magenta")
                     )
                 ),
@@ -624,7 +532,7 @@ class StreamStats:
             words_table.add_row("💫 Diversidade", f"{self.diversidade_lexica:.1%}")
             
             # Últimas 10 palavras
-            words_table.add_row("📝 ÚLTIMAS", "", style="bold cyan")
+            words_table.add_row(" Últimas", "", style="bold cyan")
             for palavra in list(self.ultimas_palavras)[-10:]:
                 words_table.add_row("📖", palavra)
             
@@ -684,21 +592,34 @@ class StreamProcessor:
                 generation_config=CONFIG_GERACAO
             )
 
-            # Gera o conteúdo de forma síncrona
+            # Processa o stream
             response = model.generate_content(prompt, stream=True)
             
-            # Processa o stream
-            async with aiofiles.open(arquivo_yaml, 'w', encoding='utf-8') as f:
-                async for chunk in response:
+            # Abre o arquivo em modo append para escrita em tempo real
+            async with aiofiles.open(arquivo_yaml, 'a', encoding='utf-8') as f:
+                buffer = ""
+                for chunk in response:
                     if chunk.text:
                         texto = chunk.text
-                        # Atualiza estatísticas (BERT em thread separada)
-                        await self.stats.atualizar(texto, iteracao, arquivo_yaml.name)
-                        # Escreve no arquivo
+                        buffer += texto
+                        
+                        # Escreve imediatamente no arquivo
                         await f.write(texto)
-                        # Atualiza display
+                        await f.flush()  # Força a escrita no disco
+                        
+                        # Atualiza estatísticas
+                        await self.stats.atualizar(texto, iteracao, arquivo_yaml.name)
+                        
+                        # Atualiza display em tempo real
                         self.live.update(self.stats.criar_grid_layout())
-
+                        
+                        # Pequena pausa para não sobrecarregar o display
+                        await asyncio.sleep(0.01)
+                
+                # Processa métricas finais do texto completo
+                self.stats.calcular_metricas_avancadas(buffer)
+                self.live.update(self.stats.criar_grid_layout())
+            
             return True
 
         except Exception as e:
@@ -706,7 +627,7 @@ class StreamProcessor:
             return False
 
     async def processar_iteracoes(self, palavra_inicial: str):
-        """Processa todas as iterações com display em tempo real"""
+        """Processa todas as iterações sequencialmente"""
         total_iteracoes = 20
         
         with self.live:
@@ -718,20 +639,57 @@ class StreamProcessor:
                     output_dir = Path("generated-yaml-text-to-embedding")
                     output_dir.mkdir(exist_ok=True)
                     
-                    hash_id = hashlib.md5(f"{datetime.now().timestamp()}_{i}".encode()).hexdigest()[:10]
+                    # Gera nome único para o arquivo
+                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                    hash_id = hashlib.md5(f"{timestamp}_{i}".encode()).hexdigest()[:8]
                     arquivo_yaml = output_dir / f"embedding_stream_v1_{hash_id}.yaml"
                     
                     # Template do prompt
                     prompt = f"""
-                    Baseado na palavra-chave '{palavra_inicial}', gere um YAML técnico e detalhado.
-                    Iteração: {i+1}/{total_iteracoes}
+                    crie listas longas e extensas de palavras relacionadas ao termo '{palavra_inicial}'.
+                    expanda a lista e incremente o número de palavras relacionadas ao termo '{palavra_inicial}'.
+                    faça isso até que a lista tenha pelo menos 1000 palavras.
+                    Gere uma lista YAML abrangente e hierárquica de palavras relacionadas ao termo '{palavra_inicial}'.
+
+                    Requisitos Específicos:
+                    - Crie uma estrutura YAML organizada por categorias semânticas
+                    - Cada palavra deve ter relação direta ou contextual com '{palavra_inicial}'
+                    - Evite QUALQUER repetição de palavras
+                    - Inclua:
+                      * Sinônimos e variações
+                      * Termos técnicos relacionados
+                      * Conceitos associados
+                      * Aplicações práticas
+                      * Termos do mesmo campo semântico
+                      * Palavras que compõem o contexto completo
+                      * Relacionamentos hierárquicos (super-conceitos e sub-conceitos)
+
+                    Formato Desejado:
+                    palavras_relacionadas:
+                      categoria1:
+                        - palavra1
+                        - palavra2
+                      categoria2:
+                        subcategoria1:
+                          - palavra3
+                          - palavra4
+
+                    Objetivos:
+                    - Máxima cobertura contextual
+                    - Alta relevância semântica
+                    - Zero redundância
+                    - Foco em embeddings para IA de domínio específico
+                    - Priorize qualidade e precisão das relações
+
+                    Mantenha todas as palavras estritamente relacionadas ao contexto de '{palavra_inicial}' para criar um banco vetorial de embeddings preciso e abrangente.
                     """
                     
-                    # Processa YAML
+                    # Processa um YAML por vez
+                    console.print(f"\n[cyan]Processando YAML {i+1}/{total_iteracoes}...[/cyan]")
                     await self.processar_yaml(prompt, arquivo_yaml, i+1, total_iteracoes)
                     
-                    # Pausa entre iterações
-                    await asyncio.sleep(0.5)
+                    # Pequena pausa entre arquivos
+                    await asyncio.sleep(1)
                     
                 except Exception as e:
                     self.console.print(f"[red]Erro na iteração {i+1}: {str(e)}[/red]")
@@ -740,7 +698,6 @@ async def main():
     try:
         processor = StreamProcessor()
         
-        # Solicita palavra inicial
         console.print(f"\n{EMOJI['palavra']} [cyan]Digite a palavra inicial:[/cyan]")
         palavra_inicial = input().strip()
         
@@ -748,14 +705,12 @@ async def main():
             console.print("[red]Palavra inicial não pode estar vazia![/red]")
             return
         
-        # Limpa console e inicia processamento
         console.clear()
         await processor.processar_iteracoes(palavra_inicial)
         
-        # Mensagem final
         console.print(Panel(
             f"[green]🎉 Processo completo![/green]\n"
-            f"20 YAMLs foram gerados com sucesso!",
+            f"YAMLs gerados com sucesso na pasta 'generated-yaml-text-to-embedding'",
             border_style="green"
         ))
         
@@ -765,9 +720,4 @@ async def main():
         console.print(f"[red]Erro durante o processamento: {str(e)}[/red]")
 
 if __name__ == "__main__":
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        console.print("\n[yellow]Operação cancelada pelo usuário.[/yellow]")
-    except Exception as e:
-        console.print(f"[red]Erro inesperado: {str(e)}[/red]")
+    asyncio.run(main())

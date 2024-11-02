@@ -1,0 +1,108 @@
+```yaml
+palavras_relacionadas:
+  conceitos_fundamentais:
+    - containerização
+    - virtualização
+    - isolamento
+    - compartilhamento de recursos
+    - imagens
+    - camadas
+    - repositórios
+    - registradores
+  ferramentas_e_tecnologias:
+    - Dockerfile
+    - docker-compose
+    - Docker Hub
+    - Docker Desktop
+    - Docker Swarm
+    - Kubernetes
+    - Podman
+    - LXD
+    - containerd
+    - runC
+  ciclos_de_vida:
+    - build
+    - run
+    - stop
+    - start
+    - restart
+    - pause
+    - unpause
+    - kill
+    - rm
+    - push
+    - pull
+  arquitetura:
+    - daemon
+    - cliente
+    - API
+    - rede
+    - volumes
+    - namespaces
+    - cgroups
+  aplicacao:
+    - microserviços
+    - desenvolvimento ágil
+    - CI/CD
+    - entrega contínua
+    - implantação
+    - escalabilidade
+    - alta disponibilidade
+    - orquestração
+    - gerenciamento de containers
+  segurança:
+    - imagens seguras
+    - verificação de integridade
+    - controle de acesso
+    - autenticação
+    - criptografia
+    - hardening
+    - vulnerabilidades
+    - varredura de imagens
+  avançado:
+    - Docker Compose
+    - Docker Swarm
+    - Docker Networking
+    - Docker Volumes
+    - Docker Secrets
+    - Docker Registry
+    - Docker Security
+    - Docker for Mac/Windows
+  sinônimos:
+    - container
+    - contêiner
+    - imagem Docker
+    - imagem de contêiner
+    - orquestrador de containers
+  termos_relacionados:
+    - virtual machine (VM)
+    - servidor
+    - infraestrutura
+    - código-fonte
+    - ambiente de desenvolvimento
+    - DevOps
+    - cloud computing
+    - plataforma como serviço (PaaS)
+    - função como serviço (FaaS)
+    - servidor sem servidor
+  conceitos_associados:
+    - portabilidade
+    - consistência
+    - reutilização
+    - eficiência
+    - escalabilidade
+    - automação
+    - confiabilidade
+    - agilidade
+    - flexibilidade
+    - independência
+    - otimização
+  aplicações_práticas:
+    - desenvolvimento web
+    - desenvolvimento de aplicações
+    - testes de software
+    - implantação de aplicativos
+    - gerenciamento de infraestrutura
+    - análise de dados
+    - machine learning
+    

@@ -78,9 +78,6 @@ CONFIG_GERACAO = {
     "max_output_tokens": 8096,
 }
 
-# Configurações Globais
-TOKEN_COUNTER = True  # Define se a análise de tokens BERT será realizada (True/False)
-
 class AdvancedMetrics:
     def __init__(self):
         try:
@@ -132,30 +129,6 @@ class StreamStats:
         # Inicializa métricas do sistema
         self.atualizar_metricas_sistema()
 
-        # Inicialização condicional do tokenizador BERT
-        self.bert_enabled = TOKEN_COUNTER
-        if self.bert_enabled:
-            try:
-                console.print("[cyan]🎯 Token Counter: ATIVADO - Iniciando BERT...[/cyan]")
-                self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-                self.tokens_bert = 0
-                self.token_unicos = set()
-                self.token_frequency = {}
-                self.tokens_por_segundo = 0
-                self.token_stats = {
-                    'media_len': 0,
-                    'max_len': 0,
-                    'subwords_ratio': 0,
-                    'special_tokens': 0
-                }
-                console.print("[green]✅ BERT inicializado com sucesso![/green]")
-            except Exception as e:
-                console.print(f"[yellow]⚠️ Aviso: Erro ao inicializar BERT: {e}[/yellow]")
-                self.bert_tokenizer = None
-        else:
-            console.print("[yellow]⚠️ Token Counter: DESATIVADO - BERT não será utilizado[/yellow]")
-            self.bert_tokenizer = None
-
     def safe_div(self, n, d):
         """Divisão segura com valor default 0"""
         try:
@@ -189,6 +162,12 @@ class StreamStats:
             self.buffer += novo_texto
             self.caracteres += len(novo_texto)
             
+            # Processa tokens BERT
+            if self.metrics.bert_tokenizer:
+                tokens = self.metrics.bert_tokenizer.tokenize(novo_texto)
+                self.tokens_bert += len(tokens)
+                self.token_unicos.update(tokens)
+            
             # Processa palavras
             palavras = word_tokenize(novo_texto)
             self.palavras += len(palavras)
@@ -208,77 +187,27 @@ class StreamStats:
             tempo_total = max(0.001, time.time() - self.inicio)
             self.chars_por_segundo = self.caracteres / tempo_total
             self.palavras_por_segundo = self.palavras / tempo_total
-            self.tokens_por_segundo = self.tokens_bert / tempo_total
+            self.tokens_por_segundo = self.tokens_bert / tempo_total if self.tokens_bert > 0 else 0
             
-            # Calcula médias e ratios
-            if self.palavras > 0:
-                tamanhos = [len(p) for p in self.palavras_unicas]
-                self.media_tamanho_palavras = sum(tamanhos) / len(tamanhos) if tamanhos else 0
-                self.diversidade_lexica = len(self.palavras_unicas) / self.palavras
-                
-            if self.tokens_bert > 0:
-                self.token_ratio = len(self.token_unicos) / self.tokens_bert
+            # Calcula token ratio
+            self.token_ratio = len(self.token_unicos) / max(1, self.tokens_bert)
             
-            # Atualiza métricas do sistema
-            self.atualizar_metricas_sistema()
-            
-            # Adiciona processamento de tokens BERT
-            self.processar_tokens_bert(novo_texto)
+            # Atualiza métricas avançadas
+            self.calcular_metricas_avancadas(novo_texto)
             
         except Exception as e:
             console.print(f"[yellow]Erro ao atualizar estatísticas: {e}[/yellow]")
-
-    def processar_tokens_bert(self, texto: str):
-        """Processa tokens BERT em tempo real se ativado"""
-        if not self.bert_enabled:
-            return
-            
-        try:
-            if not self.bert_tokenizer or not texto.strip():
-                return
-
-            # Tokenização
-            tokens = self.bert_tokenizer.tokenize(texto)
-            token_ids = self.bert_tokenizer.convert_tokens_to_ids(tokens)
-            
-            # Atualiza contadores
-            self.tokens_bert += len(tokens)
-            self.token_unicos.update(tokens)
-            
-            # Frequência de tokens
-            for token in tokens:
-                self.token_frequency[token] = self.token_frequency.get(token, 0) + 1
-            
-            # Estatísticas de tokens
-            token_lengths = [len(token) for token in tokens]
-            if token_lengths:
-                self.token_stats['media_len'] = sum(token_lengths) / len(token_lengths)
-                self.token_stats['max_len'] = max(token_lengths)
-            
-            # Conta subwords (tokens que começam com ##)
-            subwords = sum(1 for t in tokens if t.startswith('##'))
-            self.token_stats['subwords_ratio'] = subwords / len(tokens) if tokens else 0
-            
-            # Conta tokens especiais
-            special_tokens = sum(1 for t in tokens if t in self.bert_tokenizer.special_tokens_map.values())
-            self.token_stats['special_tokens'] = special_tokens
-            
-            # Atualiza taxa de tokens por segundo
-            tempo_total = max(0.001, time.time() - self.inicio)
-            self.tokens_por_segundo = self.tokens_bert / tempo_total
-            
-        except Exception as e:
-            console.print(f"[yellow]Erro ao processar tokens BERT: {e}[/yellow]")
 
     def calcular_metricas_avancadas(self, texto: str):
         try:
             if not texto.strip():
                 return
                 
-            # Tokenização segura
+            # Tokenização BERT
             if self.metrics.bert_tokenizer:
-                tokens_bert = self.metrics.bert_tokenizer.tokenize(texto)
-                self.tokens_bert = max(1, self.tokens_bert + len(tokens_bert))
+                tokens = self.metrics.bert_tokenizer.tokenize(texto)
+                for token in tokens:
+                    self.metrics.token_frequency[token] = self.metrics.token_frequency.get(token, 0) + 1
             
             # Análise de sentenças
             sentences = nltk.sent_tokenize(texto)
@@ -402,35 +331,12 @@ class StreamStats:
             tokens_table.add_column("🎯 Tokens", style="blue")
             tokens_table.add_column("Valor", justify="right", style="cyan")
             
-            if self.bert_enabled:
-                # Métricas completas do BERT
-                tokens_table.add_row("📊 Total BERT", f"{self.tokens_bert:,}")
-                tokens_table.add_row("🔄 Tokens/s", f"{self.tokens_por_segundo:.1f}")
-                tokens_table.add_row("📈 Únicos", f"{len(self.token_unicos):,}")
-                tokens_table.add_row("🎯 Ratio", f"{len(self.token_unicos)/max(1, self.tokens_bert):.1%}")
-                tokens_table.add_row("📏 Média Len", f"{self.token_stats['media_len']:.1f}")
-                tokens_table.add_row("📊 Max Len", f"{self.token_stats['max_len']}")
-                tokens_table.add_row("🔄 Subwords", f"{self.token_stats['subwords_ratio']:.1%}")
-                tokens_table.add_row("⚡ Especiais", f"{self.token_stats['special_tokens']}")
-                
-                # Top tokens
-                tokens_table.add_row("📈 TOP TOKENS", "", style="bold magenta")
-                top_tokens = sorted(self.token_frequency.items(), key=lambda x: x[1], reverse=True)[:5]
-                for token, freq in top_tokens:
-                    tokens_table.add_row("🔤", f"{token} ({freq})")
-            else:
-                # Métricas básicas sem BERT
-                tokens_table.add_row("ℹ️ Status", "BERT Desativado")
-                tokens_table.add_row("📝 Palavras", f"{self.palavras:,}")
-                tokens_table.add_row("📊 Caracteres", f"{self.caracteres:,}")
-                tokens_table.add_row("⚡ Char/s", f"{self.chars_por_segundo:.1f}")
+            tokens_table.add_row("📊 Total BERT", f"{self.tokens_bert:,}")
+            tokens_table.add_row("🔄 Tokens/s", f"{self.tokens_por_segundo:.1f}")
+            tokens_table.add_row("📈 Únicos", f"{len(self.token_unicos):,}")
+            tokens_table.add_row("💫 Token Ratio", f"{self.token_ratio:.2%}")
             
-            title = "🎯 Análise de Tokens BERT" if self.bert_enabled else "📊 Métricas Básicas"
-            layout["tokens"].update(Panel(
-                tokens_table,
-                title=title,
-                border_style="cyan"
-            ))
+            layout["tokens"].update(Panel(tokens_table, title="Tokens BERT", border_style="cyan"))
 
             # 4. Coluna Análise de Palavras
             words_table = Table(box=ROUNDED, expand=True)
@@ -496,27 +402,21 @@ class StreamProcessor:
             self.stats.criar_grid_layout(),
             console=self.console,
             auto_refresh=False,
-            screen=True,  # Mantém a tela fixa
-            refresh_per_second=4,
-            transient=False  # Impede scroll automático
+            screen=True,
+            # Reduzir a frequência de atualização
+            refresh_per_second=2,
+            transient=True,  # Alterado para True
+            vertical_overflow="visible"
         )
 
     async def processar_iteracoes(self, palavra_inicial):
         total_iteracoes = 20
         
-        with self.live:  # Inicia o contexto Live
-            self.console.clear()  # Limpa a tela inicial
-            
+        with self.live:
+            # Removido o console.clear() aqui
             for i in range(total_iteracoes):
                 try:
-                    # Atualiza cabeçalho
-                    self.console.clear()
-                    self.console.print(Panel(
-                        f"{EMOJI['stream']} Iteração {i+1}/{total_iteracoes} - Palavra: '{palavra_inicial}'",
-                        style="bold cyan"
-                    ))
-                    
-                    # Inicializa estatísticas para cada iteração
+                    # Removido o console.clear() e console.print do cabeçalho
                     self.stats = StreamStats()
                     
                     # Configuração do arquivo
@@ -528,15 +428,13 @@ class StreamProcessor:
                     
                     # Template do prompt
                     prompt = f"""
-                    nunca repita palavras ja usadas. - sempre crie expansoes de palavras ja usadas. crie expandindo o contexto
-        seja criativo e generalsita inovador traga palavras altamente relevantes e nomas de novas abordagens enriquecendo e nunca repetindo
-                
-        
+                    Baseado na palavra-chave '{palavra_inicial}', gere um YAML técnico e detalhado.
+                    
         inicia a listra de palavra depois do topico lista_palavras no yaml
         crie o mais longo completo e detalhado possivel, com o maximo de palavras possivel, referentes ao tema.
         
         Gere um YAML técnico e detalhado para embeddings com:
-        1 palavra por linha, 1 palavra chave por linha, o maximo de palavras possivel, referentes a palavra chave.
+1 palavra por linha, 1 palavra chave por linha, o maximo de palavras possivel, referentes a palavra chave.
         use tecnicas de semanticas e verossimilhança para gerar o vocabulario.
         use as tecnicas de maximo verossimilhança para gerar o vocabulario.
         use a linguagem mais tecnica possivel.
@@ -545,19 +443,25 @@ class StreamProcessor:
         use a tecnica de lematizacao.
         use a tecnica de remocao de stopwords.
         use a tecnica de normalizacao de texto.
-        Seja extremamente técnico e específico."""
-                    Baseado na palavra-chave '{palavra_inicial}', gere um YAML técnico e detalhado.
+        Seja extremamente técnico e específico.
+
+crie o mais longo completo e detalhado possivel, com o maximo de palavras possivel, referentes ao tema.
+                 inicia a listra de palavra depois do topico lista_palavras no yaml
+        
+                Objetivo: Gerar yaml com listra de palavras que depois serão usadas em tecnicas de embedding e vocabulário relacionado para machine learning para criar vetores de embeedings
+                
                     Iteração: {i+1}/{total_iteracoes}
                     """
                     
                     # Processa resposta do Gemini
                     await self.get_gemini_response_stream(prompt, arquivo_yaml)
                     
-                    # Atualiza display sem scroll
-                    self.live.update(self.stats.criar_grid_layout(), refresh=True)
+                    # Atualiza display com menor frequência
+                    if i % 2 == 0:  # Atualiza a cada 2 iterações
+                        self.live.update(self.stats.criar_grid_layout(), refresh=True)
                     
-                    # Pequena pausa entre iterações
-                    await asyncio.sleep(1)
+                    # Aumentado o intervalo entre iterações
+                    await asyncio.sleep(2)
                     
                 except Exception as e:
                     self.console.print(f"[red]Erro na iteração {i+1}: {str(e)}[/red]")
@@ -582,8 +486,9 @@ class StreamProcessor:
                 with open(arquivo_yaml, 'a', encoding='utf-8') as f:
                     f.write(texto)
                 
-                # Atualiza display mantendo posição
-                self.live.update(self.stats.criar_grid_layout(), refresh=True)
+                # Atualiza o display com menos frequência
+                if len(texto) > 100:  # Só atualiza quando tiver conteúdo substancial
+                    self.live.update(self.stats.criar_grid_layout(), refresh=True)
                 
             return True
             

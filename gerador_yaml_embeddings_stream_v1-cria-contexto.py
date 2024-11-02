@@ -39,6 +39,15 @@ from rich.text import Text
 from rich.box import ROUNDED, HEAVY, SIMPLE  # Importação correta dos boxes
 from psutil import cpu_percent, virtual_memory, disk_usage
 import platform
+from concurrent.futures import ThreadPoolExecutor
+from queue import Queue
+from threading import Thread
+import multiprocessing
+from functools import partial
+from dataclasses import dataclass
+from collections import defaultdict
+import aiofiles
+from contextlib import suppress
 
 # Download necessário do NLTK
 nltk.download('punkt', quiet=True)
@@ -78,6 +87,16 @@ CONFIG_GERACAO = {
     "max_output_tokens": 8096,
 }
 
+# Configurações Globais
+TOKEN_COUNTER = True  # Define se a análise de tokens BERT será realizada (True/False)
+
+@dataclass
+class TokenBatch:
+    """Estrutura para batch de tokens"""
+    text: str
+    timestamp: float
+    batch_id: int
+
 class AdvancedMetrics:
     def __init__(self):
         try:
@@ -98,6 +117,65 @@ class AdvancedMetrics:
         self.cpu_usage = 0.0
         self.memory_usage = 0.0
         self.gpu_usage = 0.0
+
+class SystemMonitor:
+    """Monitora recursos do sistema com fallbacks"""
+    def __init__(self):
+        self.os_type = platform.system()
+        self.fallback_mode = False
+        
+        # Tenta inicializar contadores
+        try:
+            self.cpu_percent = psutil.cpu_percent(interval=0.1)
+            self.cpu_per_core = psutil.cpu_percent(percpu=True)
+        except Exception as e:
+            console.print(f"[yellow]⚠️ Usando modo fallback para métricas de CPU[/yellow]")
+            self.fallback_mode = True
+
+    def get_cpu_stats(self):
+        """Obtém estatísticas de CPU com fallback"""
+        try:
+            if self.fallback_mode:
+                # Fallback usando /proc no Linux ou wmic no Windows
+                if self.os_type == "Linux":
+                    with open('/proc/stat', 'r') as f:
+                        cpu_lines = f.readlines()
+                    return {
+                        'total': float(cpu_lines[0].split()[1]),
+                        'cores': [float(line.split()[1]) for line in cpu_lines[1:] if line.startswith('cpu')]
+                    }
+                else:
+                    # Windows fallback
+                    return {
+                        'total': os.getloadavg()[0] if hasattr(os, 'getloadavg') else 0,
+                        'cores': [0] * psutil.cpu_count()
+                    }
+            else:
+                return {
+                    'total': psutil.cpu_percent(interval=0.1),
+                    'cores': psutil.cpu_percent(percpu=True)
+                }
+        except Exception:
+            return {'total': 0, 'cores': [0] * psutil.cpu_count()}
+
+    def get_memory_stats(self):
+        """Obtém estatísticas de memória com fallback"""
+        try:
+            mem = psutil.virtual_memory()
+            swap = psutil.swap_memory()
+            return {
+                'used': mem.used,
+                'total': mem.total,
+                'percent': mem.percent,
+                'swap_percent': swap.percent
+            }
+        except Exception:
+            return {
+                'used': 0,
+                'total': 0,
+                'percent': 0,
+                'swap_percent': 0
+            }
 
 class StreamStats:
     def __init__(self):
@@ -129,6 +207,45 @@ class StreamStats:
         # Inicializa métricas do sistema
         self.atualizar_metricas_sistema()
 
+        # Inicialização condicional do tokenizador BERT
+        self.bert_enabled = TOKEN_COUNTER
+        if self.bert_enabled:
+            try:
+                console.print("[cyan]🎯 Token Counter: ATIVADO - Iniciando BERT...[/cyan]")
+                self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+                self.tokens_bert = 0
+                self.token_unicos = set()
+                self.token_frequency = {}
+                self.tokens_por_segundo = 0
+                self.token_stats = {
+                    'media_len': 0,
+                    'max_len': 0,
+                    'subwords_ratio': 0,
+                    'special_tokens': 0
+                }
+                console.print("[green]✅ BERT inicializado com sucesso![/green]")
+            except Exception as e:
+                console.print(f"[yellow]⚠️ Aviso: Erro ao inicializar BERT: {e}[/yellow]")
+                self.bert_tokenizer = None
+        else:
+            console.print("[yellow]⚠️ Token Counter: DESATIVADO - BERT não será utilizado[/yellow]")
+            self.bert_tokenizer = None
+
+        self.system_monitor = SystemMonitor()
+
+        # Adicionar atributos faltantes
+        self.sentences = []
+        self.embedding_stats = {
+            'min_magnitude': 0,
+            'max_magnitude': 0,
+            'avg_magnitude': 0
+        }
+        self.top_tokens = []  # Lista para os tokens mais frequentes
+        self.eficiencia_tokens = 0.0
+        self.cobertura_vocab = 0.0
+        self.densidade_texto = 0.0
+        self.performance_score = 0.0
+
     def safe_div(self, n, d):
         """Divisão segura com valor default 0"""
         try:
@@ -147,7 +264,7 @@ class StreamStats:
         except:
             return 0.0
 
-    def atualizar(self, novo_texto: str, iteracao: int = 0, arquivo: str = ""):
+    async def atualizar(self, novo_texto: str, iteracao: int = 0, arquivo: str = ""):
         """Atualiza estatísticas com novo texto"""
         try:
             if not novo_texto:
@@ -195,8 +312,48 @@ class StreamStats:
             # Atualiza métricas do sistema
             self.atualizar_metricas_sistema()
             
+            # Processamento BERT assíncrono
+            await self.processar_tokens_bert(novo_texto)
+            
         except Exception as e:
             console.print(f"[yellow]Erro ao atualizar estatísticas: {e}[/yellow]")
+
+    async def processar_tokens_bert(self, texto: str):
+        """Processa tokens BERT de forma síncrona"""
+        if not TOKEN_COUNTER or not self.bert_tokenizer:
+            return
+            
+        try:
+            tokens = self.bert_tokenizer.tokenize(texto)
+            stats = {
+                'num_tokens': len(tokens),
+                'unique_tokens': len(set(tokens)),
+                'subwords': sum(1 for t in tokens if t.startswith('##')),
+                'special': sum(1 for t in tokens if t in self.bert_tokenizer.special_tokens_map.values()),
+                'max_len': max(len(t) for t in tokens) if tokens else 0,
+                'avg_len': np.mean([len(t) for t in tokens]) if tokens else 0
+            }
+            
+            self.atualizar_estatisticas_bert(stats)
+            
+        except Exception as e:
+            console.print(f"[yellow]Erro ao processar tokens BERT: {e}[/yellow]")
+
+    def atualizar_estatisticas_bert(self, stats: Dict):
+        """Atualiza estatísticas do BERT"""
+        try:
+            self.tokens_bert += stats['num_tokens']
+            self.token_stats['media_len'] = stats['avg_len']
+            self.token_stats['max_len'] = max(self.token_stats['max_len'], stats['max_len'])
+            self.token_stats['subwords_ratio'] = stats['subwords'] / max(1, stats['num_tokens'])
+            self.token_stats['special_tokens'] += stats['special']
+            
+            # Atualiza taxa de processamento
+            tempo_total = max(0.001, time.time() - self.inicio)
+            self.tokens_por_segundo = self.tokens_bert / tempo_total
+            
+        except Exception as e:
+            console.print(f"[yellow]Erro ao atualizar estatísticas BERT: {e}[/yellow]")
 
     def calcular_metricas_avancadas(self, texto: str):
         try:
@@ -265,34 +422,20 @@ class StreamStats:
             tempo_atual = time.time()
             tempo_total = max(0.001, tempo_atual - self.inicio)
             tempo_formatado = str(timedelta(seconds=int(tempo_total)))
-            
+
             layout = Layout()
-            
-            # Divisão principal: header, main (6 colunas) e footer
             layout.split_column(
                 Layout(name="header", size=3),
                 Layout(name="main", size=30),
                 Layout(name="footer", size=3)
             )
-            
-            # Dividir main em 6 colunas
-            layout["main"].split_row(
-                Layout(name="system", ratio=1),      # Sistema
-                Layout(name="process", ratio=1),     # Processamento
-                Layout(name="tokens", ratio=1),      # Tokens
-                Layout(name="words", ratio=1),       # Análise de Palavras
-                Layout(name="stats", ratio=1),       # Estatísticas
-                Layout(name="tops", ratio=1)         # Tops e Rankings
-            )
 
-            # Header com informações da iteração atual
+            # Header com métricas de processamento
             header = Panel(
                 Align.center(
                     Text.assemble(
-                        (f"🔄 Iteração: {self.iteracao_atual}/{self.total_iteracoes} ", "bold cyan"),
-                        (f"| ⏱️ {tempo_formatado} ", "yellow"),
-                        (f"| 📝 Último YAML: {self.ultimo_arquivo} ", "green"),
-                        (f"| 💾 Total: {self.caracteres:,} chars", "blue")
+                        (f"🚀 BERT Processor ", "bold cyan"),
+                        (f"| ⏱️ {tempo_formatado}", "magenta")
                     )
                 ),
                 border_style="blue",
@@ -300,32 +443,66 @@ class StreamStats:
             )
             layout["header"].update(header)
 
-            # 1. Coluna Sistema
+            # 6 colunas para métricas
+            layout["main"].split_row(
+                Layout(name="system", ratio=1),
+                Layout(name="process", ratio=1),
+                Layout(name="tokens", ratio=1),
+                Layout(name="words", ratio=1),
+                Layout(name="stats", ratio=1),
+                Layout(name="tops", ratio=1)
+            )
+
+            # 1. Sistema e Recursos
+            system_stats = self.system_monitor.get_cpu_stats()
+            memory_stats = self.system_monitor.get_memory_stats()
+            
             system_table = Table(box=ROUNDED, expand=True)
             system_table.add_column("💻 Sistema", style="cyan")
             system_table.add_column("Valor", justify="right", style="green")
             
-            system_table.add_row("🖥️ CPU Total", f"{self.cpu_total}%")
-            for i, cpu in enumerate(self.cpu_cores):
-                system_table.add_row(f"Core {i+1}", f"{cpu}%")
-            system_table.add_row("🧠 RAM", f"{self.ram.percent}%")
-            system_table.add_row("💾 Disco", f"{self.disk.percent}%")
+            # CPU com fallback
+            system_table.add_row("🖥️ CPU Total", f"{system_stats['total']:.1f}%")
+            for i, cpu in enumerate(system_stats['cores']):
+                with suppress(Exception):
+                    system_table.add_row(f"Core {i+1}", f"{cpu:.1f}%")
             
-            layout["system"].update(Panel(system_table, title="Sistema", border_style="blue"))
+            # Memória com fallback
+            system_table.add_row("🧠 RAM Uso", f"{memory_stats['percent']}%")
+            system_table.add_row("💾 RAM Total", f"{memory_stats['total']/1024**3:.1f}GB")
+            system_table.add_row("📊 RAM Livre", f"{(memory_stats['total']-memory_stats['used'])/1024**3:.1f}GB")
+            
+            if memory_stats['swap_percent'] > 0:
+                system_table.add_row("💫 Swap", f"{memory_stats['swap_percent']}%")
+            
+            # Informações do sistema
+            system_table.add_row("🔧 Sistema", platform.system())
+            system_table.add_row("📌 Python", platform.python_version())
+            
+            if self.system_monitor.fallback_mode:
+                system_table.add_row("⚠️ Modo", "Fallback", style="yellow")
+            
+            layout["system"].update(Panel(
+                system_table,
+                title="💻 Sistema" + (" (Fallback)" if self.system_monitor.fallback_mode else ""),
+                border_style="blue"
+            ))
 
-            # 2. Coluna Processamento
+            # 2. Processamento
             process_table = Table(box=ROUNDED, expand=True)
             process_table.add_column("⚡ Processo", style="magenta")
             process_table.add_column("Valor", justify="right", style="yellow")
             
+            process_table.add_row("📝 Iteração", f"{self.iteracao_atual}/{self.total_iteracoes}")
+            process_table.add_row("⏱️ Tempo", tempo_formatado)
             process_table.add_row("📊 Chars/s", f"{self.chars_por_segundo:.1f}")
-            process_table.add_row("📈 Words/s", f"{self.palavras_por_segundo:.1f}")
-            process_table.add_row("💾 KB/s", f"{(self.chars_por_segundo/1024):.1f}")
-            process_table.add_row("🚀 MB Total", f"{(self.caracteres/1024/1024):.2f}")
+            process_table.add_row("🚀 Words/s", f"{self.palavras_por_segundo:.1f}")
+            process_table.add_row("💾 Buffer", f"{len(self.buffer):,}")
+            process_table.add_row("📈 Total KB", f"{self.caracteres/1024:.1f}")
             
-            layout["process"].update(Panel(process_table, title="Processamento", border_style="magenta"))
+            layout["process"].update(Panel(process_table, title="⚡ Processamento", border_style="magenta"))
 
-            # 3. Coluna Tokens
+            # 3. Tokens BERT
             tokens_table = Table(box=ROUNDED, expand=True)
             tokens_table.add_column("🎯 Tokens", style="blue")
             tokens_table.add_column("Valor", justify="right", style="cyan")
@@ -333,11 +510,18 @@ class StreamStats:
             tokens_table.add_row("📊 Total", f"{self.tokens_bert:,}")
             tokens_table.add_row("🔄 Por Seg", f"{self.tokens_por_segundo:.1f}")
             tokens_table.add_row("📈 Únicos", f"{len(self.token_unicos):,}")
-            tokens_table.add_row("💫 Ratio", f"{self.token_ratio:.1%}")
+            tokens_table.add_row("🎯 Ratio", f"{self.token_stats['subwords_ratio']:.1%}")
+            tokens_table.add_row("📏 Média Len", f"{self.token_stats['media_len']:.1f}")
+            tokens_table.add_row("⚡ Especiais", f"{self.token_stats['special_tokens']}")
             
-            layout["tokens"].update(Panel(tokens_table, title="Tokens", border_style="cyan"))
+            # Top 5 tokens mais frequentes
+            tokens_table.add_row("📈 TOP TOKENS", "", style="bold magenta")
+            for token, freq in self.top_tokens[:5]:
+                tokens_table.add_row("🔤", f"{token} ({freq})")
+            
+            layout["tokens"].update(Panel(tokens_table, title="🎯 Tokens BERT", border_style="cyan"))
 
-            # 4. Coluna Análise de Palavras
+            # 4. Análise de Palavras
             words_table = Table(box=ROUNDED, expand=True)
             words_table.add_column("📝 Palavras", style="yellow")
             words_table.add_column("Valor", justify="right", style="green")
@@ -347,45 +531,36 @@ class StreamStats:
             words_table.add_row("📊 Média Len", f"{self.media_tamanho_palavras:.1f}")
             words_table.add_row("💫 Diversidade", f"{self.diversidade_lexica:.1%}")
             
-            layout["words"].update(Panel(words_table, title="Análise", border_style="yellow"))
+            # Últimas 10 palavras
+            words_table.add_row("��� ÚLTIMAS", "", style="bold cyan")
+            for palavra in list(self.ultimas_palavras)[-10:]:
+                words_table.add_row("📖", palavra)
+            
+            layout["words"].update(Panel(words_table, title="📝 Análise", border_style="yellow"))
 
-            # 5. Coluna Estatísticas
+            # 5. Estatísticas
             stats_table = Table(box=ROUNDED, expand=True)
             stats_table.add_column("📊 Stats", style="red")
             stats_table.add_column("Valor", justify="right", style="blue")
             
-            # Últimas 10 palavras únicas
-            ultimas_unicas = list(self.palavras_unicas)[-10:] if self.palavras_unicas else []
-            for palavra in ultimas_unicas:
-                stats_table.add_row("📝", palavra)
+            stats_table.add_row("🎯 Eficiência", f"{self.eficiencia_tokens:.1%}")
+            stats_table.add_row("📈 Cobertura", f"{self.cobertura_vocab:.1%}")
+            stats_table.add_row("💫 Densidade", f"{self.densidade_texto:.2f}")
+            stats_table.add_row("⚡ Performance", f"{self.performance_score:.1f}")
             
-            layout["stats"].update(Panel(stats_table, title="Últimas Únicas", border_style="red"))
+            layout["stats"].update(Panel(stats_table, title="📊 Estatísticas", border_style="red"))
 
-            # 6. Coluna Tops
+            # 6. Tops e Rankings
             tops_table = Table(box=ROUNDED, expand=True)
             tops_table.add_column("🏆 Tops", style="green")
             tops_table.add_column("Valor", justify="right", style="magenta")
             
             # Top 10 maiores palavras
+            tops_table.add_row("📏 MAIORES", "", style="bold yellow")
             for tamanho, palavra in sorted(self.maiores_palavras, reverse=True)[:10]:
                 tops_table.add_row("📏", f"{palavra} ({tamanho})")
             
-            layout["tops"].update(Panel(tops_table, title="Maiores Palavras", border_style="green"))
-
-            # Footer com totalizadores
-            footer = Panel(
-                Align.center(
-                    Text.assemble(
-                        (f"📊 Palavras: {self.palavras:,} ", "cyan"),
-                        (f"| 🎯 Únicas: {len(self.palavras_unicas):,} ", "yellow"),
-                        (f"| 📈 Tokens: {self.tokens_bert:,} ", "green"),
-                        (f"| ⚡ Chars/s: {self.chars_por_segundo:.1f}", "blue")
-                    )
-                ),
-                border_style="blue",
-                box=SIMPLE
-            )
-            layout["footer"].update(footer)
+            layout["tops"].update(Panel(tops_table, title="🏆 Rankings", border_style="green"))
 
             return layout
 
@@ -400,106 +575,114 @@ class StreamProcessor:
         self.live = Live(
             self.stats.criar_grid_layout(),
             console=self.console,
-            auto_refresh=False,
-            screen=True,  # Mantém a tela fixa
-            refresh_per_second=4,
-            transient=False  # Impede scroll automático
+            auto_refresh=True,
+            refresh_per_second=10,
+            screen=True
         )
 
-    async def processar_iteracoes(self, palavra_inicial):
+    async def processar_yaml(self, prompt: str, arquivo_yaml: Path, iteracao: int, total: int):
+        """Processa um único YAML com atualizações em tempo real"""
+        try:
+            self.stats.iteracao_atual = iteracao
+            self.stats.total_iteracoes = total
+            
+            # Inicializa o modelo
+            model = genai.GenerativeModel(
+                model_name=NOME_MODELO,
+                generation_config=CONFIG_GERACAO
+            )
+
+            # Processa o stream
+            response = model.generate_content(prompt, stream=True)
+            
+            # Abre o arquivo em modo append para escrita em tempo real
+            async with aiofiles.open(arquivo_yaml, 'a', encoding='utf-8') as f:
+                buffer = ""
+                for chunk in response:
+                    if chunk.text:
+                        texto = chunk.text
+                        buffer += texto
+                        
+                        # Escreve imediatamente no arquivo
+                        await f.write(texto)
+                        await f.flush()  # Força a escrita no disco
+                        
+                        # Atualiza estatísticas
+                        await self.stats.atualizar(texto, iteracao, arquivo_yaml.name)
+                        
+                        # Atualiza display em tempo real
+                        self.live.update(self.stats.criar_grid_layout())
+                        
+                        # Pequena pausa para não sobrecarregar o display
+                        await asyncio.sleep(0.01)
+                
+                # Processa métricas finais do texto completo
+                self.stats.calcular_metricas_avancadas(buffer)
+                self.live.update(self.stats.criar_grid_layout())
+            
+            return True
+
+        except Exception as e:
+            self.console.print(f"[red]Erro ao processar YAML {iteracao}: {str(e)}[/red]")
+            return False
+
+    async def processar_iteracoes(self, palavra_inicial: str):
+        """Processa todas as iterações sequencialmente"""
         total_iteracoes = 20
         
-        with self.live:  # Inicia o contexto Live
-            self.console.clear()  # Limpa a tela inicial
+        with self.live:
+            self.console.clear()
             
             for i in range(total_iteracoes):
                 try:
-                    # Atualiza cabeçalho
-                    self.console.clear()
-                    self.console.print(Panel(
-                        f"{EMOJI['stream']} Iteração {i+1}/{total_iteracoes} - Palavra: '{palavra_inicial}'",
-                        style="bold cyan"
-                    ))
-                    
-                    # Inicializa estatísticas para cada iteração
-                    self.stats = StreamStats()
-                    
-                    # Configuração do arquivo
+                    # Prepara diretório e arquivo
                     output_dir = Path("generated-yaml-text-to-embedding")
                     output_dir.mkdir(exist_ok=True)
                     
-                    hash_id = hashlib.md5(f"{datetime.now().timestamp()}_{i}".encode()).hexdigest()[:10]
+                    # Gera nome único para o arquivo
+                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                    hash_id = hashlib.md5(f"{timestamp}_{i}".encode()).hexdigest()[:8]
                     arquivo_yaml = output_dir / f"embedding_stream_v1_{hash_id}.yaml"
                     
                     # Template do prompt
                     prompt = f"""
                     Baseado na palavra-chave '{palavra_inicial}', gere um YAML técnico e detalhado.
                     Iteração: {i+1}/{total_iteracoes}
+                    
+                    Requisitos:
+                    - Estrutura YAML válida
+                    - Conteúdo técnico relacionado à palavra-chave
+                    - Mínimo de 3 níveis de profundidade
+                    - Incluir exemplos práticos
                     """
                     
-                    # Processa resposta do Gemini
-                    await self.get_gemini_response_stream(prompt, arquivo_yaml)
+                    # Processa um YAML por vez
+                    console.print(f"\n[cyan]Processando YAML {i+1}/{total_iteracoes}...[/cyan]")
+                    await self.processar_yaml(prompt, arquivo_yaml, i+1, total_iteracoes)
                     
-                    # Atualiza display sem scroll
-                    self.live.update(self.stats.criar_grid_layout(), refresh=True)
-                    
-                    # Pequena pausa entre iterações
+                    # Pequena pausa entre arquivos
                     await asyncio.sleep(1)
                     
                 except Exception as e:
                     self.console.print(f"[red]Erro na iteração {i+1}: {str(e)}[/red]")
 
-    async def get_gemini_response_stream(self, prompt, arquivo_yaml):
-        try:
-            model = genai.GenerativeModel(
-                model_name=NOME_MODELO,
-                generation_config=CONFIG_GERACAO
-            )
-            
-            response = await model.generate_content_async(
-                prompt,
-                stream=True,
-                generation_config=CONFIG_GERACAO
-            )
-            
-            async for chunk in response:
-                texto = chunk.text
-                self.stats.atualizar(texto)
-                
-                with open(arquivo_yaml, 'a', encoding='utf-8') as f:
-                    f.write(texto)
-                
-                # Atualiza display mantendo posição
-                self.live.update(self.stats.criar_grid_layout(), refresh=True)
-                
-            return True
-            
-        except Exception as e:
-            self.console.print(f"[red]Erro no streaming: {str(e)}[/red]")
-            return False
-
 async def main():
     try:
         processor = StreamProcessor()
         
-        # Solicita palavra inicial
         console.print(f"\n{EMOJI['palavra']} [cyan]Digite a palavra inicial:[/cyan]")
         palavra_inicial = input().strip()
         
         if not palavra_inicial:
             console.print("[red]Palavra inicial não pode estar vazia![/red]")
             return
-            
-        # Limpa a tela antes de começar
-        console.clear()
         
-        # Inicia processamento
+        console.clear()
         await processor.processar_iteracoes(palavra_inicial)
         
-        # Mensagem final
         console.print(Panel(
             f"[green]🎉 Processo completo![/green]\n"
-            f"20 YAMLs foram gerados com sucesso!",
+            f"YAMLs gerados com sucesso na pasta 'generated-yaml-text-to-embedding'",
             border_style="green"
         ))
         
@@ -509,9 +692,4 @@ async def main():
         console.print(f"[red]Erro durante o processamento: {str(e)}[/red]")
 
 if __name__ == "__main__":
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        console.print("\n[yellow]Operação cancelada pelo usuário.[/yellow]")
-    except Exception as e:
-        console.print(f"[red]Erro inesperado: {str(e)}[/red]")
+    asyncio.run(main())
