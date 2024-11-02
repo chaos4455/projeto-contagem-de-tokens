@@ -1,0 +1,12 @@
+2024-11-02 13:16:54 - estudo - INFO: Arquivo 'gerador_vetorizador_continuo.py' versionado para 'gerador_vetorizador_continuo-work--revision-0001.py'.
+2024-11-02 13:17:54 - estudo - INFO: Arquivo 'gerador_vetorizador_continuo.py' versionado para 'gerador_vetorizador_continuo-work--revision-0001.py'.
+2024-11-02 13:18:39 - estudo - INFO: Arquivo 'gerador_vetorizador_continuo.py' versionado para 'gerador_vetorizador_continuo-work--revision-0001.py'.
+2024-11-02 13:19:04 - estudo - INFO: Arquivo 'gerador_vetorizador_continuo.py' versionado para 'gerador_vetorizador_continuo-work--revision-0002.py'.
+2024-11-02 13:19:57 - estudo - INFO: Arquivo 'gerador_vetorizador_continuo.py' versionado para 'gerador_vetorizador_continuo-work--revision-0001.py'.
+2024-11-02 13:20:41 - estudo - INFO: Arquivo 'gerador_vetorizador_continuo.py' versionado para 'gerador_vetorizador_continuo-work--revision-0001.py'.
+[2024-11-02 13:22:08] ❌ Erro ao gerar indicadores: type object 'datetime.datetime' has no attribute 'datetime'
+[2024-11-02 13:22:08] ✅ Arquivo 'gerador_yaml_embeddings.py' versionado para 'gerador_yaml_embeddings-work--revision-0001.py'
+[2024-11-02 13:22:27] ❌ Erro ao gerar indicadores: type object 'datetime.datetime' has no attribute 'datetime'
+[2024-11-02 13:22:27] ✅ Arquivo 'gerador_vetorizador_continuo.py' versionado para 'gerador_vetorizador_continuo-work--revision-0001.py'
+[2024-11-02 13:22:49] ❌ Erro ao gerar indicadores: type object 'datetime.datetime' has no attribute 'datetime'
+[2024-11-02 13:22:49] ✅ Arquivo 'gerador_vetorizador_continuo.py' versionado para 'gerador_vetorizador_continuo-work--revision-0001.py'

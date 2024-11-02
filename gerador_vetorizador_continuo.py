@@ -122,6 +122,20 @@ class ProcessingStats:
         self.palavras_na_fila = 0
         self.precisao = 0
         
+        # Novos atributos para métricas IA
+        self.temperatura = 0.8
+        self.top_p = 0.95
+        self.tokens_por_requisicao = 0
+        
+        # Métricas de tempo estimado
+        self.tempo_estimado_restante = 0
+        
+        # Cache e performance expandidos
+        self.cache_hits = 0
+        self.cache_misses = 0
+        self.precisao = 0
+        self.taxa_sucesso = 0
+        
     def update_tempo(self):
         """Atualiza métricas relacionadas ao tempo"""
         tempo_atual = time.time()
@@ -316,22 +330,29 @@ class GeradorVetorizadorContinuo:
         return '\n'.join(formatted_lines)
 
     def setup_layout(self):
-        """Configura o layout responsivo"""
+        """Configura o layout com 5 colunas de métricas e estatísticas no fundo"""
         layout = Layout()
         
-        # Divide em duas linhas
-        layout.split(
-            Layout(name="top", ratio=1),
-            Layout(name="bottom", ratio=1)
+        # Divide em duas seções principais
+        layout.split_column(
+            Layout(name="metrics_area", size=15),  # Área para métricas
+            Layout(name="spacer", size=0),         # Espaço flexível
+            Layout(name="stats_row", size=8)       # Estatísticas no fundo
         )
         
-        # Divide cada linha em duas colunas
-        layout["top"].split_row(
+        # Divide a área de métricas em 5 colunas
+        layout["metrics_area"].split_row(
+            Layout(name="ia_metrics", ratio=1),
+            Layout(name="queue_metrics", ratio=1),
+            Layout(name="token_metrics", ratio=1),
+            Layout(name="response_metrics", ratio=1),
+            Layout(name="time_metrics", ratio=1)
+        )
+        
+        # Mantém a divisão original das estatísticas
+        layout["stats_row"].split_row(
             Layout(name="processamento", ratio=1),
-            Layout(name="performance", ratio=1)
-        )
-        
-        layout["bottom"].split_row(
+            Layout(name="performance", ratio=1),
             Layout(name="recursos", ratio=1),
             Layout(name="metricas", ratio=1)
         )
@@ -451,18 +472,134 @@ class GeradorVetorizadorContinuo:
         table.add_row(emoji.emojize(":gear:"), f"Batch Size: {self.stats.batch_size}")
         return Panel(table, title="Status Atual", border_style="purple")
 
+    def create_ia_metrics_panel(self):
+        table = Table.grid(padding=(0, 1))
+        table.add_column(justify="right", style="cyan")
+        table.add_column(justify="left", style="white")
+        
+        rows = [
+            ("🤖 Modelo", NOME_MODELO),
+            ("🌡️ Temperatura", f"{self.stats.temperatura:.2f}"),
+            ("📊 Top-P", f"{self.stats.top_p:.2f}"),
+            ("⚡ Latência IA", f"{self.stats.tempo_ia*1000:.0f}ms"),
+            ("💭 Tokens/Req", f"{self.stats.tokens_por_requisicao:.1f}")
+        ]
+        
+        for label, value in rows:
+            table.add_row(label, value)
+        
+        return Panel(
+            Align.center(table),
+            title="[bold cyan]Métricas IA[/bold cyan]",
+            border_style="cyan"
+        )
+
+    def create_queue_metrics_panel(self):
+        table = Table.grid(padding=(0, 1))
+        table.add_column(justify="right", style="green")
+        table.add_column(justify="left", style="white")
+        
+        rows = [
+            ("📥 Na Fila", f"{self.stats.palavras_na_fila:,}"),
+            ("⏳ Processando", f"{self.stats.em_processamento:,}"),
+            ("✅ Concluídas", f"{self.stats.palavras_processadas:,}"),
+            ("⚠️ Pendentes", f"{self.stats.total_palavras - self.stats.palavras_processadas:,}"),
+            ("📈 Progresso", f"{(self.stats.palavras_processadas/max(1, self.stats.total_palavras))*100:.1f}%")
+        ]
+        
+        for label, value in rows:
+            table.add_row(label, value)
+        
+        return Panel(
+            Align.center(table),
+            title="[bold green]Fila de Processamento[/bold green]",
+            border_style="green"
+        )
+
+    def create_token_metrics_panel(self):
+        table = Table.grid(padding=(0, 1))
+        table.add_column(justify="right", style="yellow")
+        table.add_column(justify="left", style="white")
+        
+        rows = [
+            ("🔤 Total Tokens", f"{self.stats.total_tokens:,}"),
+            ("🆕 Únicos", f"{self.stats.tokens_unicos:,}"),
+            ("📊 Média/Palavra", f"{self.stats.tokens_por_palavra:.1f}"),
+            ("📈 Taxa", f"{self.stats.tokens_por_segundo:.1f}/s"),
+            ("💫 Densidade", f"{self.stats.densidade_vetores:.2f}")
+        ]
+        
+        for label, value in rows:
+            table.add_row(label, value)
+        
+        return Panel(
+            Align.center(table),
+            title="[bold yellow]Métricas de Tokens[/bold yellow]",
+            border_style="yellow"
+        )
+
+    def create_response_metrics_panel(self):
+        table = Table.grid(padding=(0, 1))
+        table.add_column(justify="right", style="magenta")
+        table.add_column(justify="left", style="white")
+        
+        rows = [
+            ("✅ Sucesso", f"{self.stats.taxa_sucesso:.1f}%"),
+            ("❌ Erros", f"{self.stats.falhas}"),
+            ("🎯 Precisão", f"{self.stats.precisao:.1f}%"),
+            ("💾 Cache Hits", f"{self.stats.cache_hits:,}"),
+            ("🔄 Cache Miss", f"{self.stats.cache_misses:,}")
+        ]
+        
+        for label, value in rows:
+            table.add_row(label, value)
+        
+        return Panel(
+            Align.center(table),
+            title="[bold magenta]Respostas[/bold magenta]",
+            border_style="magenta"
+        )
+
+    def create_time_metrics_panel(self):
+        table = Table.grid(padding=(0, 1))
+        table.add_column(justify="right", style="blue")
+        table.add_column(justify="left", style="white")
+        
+        rows = [
+            ("⚡ Palavras/s", f"{self.stats.palavras_por_segundo:.1f}"),
+            ("🚀 Tokens/s", f"{self.stats.tokens_por_segundo:.1f}"),
+            ("⏱️ Tempo Total", str(timedelta(seconds=int(self.stats.tempo_processamento)))),
+            ("💨 Velocidade", f"{self.stats.palavras_por_segundo * 60:.0f}/min"),
+            ("📊 ETA", str(timedelta(seconds=int(self.stats.tempo_estimado_restante))))
+        ]
+        
+        for label, value in rows:
+            table.add_row(label, value)
+        
+        return Panel(
+            Align.center(table),
+            title="[bold blue]Métricas de Tempo[/bold blue]",
+            border_style="blue"
+        )
+
     def update_display(self, status: str, live: Live):
         try:
             self.stats.update_tempo()
             self.stats.update_system_metrics()
             
-            # Atualiza os painéis com alinhamento centralizado
-            self.layout["processamento"].update(self.create_processamento_panel())
-            self.layout["performance"].update(self.create_performance_panel())
-            self.layout["recursos"].update(self.create_recursos_panel())
-            self.layout["metricas"].update(self.create_metricas_panel())
+            # Atualiza os painéis de métricas
+            self.layout["metrics_area"]["ia_metrics"].update(self.create_ia_metrics_panel())
+            self.layout["metrics_area"]["queue_metrics"].update(self.create_queue_metrics_panel())
+            self.layout["metrics_area"]["token_metrics"].update(self.create_token_metrics_panel())
+            self.layout["metrics_area"]["response_metrics"].update(self.create_response_metrics_panel())
+            self.layout["metrics_area"]["time_metrics"].update(self.create_time_metrics_panel())
             
-            # Atualiza o display com o novo layout
+            # Atualiza os painéis de estatísticas no fundo
+            self.layout["stats_row"]["processamento"].update(self.create_processamento_panel())
+            self.layout["stats_row"]["performance"].update(self.create_performance_panel())
+            self.layout["stats_row"]["recursos"].update(self.create_recursos_panel())
+            self.layout["stats_row"]["metricas"].update(self.create_metricas_panel())
+            
             live.update(self.layout)
             
         except Exception as e:

@@ -37,3 +37,10 @@ Tipo: AttributeError
 Mensagem: 'ProcessingStats' object has no attribute 'update_tempo'
 Palavra: devops
 2024-11-02 11:22:05,081 - ERROR - Erro ao atualizar display: 'ProcessingStats' object has no attribute 'update_tempo'
+2024-11-02 12:53:11,873 - ERROR - Erro ao obter resposta do Gemini: Invalid operation: The `response.text` quick accessor requires the response to contain a valid `Part`, but none were returned. The candidate's [finish_reason](https://ai.google.dev/api/generate-content#finishreason) is 4. Meaning that the model was reciting from copyrighted material.
+2024-11-02 13:05:47,038 - ERROR - Erro ao atualizar display: name 'Text' is not defined
+2024-11-02 13:05:47,038 - ERROR - Erro no processamento:
+Tipo: NameError
+Mensagem: name 'Text' is not defined
+Palavra: devops
+2024-11-02 13:05:47,072 - ERROR - Erro ao atualizar display: name 'Text' is not defined
