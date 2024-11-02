@@ -1,4 +1,4 @@
-# 🤖 Projeto de Geração de Embeddings com IA para RAG v0.0.0.5
+# 🤖 Projeto de Geração de Embeddings com IA para RAG v0.0.0.6 RC1 beta 02 11 2024 17 24
 
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
@@ -8,7 +8,7 @@
 
 ## 📋 Índice
 - [Sobre o Projeto](#sobre-o-projeto)
-- [Novidades da Versão 0.0.0.5](#novidades-da-versão-00005)
+- [Novidades da Versão 0.0.0.6 RC1 beta 02 11 2024 17 24](#novidades-da-versão-00006-rc1-beta-02-11-2024-17-24)
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Arquitetura](#arquitetura)
@@ -48,16 +48,16 @@
 
 Este projeto está licenciado sob a Licença MIT.
 
-# 🚀 Projeto de Automação e Análise de Embeddings v0.0.0.5
+# 🚀 Projeto de Automação e Análise de Embeddings v0.0.0.6 RC1 beta 02 11 2024 17 24
 
 **Arquiteto:** Elias Andrade  
 **Status:** Beta  
-**Versão:** 0.0.0.5  
+**Versão:** 0.0.0.6 RC1 beta 02 11 2024 17 24  
 **Data:** 02/11/2024
 
-# 🚀 Projeto de Automação e Análise de Embeddings v0.0.0.5
+# 🚀 Projeto de Automação e Análise de Embeddings v0.0.0.6 RC1 beta 02 11 2024 17 24
 
-# ⚡ Processamento Assíncrono v0.0.0.5
+# ⚡ Processamento Assíncrono v0.0.0.6 RC1 beta 02 11 2024 17 24
 
 ## 🔄 Pipeline Assíncrono
 
@@ -95,7 +95,7 @@ Este projeto está licenciado sob a Licença MIT.
 
 **Arquiteto:** Elias Andrade
 **Status:** Beta
-**Versão:** 0.0.0.5
+**Versão:** 0.0.0.6 RC1 beta 02 11 2024 17 24
 **Data:** 02/11/2024
 
 ## 📋 Sumário
@@ -111,11 +111,11 @@ Este projeto está licenciado sob a Licença MIT.
 ## 🎯 Visão Geral
 Sistema integrado de última geração para processamento, análise e geração de embeddings textuais, utilizando modelos avançados de IA (BERT/Transformers) com pipeline completo de automação, backup e organização. Desenvolvido para suportar sistemas RAG (Retrieval-Augmented Generation) de alta performance.  Este projeto visa otimizar o processo de criação e utilização de embeddings, desde a ingestão de dados até a sua utilização em aplicações downstream.
 
-### 🆕 Novidades da Versão 0.0.0.5
-- Atualização do número da versão para 0.0.0.5 em todo o README.md.
+### 🆕 Novidades da Versão 0.0.0.6 RC1 beta 02 11 2024 17 24
+- Atualização do número da versão para 0.0.0.6 RC1 beta 02 11 2024 17 24 em todo o README.md.
 - Adição de uma seção "Scripts do Projeto" descrevendo os principais scripts Python.
 - Melhorias na clareza e organização do texto em várias seções.
-- Atualização da seção "Changelog Detalhado" para incluir a versão 0.0.0.5.
+- Atualização da seção "Changelog Detalhado" para incluir a versão 0.0.0.6 RC1 beta 02 11 2024 17 24.
 
 
 ## 🔧 Componentes Principais
@@ -234,7 +234,7 @@ Sistema integrado de última geração para processamento, análise e geração 
    - Diagramas ASCII art
 
 
-# 🏗️ Arquitetura do Sistema v0.0.0.5
+# 🏗 Arquitetura do Sistema v0.0.0.6 RC1 beta 02 11 2024 17 24
 
 ## 🎯 Visão Arquitetural v2
 
@@ -267,16 +267,16 @@ Sistema integrado de última geração para processamento, análise e geração 
 - 🔍 Auditoria em Tempo Real
 
 
-## 🆕 Novidades da Versão 0.0.0.5
+## 🆕 Novidades da Versão 0.0.0.6 RC1 beta 02 11 2024 17 24
 
-- Atualização do número da versão para 0.0.0.5 em todo o README.md.
+- Atualização do número da versão para 0.0.0.6 RC1 beta 02 11 2024 17 24 em todo o README.md.
 - Adição de uma seção "Scripts do Projeto" descrevendo os principais scripts Python.  Esta seção inclui descrições detalhadas de cada script, incluindo suas funcionalidades principais e as bibliotecas utilizadas.
 - Melhorias na clareza e organização do texto em várias seções.  O texto foi revisado para melhorar a legibilidade e a clareza, tornando a documentação mais fácil de entender.
-- Atualização da seção "Changelog Detalhado" para incluir a versão 0.0.0.5, descrevendo as mudanças realizadas nesta versão.  A descrição inclui a atualização do número da versão, a adição da seção "Scripts do Projeto", e as melhorias na clareza e organização do texto.
+- Atualização da seção "Changelog Detalhado" para incluir a versão 0.0.0.6 RC1 beta 02 11 2024 17 24, descrevendo as mudanças realizadas nesta versão.  A descrição inclui a atualização do número da versão, a adição da seção "Scripts do Projeto", e as melhorias na clareza e organização do texto.
 - Atualização da seção "Tecnologias Utilizadas" para refletir as bibliotecas utilizadas em cada script.
 
 
-# ⚡ Processamento Assíncrono v0.0.0.5
+# ⚡ Processamento Assíncrono v0.0.0.6 RC1 beta 02 11 2024 17 24
 
 ## 🔄 Pipeline Assíncrono
 
@@ -318,6 +318,15 @@ Este projeto é uma solução avançada para geração de embeddings vetoriais u
 
 ## 📜 Changelog Detalhado
 
+### 🎯 Versão 0.0.0.6 RC1 beta 02 11 2024 17 24 ![Status](https://img.shields.io/badge/status-current-brightgreen)
+
+#### 📝 Atualizações
+- Atualização do número da versão para 0.0.0.6 RC1 beta 02 11 2024 17 24 em todo o README.md.
+- Adição de uma seção "Scripts do Projeto" descrevendo os principais scripts Python.
+- Melhorias na clareza e organização do texto em várias seções.
+- Atualização da seção "Changelog Detalhado" para incluir a versão 0.0.0.6 RC1 beta 02 11 2024 17 24.
+
+
 ### 🎯 Versão 0.0.0.5 (02/11/2024) ![Status](https://img.shields.io/badge/status-current-brightgreen)
 
 #### 📝 Atualizações
@@ -349,7 +358,7 @@ Este projeto é uma solução avançada para geração de embeddings vetoriais u
 
 ### 🎯 Versão 0.0.0.3 (01/11/2024) ![Status](https://img.shields.io/badge/status-stable-blue)
 
-#### 🏗️ Arquitetura
+#### 🏗 Arquitetura
 - 🔄 Implementação do pipeline assíncrono
 - 📦 Novo sistema de backup incremental
 - 🔐 Segurança aprimorada
@@ -533,6 +542,8 @@ A comunicação entre os módulos é feita através de uma interface bem definid
 ![Cursor_euDOSJgsSN](https://github.com/user-attachments/assets/830f0499-0013-4dab-9db2-dfbe1b1c0241)
 
 ![Cursor_y4ykB5cXRH](https://github.com/user-attachments/assets/ccd860fd-b1ef-4856-b119-3888ab71f8c8)
+
+![Cursor_57e2JgBSKT](https://github.com/user-attachments/assets/6dfbf009-7fc9-4769-81a6-4ebdc
 
 ![Cursor_57e2JgBSKT](https://github.com/user-attachments/assets/6dfbf009-7fc9-4769-81a6-4ebdcfb46d73)
 

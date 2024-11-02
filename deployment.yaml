@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vector-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vector-server
+  template:
+    metadata:
+      labels:
+        app: vector-server
+    spec:
+      containers:
+        - name: vector-server
+          image: vector-server:latest
+          ports:
+            - containerPort: 8000

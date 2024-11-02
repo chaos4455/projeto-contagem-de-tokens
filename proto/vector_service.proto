@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package vector_service;
+
+service VectorService {
+  rpc GetVector(VectorRequest) returns (VectorResponse) {}
+  rpc ListVectors(ListVectorsRequest) returns (stream VectorResponse) {}
+}
+
+message VectorRequest {
+  int32 id = 1;
+}
+
+message ListVectorsRequest {}
+
+message VectorResponse {
+  int32 id = 1;
+  string word = 2;
+  repeated float vector = 3;
+}

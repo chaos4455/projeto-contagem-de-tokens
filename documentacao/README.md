@@ -3,10 +3,10 @@
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
 [![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Maintainability](https://api.codeclimate.com/v1/badges/github/yourusername/yourrepo/maintainability)](https://codeclimate.com/github/yourusername/yourrepo/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/github/yourusername/yourrepo/test_coverage)](https://codeclimate.com/github/yourusername/yourrepo/test_coverage)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/yourusername/yourrepo/CI)](https://github.com/yourusername/yourrepo/actions)
-[![Downloads](https://img.shields.io/github/downloads/yourusername/yourrepo/total.svg)](https://github.com/yourusername/yourrepo/releases)
+[![Maintainability](https://api.codeclimate.com/v1/badges/github/EliasAndrade/projeto-contagem-de-tokens/maintainability)](https://codeclimate.com/github/EliasAndrade/projeto-contagem-de-tokens/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/github/EliasAndrade/projeto-contagem-de-tokens/test_coverage)](https://codeclimate.com/github/EliasAndrade/projeto-contagem-de-tokens/test_coverage)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/EliasAndrade/projeto-contagem-de-tokens/CI)](https://github.com/EliasAndrade/projeto-contagem-de-tokens/actions)
+[![Downloads](https://img.shields.io/github/downloads/EliasAndrade/projeto-contagem-de-tokens/total.svg)](https://github.com/EliasAndrade/projeto-contagem-de-tokens/releases)
 
 
 ## 📋 Índice
@@ -79,21 +79,20 @@ Este projeto é uma solução avançada para geração de embeddings vetoriais u
 
 ## 🏗 Arquitetura
 
-O projeto segue uma arquitetura modular, organizada em diferentes módulos para facilitar a manutenção e a extensão. Os principais componentes são:
+O projeto utiliza uma arquitetura modular e escalável, composta pelos seguintes componentes principais:
 
-- **Módulo de Pré-processamento:** Responsável pela leitura dos arquivos YAML, limpeza de dados e tokenização do texto.
-- **Módulo de Geração de Embeddings:** Gera os embeddings vetoriais utilizando os modelos BERT e Sentence Transformers.
-- **Módulo de Cache:** Armazena os embeddings gerados em cache para otimizar o desempenho.
-- **Módulo de Monitoramento:** Monitora o uso de recursos e coleta métricas de desempenho.
-- **Módulo de Visualização:** Exibe as métricas e os resultados através da interface CLI com a biblioteca Rich.
-- **Banco de Dados SQLite:** Armazena os tokens e embeddings gerados.
+- **Módulo de Pré-processamento:** Responsável pela leitura e validação dos arquivos YAML, limpeza de dados e tokenização do texto utilizando modelos BERT.
+- **Módulo de Geração de Embeddings:** Gera os embeddings vetoriais utilizando modelos Sentence Transformers, otimizado para processamento em stream e com cache inteligente para melhorar o desempenho.
+- **Módulo de Armazenamento:**  Utiliza um banco de dados SQLite para armazenar os embeddings gerados, permitindo acesso eficiente e persistência dos dados.
+- **Módulo de Análise:** Realiza análises de métricas, incluindo contagem de tokens, densidade semântica e monitoramento de recursos do sistema.
+- **Módulo de Visualização:**  Fornece uma interface de usuário rica e interativa via CLI (usando a biblioteca Rich) para exibir as métricas e resultados em tempo real.
 
-A comunicação entre os módulos é feita através de uma interface bem definida, permitindo a substituição de componentes sem afetar o funcionamento do sistema como um todo.  O design segue os princípios SOLID para garantir a manutenibilidade e a escalabilidade do código.
+Esta arquitetura modular permite fácil manutenção, extensão e escalabilidade do sistema.  O design segue os princípios SOLID para garantir a manutenibilidade e a escalabilidade do código.  O sistema é projetado para lidar com grandes volumes de dados de forma eficiente, utilizando processamento paralelo e técnicas de otimização de memória.
 
 
 ## ⚙️ Instalação
 
-1. **Clone o repositório:** `git clone <URL_DO_REPOSITORIO>`
+1. **Clone o repositório:** `git clone https://github.com/EliasAndrade/projeto-contagem-de-tokens.git`
 2. **Crie um ambiente virtual (recomendado):** `python3 -m venv .venv`
 3. **Ative o ambiente virtual:** `.venv\Scripts\activate` (Windows)
 4. **Instale as dependências:** `pip install -r requirements.txt`
