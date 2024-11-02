@@ -1,0 +1,136 @@
+2024-11-02 03:53:37,807 - INFO - Iniciando processo de limpeza avançada...
+2024-11-02 03:53:37,808 - INFO - Mapeando arquivos da raiz...
+2024-11-02 03:53:37,879 - INFO - Total de arquivos mapeados na raiz: 52
+2024-11-02 03:53:37,879 - INFO - Mapeando arquivos do backup_restaurado...
+2024-11-02 03:53:37,913 - INFO - Total de arquivos mapeados no backup: 86
+2024-11-02 03:53:37,913 - INFO - Removendo duplicados internos do backup_restaurado...
+2024-11-02 03:53:37,913 - INFO - Removendo arquivos do backup que existem na raiz...
+2024-11-02 03:53:37,913 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001\banco_tokens.py
+2024-11-02 03:53:37,913 - INFO - Data modificação: 2024-11-02 03:53:33.359611
+2024-11-02 03:53:37,914 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,914 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001\contador_tokens_menu.py
+2024-11-02 03:53:37,914 - INFO - Data modificação: 2024-11-02 03:53:33.360608
+2024-11-02 03:53:37,914 - INFO - Tamanho: 0.02 MB
+2024-11-02 03:53:37,914 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001\gerador-dic-texto-yaml-v1.py
+2024-11-02 03:53:37,914 - INFO - Data modificação: 2024-11-02 03:53:33.360608
+2024-11-02 03:53:37,915 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,915 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001\gerador_yaml_embeddings.py
+2024-11-02 03:53:37,915 - INFO - Data modificação: 2024-11-02 03:53:33.361606
+2024-11-02 03:53:37,915 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,915 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001\resultados.json
+2024-11-02 03:53:37,915 - INFO - Data modificação: 2024-11-02 03:53:33.362603
+2024-11-02 03:53:37,916 - INFO - Tamanho: 0.03 MB
+2024-11-02 03:53:37,916 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001\resultados.txt
+2024-11-02 03:53:37,916 - INFO - Data modificação: 2024-11-02 03:53:33.362603
+2024-11-02 03:53:37,916 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,916 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001\resultados.yaml
+2024-11-02 03:53:37,917 - INFO - Data modificação: 2024-11-02 03:53:33.363600
+2024-11-02 03:53:37,917 - INFO - Tamanho: 0.02 MB
+2024-11-02 03:53:37,917 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001\tokens_database.db
+2024-11-02 03:53:37,917 - INFO - Data modificação: 2024-11-02 03:53:33.363600
+2024-11-02 03:53:37,917 - INFO - Tamanho: 0.02 MB
+2024-11-02 03:53:37,918 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001\tokens_database.db-x-tokens-1-embeddings.bin
+2024-11-02 03:53:37,918 - INFO - Data modificação: 2024-11-02 03:53:33.364598
+2024-11-02 03:53:37,918 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,918 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001\yamls_textembedding_bruto_backups_original_limpeza_20241102_024250_275a3668.zip
+2024-11-02 03:53:37,919 - INFO - Data modificação: 2024-11-02 03:53:33.365595
+2024-11-02 03:53:37,919 - INFO - Tamanho: 0.04 MB
+2024-11-02 03:53:37,919 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001\zipar_yamls.py
+2024-11-02 03:53:37,919 - INFO - Data modificação: 2024-11-02 03:53:33.366592
+2024-11-02 03:53:37,920 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,920 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024615-12074e44-versao-0002\backup_projeto.py
+2024-11-02 03:53:37,920 - INFO - Data modificação: 2024-11-02 03:53:33.348640
+2024-11-02 03:53:37,920 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,921 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_030201-aba6a2c4-versao-0003\gerador_yaml_embeddings-prompt-v2.py
+2024-11-02 03:53:37,921 - INFO - Data modificação: 2024-11-02 03:53:33.337670
+2024-11-02 03:53:37,921 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,921 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_030201-aba6a2c4-versao-0003\yamls_textembedding_bruto_backups_original_limpeza_20241102_024952_9dd2e439.zip
+2024-11-02 03:53:37,921 - INFO - Data modificação: 2024-11-02 03:53:33.345648
+2024-11-02 03:53:37,922 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,922 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_030201-aba6a2c4-versao-0003\yamls_textembedding_bruto_backups_original_limpeza_20241102_025536_7fa0f8a1.zip
+2024-11-02 03:53:37,922 - INFO - Data modificação: 2024-11-02 03:53:33.345648
+2024-11-02 03:53:37,922 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,922 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_030201-aba6a2c4-versao-0003\yamls_textembedding_bruto_backups_original_limpeza_20241102_030152_eac5b9a7.zip
+2024-11-02 03:53:37,922 - INFO - Data modificação: 2024-11-02 03:53:33.346646
+2024-11-02 03:53:37,923 - INFO - Tamanho: 0.06 MB
+2024-11-02 03:53:37,923 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_032606-43e38bca-versao-0005\yamls_textembedding_bruto_backups_original_limpeza_20241102_032144_0f5392c2.zip
+2024-11-02 03:53:37,923 - INFO - Data modificação: 2024-11-02 03:53:33.284811
+2024-11-02 03:53:37,923 - INFO - Tamanho: 0.05 MB
+2024-11-02 03:53:37,923 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006\automacao_backup.log
+2024-11-02 03:53:37,924 - INFO - Data modificação: 2024-11-02 03:53:33.206022
+2024-11-02 03:53:37,924 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,924 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006\gerador_yaml_embeddings_stream_v1.py
+2024-11-02 03:53:37,924 - INFO - Data modificação: 2024-11-02 03:53:33.210011
+2024-11-02 03:53:37,924 - INFO - Tamanho: 0.03 MB
+2024-11-02 03:53:37,924 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006\limpar_duplicados_avancado.py
+2024-11-02 03:53:37,925 - INFO - Data modificação: 2024-11-02 03:53:33.210011
+2024-11-02 03:53:37,925 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,925 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006\remover_duplicados.py
+2024-11-02 03:53:37,925 - INFO - Data modificação: 2024-11-02 03:53:33.211008
+2024-11-02 03:53:37,925 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,925 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006\restaurar_backup.py
+2024-11-02 03:53:37,926 - INFO - Data modificação: 2024-11-02 03:53:33.211008
+2024-11-02 03:53:37,926 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,926 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006\yamls_textembedding_bruto_backups_original_limpeza_20241102_033205_ba41b0b4.zip
+2024-11-02 03:53:37,926 - INFO - Data modificação: 2024-11-02 03:53:33.217990
+2024-11-02 03:53:37,926 - INFO - Tamanho: 0.03 MB
+2024-11-02 03:53:37,926 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006\generated-yaml-text-to-embedding\embedding_stream_v1_17732c163f.yaml
+2024-11-02 03:53:37,926 - INFO - Data modificação: 2024-11-02 03:53:33.249905
+2024-11-02 03:53:37,927 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,927 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006\generated-yaml-text-to-embedding\embedding_stream_v1_4ac5839973.yaml
+2024-11-02 03:53:37,927 - INFO - Data modificação: 2024-11-02 03:53:33.251900
+2024-11-02 03:53:37,927 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,927 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006\generated-yaml-text-to-embedding\embedding_stream_v1_fceeecbd79.yaml
+2024-11-02 03:53:37,927 - INFO - Data modificação: 2024-11-02 03:53:33.257883
+2024-11-02 03:53:37,927 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,928 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006\generated-yaml-text-to-embedding\embedding_stream_v1_fe33cb89db.yaml
+2024-11-02 03:53:37,928 - INFO - Data modificação: 2024-11-02 03:53:33.257883
+2024-11-02 03:53:37,928 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,928 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035009-b4ec8d66-versao-0007\automacao_backup.log
+2024-11-02 03:53:37,928 - INFO - Data modificação: 2024-11-02 03:53:33.151169
+2024-11-02 03:53:37,928 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,928 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035009-b4ec8d66-versao-0007\logs\limpeza_avancada.log
+2024-11-02 03:53:37,929 - INFO - Data modificação: 2024-11-02 03:53:33.202033
+2024-11-02 03:53:37,929 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,929 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035009-b4ec8d66-versao-0007\logs\limpeza_duplicados.log
+2024-11-02 03:53:37,929 - INFO - Data modificação: 2024-11-02 03:53:33.203031
+2024-11-02 03:53:37,929 - INFO - Tamanho: 0.05 MB
+2024-11-02 03:53:37,929 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035009-b4ec8d66-versao-0007\logs\restauracao_backup.log
+2024-11-02 03:53:37,930 - INFO - Data modificação: 2024-11-02 03:53:33.204028
+2024-11-02 03:53:37,930 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,930 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035201-c4fd0ef7-versao-0008\limpeza_avancada.log
+2024-11-02 03:53:37,930 - INFO - Data modificação: 2024-11-02 03:53:33.096316
+2024-11-02 03:53:37,930 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,930 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035201-c4fd0ef7-versao-0008\limpeza_duplicados.log
+2024-11-02 03:53:37,930 - INFO - Data modificação: 2024-11-02 03:53:33.097313
+2024-11-02 03:53:37,931 - INFO - Tamanho: 0.08 MB
+2024-11-02 03:53:37,931 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035201-c4fd0ef7-versao-0008\restauracao_backup.log
+2024-11-02 03:53:37,931 - INFO - Data modificação: 2024-11-02 03:53:33.098311
+2024-11-02 03:53:37,931 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,931 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035331-034e861b-versao-0009\automacao_organiza_projeto_restaura_backup_v1.py
+2024-11-02 03:53:37,931 - INFO - Data modificação: 2024-11-02 03:53:32.973644
+2024-11-02 03:53:37,931 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,932 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035331-034e861b-versao-0009\logs\automacao_backup_99c1af0c.log
+2024-11-02 03:53:37,932 - INFO - Data modificação: 2024-11-02 03:53:33.070385
+2024-11-02 03:53:37,932 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,932 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035331-034e861b-versao-0009\logs\limpeza_avancada_7cf09a9d.log
+2024-11-02 03:53:37,932 - INFO - Data modificação: 2024-11-02 03:53:33.072380
+2024-11-02 03:53:37,932 - INFO - Tamanho: 0.01 MB
+2024-11-02 03:53:37,933 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035331-034e861b-versao-0009\logs\limpeza_duplicados_baa04e8d.log
+2024-11-02 03:53:37,933 - INFO - Data modificação: 2024-11-02 03:53:33.074374
+2024-11-02 03:53:37,933 - INFO - Tamanho: 0.12 MB
+2024-11-02 03:53:37,933 - INFO - Removendo: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035331-034e861b-versao-0009\logs\restauracao_backup_39e92f11.log
+2024-11-02 03:53:37,933 - INFO - Data modificação: 2024-11-02 03:53:33.077366
+2024-11-02 03:53:37,933 - INFO - Tamanho: 0.00 MB
+2024-11-02 03:53:37,934 - INFO - Removendo pastas vazias de todo o sistema...
+2024-11-02 03:53:37,939 - INFO - Pasta vazia removida do backup: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035331-034e861b-versao-0009\logs
+2024-11-02 03:53:37,939 - INFO - Pasta vazia removida do backup: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035201-c4fd0ef7-versao-0008\backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001
+2024-11-02 03:53:37,940 - INFO - Pasta vazia removida do backup: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035201-c4fd0ef7-versao-0008\backup_restaurado
+2024-11-02 03:53:37,940 - INFO - Pasta vazia removida do backup: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035009-b4ec8d66-versao-0007\logs
+2024-11-02 03:53:37,941 - INFO - Pasta vazia removida do backup: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006\generated-yaml-text-to-embedding
+2024-11-02 03:53:37,946 - INFO - Pasta vazia removida do backup: backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024615-12074e44-versao-0002
+2024-11-02 03:53:37,960 - INFO - 
+Relatório Final de Limpeza:
+2024-11-02 03:53:37,960 - INFO - Arquivos removidos: 39
+2024-11-02 03:53:37,961 - INFO - Espaço liberado: 0.67 MB
+2024-11-02 03:53:37,961 - INFO - Processo de limpeza concluído com sucesso!

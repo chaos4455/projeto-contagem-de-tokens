@@ -1,0 +1,8 @@
+2024-11-02 03:48:47,048 - ERROR - Erro ao mover automacao_backup.log: [WinError 32] O arquivo j· est· sendo usado por outro processo: 'automacao_backup.log'
+2024-11-02 03:49:26,816 - ERROR - Erro ao mover automacao_backup.log: [WinError 32] O arquivo j· est· sendo usado por outro processo: 'automacao_backup.log'
+2024-11-02 03:50:09,703 - ERROR - Erro ao mover automacao_backup.log: [WinError 32] O arquivo j· est· sendo usado por outro processo: 'automacao_backup.log'
+2024-11-02 03:52:06,383 - ERROR - Erro ao mover automacao_backup.log: [WinError 32] O arquivo j· est· sendo usado por outro processo: 'automacao_backup.log'
+2024-11-02 03:53:31,432 - INFO - ==================================================
+2024-11-02 03:53:31,433 - INFO - Iniciando nova sess√£o de automa√ß√£o em 02/11/2024 03:53:31
+2024-11-02 03:53:31,433 - INFO - ==================================================
+2024-11-02 03:53:31,445 - INFO - Arquivo renomeado: automacao_backup_99c1af0c.log (original: automacao_backup.log)

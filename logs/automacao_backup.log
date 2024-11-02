@@ -1,0 +1,2 @@
+2024-11-02 03:48:47,048 - ERROR - Erro ao mover automacao_backup.log: [WinError 32] O arquivo já está sendo usado por outro processo: 'automacao_backup.log'
+2024-11-02 03:49:26,816 - ERROR - Erro ao mover automacao_backup.log: [WinError 32] O arquivo já está sendo usado por outro processo: 'automacao_backup.log'

@@ -1,0 +1,111 @@
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+          limits:
+            cpu: "500m"
+            memory: "500Mi"
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: nginx-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  selector:
+    app: nginx
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+data:
+  default.conf: |
+    server {
+      listen 80;
+      location / {
+        root /usr/share/nginx/html;
+        index index.html index.htm;
+      }
+    }
+```
+
+## Descrição do YAML
+
+Este arquivo YAML define um deployment do Kubernetes para um aplicativo Nginx, incluindo um Service para acesso externo e um ConfigMap para configurar o Nginx.
+
+**Deployment:**
+
+* `replicas: 3`: Define que 3 pods do Nginx serão criados.
+* `selector`: Define que o deployment controla os pods com o rótulo `app: nginx`.
+* `template`: Define a estrutura do pod.
+  * `containers`: Define o container Nginx.
+    * `image: nginx:1.14.2`: Especifica a imagem do container Docker.
+    * `ports: containerPort: 80`: Define a porta do container que o Nginx escuta.
+    * `resources`: Define os recursos de CPU e memória solicitados e limitados.
+    * `volumeMounts`: Define o ponto de montagem para o volume ConfigMap.
+* `volumes`: Define o volume ConfigMap.
+  * `name: nginx-config`: Define o nome do volume.
+  * `configMap: name: nginx-config`: Especifica o ConfigMap que contém a configuração do Nginx.
+
+**Service:**
+
+* `selector: app: nginx`: Define que o Service se conecta aos pods com o rótulo `app: nginx`.
+* `ports: port: 80, targetPort: 80`: Define a porta do Service e a porta do container.
+* `type: LoadBalancer`: Define o tipo de Service como LoadBalancer, criando um balanceador de carga externo.
+
+**ConfigMap:**
+
+* `name: nginx-config`: Define o nome do ConfigMap.
+* `data: default.conf`: Define o conteúdo do arquivo de configuração `default.conf` do Nginx.
+
+## Benefícios do Kubernetes
+
+Este YAML demonstra alguns dos benefícios do Kubernetes:
+
+* **Gerenciamento de recursos:** As definições de recursos permitem que o Kubernetes gerencie os recursos de CPU e memória dos pods, garantindo que eles obtenham os recursos necessários para funcionar corretamente.
+* **Escalabilidade:** O deployment pode ser facilmente escalado para cima ou para baixo alterando o número de `replicas`.
+* **Balanceamento de carga:** O Service distribui o tráfego de forma uniforme entre os pods Nginx.
+* **Configuração centralizada:** O ConfigMap permite que a configuração do Nginx seja armazenada e gerenciada de forma centralizada.
+
+## Próximos passos
+
+Este YAML é apenas um exemplo básico. Você pode expandir este YAML para incluir:
+
+* **Health checks:** Definir health checks para garantir que os pods estejam funcionando corretamente.
+* **Logs:** Configurar o logging para monitorar os logs dos pods.
+* **Segurança:** Implementar políticas de segurança para proteger o aplicativo.
+* **Ingress:** Criar um Ingress para gerenciar o tráfego de entrada para o aplicativo.

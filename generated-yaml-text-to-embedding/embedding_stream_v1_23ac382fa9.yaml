@@ -1,0 +1,223 @@
+## YAML detalhado sobre Kubernetes (Iteração 6/20)
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-namespace
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment
+  namespace: my-namespace
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app-container
+        image: my-app-image:latest
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        env:
+        - name: APP_ENV
+          value: "production"
+        livenessProbe:
+          tcpSocket:
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+      restartPolicy: Always
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-app-service
+  namespace: my-namespace
+spec:
+  selector:
+    app: my-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-app-ingress
+  namespace: my-namespace
+spec:
+  rules:
+  - host: my-app.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: my-app-service
+            port:
+              number: 80
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: my-app-role
+  namespace: my-namespace
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+- apiGroups: ["v1"]
+  resources: ["pods"]
+  verbs: ["get", "list", "watch"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: my-app-rolebinding
+  namespace: my-namespace
+subjects:
+- kind: User
+  name: my-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: my-app-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: my-job
+  namespace: my-namespace
+spec:
+  template:
+    spec:
+      containers:
+      - name: my-job-container
+        image: my-job-image:latest
+        command: ["/bin/sh", "-c", "echo 'Job running...' && sleep 30"]
+      restartPolicy: Never
+  completions: 1
+  parallelism: 1
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+  namespace: my-namespace
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: my-storage-class
+
+---
+
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: my-daemonset
+  namespace: my-namespace
+spec:
+  template:
+    metadata:
+      labels:
+        app: my-daemonset
+    spec:
+      containers:
+      - name: my-daemonset-container
+        image: my-daemonset-image:latest
+        command: ["/bin/sh", "-c", "echo 'DaemonSet running...' && sleep 30"]
+      nodeSelector:
+        kubernetes.io/hostname: my-node
+
+---
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-statefulset
+  namespace: my-namespace
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-statefulset
+  template:
+    metadata:
+      labels:
+        app: my-statefulset
+    spec:
+      containers:
+      - name: my-statefulset-container
+        image: my-statefulset-image:latest
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: my-volume
+          mountPath: /data
+  volumeClaimTemplates:
+  - metadata:
+      name: my-volume
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: my-storage-class
+```
+
+**Este YAML demonstra as seguintes funcionalidades do Kubernetes:**
+
+* **Namespaces:** Cria um namespace para organizar recursos.
+* **Deployments:** Define um deployment para gerenciar replicados de um aplicativo.
+* **Services:** Executa um serviço para expor o aplicativo externamente.
+* **Ingress:** Configura um ingress para gerenciar o tráfego para o aplicativo.
+* **RBAC:** Implementa controle de acesso baseado em funções para segurança.
+* **Jobs:** Executa trabalhos independentes para tarefas de curta duração.
+* **PersistentVolumeClaims:** Cria um PersistentVolumeClaim para armazenar dados persistentes.
+* **DaemonSets:** Implementa um DaemonSet para executar um pod em cada nó do cluster.
+* **StatefulSets:** Cria um StatefulSet para gerenciar pods com estado.
+
+**Este YAML é apenas uma demonstração e pode ser modificado e expandido de acordo com suas necessidades.**

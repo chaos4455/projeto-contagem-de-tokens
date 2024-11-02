@@ -1,0 +1,21 @@
+2024-11-02 03:52:07,629 - INFO - Extraindo backup\completo_backup_projeto-projeto contagem de tokens-20241102_035201-c4fd0ef7-versao-0008.zip para backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035201-c4fd0ef7-versao-0008
+2024-11-02 03:52:07,685 - INFO - Backup restaurado com sucesso: completo_backup_projeto-projeto contagem de tokens-20241102_035201-c4fd0ef7-versao-0008.zip
+2024-11-02 03:52:07,686 - INFO - Extraindo backup\completo_backup_projeto-projeto contagem de tokens-20241102_035009-b4ec8d66-versao-0007.zip para backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_035009-b4ec8d66-versao-0007
+2024-11-02 03:52:07,732 - INFO - Backup restaurado com sucesso: completo_backup_projeto-projeto contagem de tokens-20241102_035009-b4ec8d66-versao-0007.zip
+2024-11-02 03:52:07,733 - INFO - Extraindo backup\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006.zip para backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006
+2024-11-02 03:52:07,783 - INFO - Backup restaurado com sucesso: completo_backup_projeto-projeto contagem de tokens-20241102_034927-a6c763fc-versao-0006.zip
+2024-11-02 03:52:07,784 - INFO - Extraindo backup\completo_backup_projeto-projeto contagem de tokens-20241102_032606-43e38bca-versao-0005.zip para backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_032606-43e38bca-versao-0005
+2024-11-02 03:52:07,799 - INFO - Backup restaurado com sucesso: completo_backup_projeto-projeto contagem de tokens-20241102_032606-43e38bca-versao-0005.zip
+2024-11-02 03:52:07,799 - INFO - Extraindo backup\completo_backup_projeto-projeto contagem de tokens-20241102_032136-04c27e3d-versao-0004.zip para backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_032136-04c27e3d-versao-0004
+2024-11-02 03:52:07,827 - INFO - Backup restaurado com sucesso: completo_backup_projeto-projeto contagem de tokens-20241102_032136-04c27e3d-versao-0004.zip
+2024-11-02 03:52:07,827 - INFO - Extraindo backup\completo_backup_projeto-projeto contagem de tokens-20241102_030201-aba6a2c4-versao-0003.zip para backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_030201-aba6a2c4-versao-0003
+2024-11-02 03:52:07,843 - INFO - Backup restaurado com sucesso: completo_backup_projeto-projeto contagem de tokens-20241102_030201-aba6a2c4-versao-0003.zip
+2024-11-02 03:52:07,843 - INFO - Extraindo backup\completo_backup_projeto-projeto contagem de tokens-20241102_024615-12074e44-versao-0002.zip para backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024615-12074e44-versao-0002
+2024-11-02 03:52:07,856 - INFO - Backup restaurado com sucesso: completo_backup_projeto-projeto contagem de tokens-20241102_024615-12074e44-versao-0002.zip
+2024-11-02 03:52:07,856 - INFO - Extraindo backup\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001.zip para backup_restaurado\completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001
+2024-11-02 03:52:07,870 - INFO - Backup restaurado com sucesso: completo_backup_projeto-projeto contagem de tokens-20241102_024443-830124be-versao-0001.zip
+2024-11-02 03:52:07,870 - INFO - 
+Resumo da restauração:
+2024-11-02 03:52:07,871 - INFO - Total de arquivos processados: 8
+2024-11-02 03:52:07,871 - INFO - Restaurações bem-sucedidas: 8
+2024-11-02 03:52:07,871 - INFO - Falhas: 0

@@ -1,0 +1,58 @@
+2024-11-02 03:48:47,048 - ERROR - Erro ao mover automacao_backup.log: [WinError 32] O arquivo j� est� sendo usado por outro processo: 'automacao_backup.log'
+2024-11-02 03:49:26,816 - ERROR - Erro ao mover automacao_backup.log: [WinError 32] O arquivo j� est� sendo usado por outro processo: 'automacao_backup.log'
+2024-11-02 03:50:09,703 - ERROR - Erro ao mover automacao_backup.log: [WinError 32] O arquivo j� est� sendo usado por outro processo: 'automacao_backup.log'
+2024-11-02 03:52:06,383 - ERROR - Erro ao mover automacao_backup.log: [WinError 32] O arquivo j� est� sendo usado por outro processo: 'automacao_backup.log'
+2024-11-02 03:53:31,432 - INFO - ==================================================
+2024-11-02 03:53:31,433 - INFO - Iniciando nova sessão de automação em 02/11/2024 03:53:31
+2024-11-02 03:53:31,433 - INFO - ==================================================
+2024-11-02 03:53:31,445 - INFO - Arquivo renomeado: automacao_backup_99c1af0c.log (original: automacao_backup.log)
+2024-11-02 03:53:31,455 - ERROR - Erro ao mover automacao_backup.log: [WinError 32] O arquivo já está sendo usado por outro processo: 'automacao_backup.log'
+2024-11-02 03:53:31,459 - INFO - Arquivo renomeado: limpeza_avancada_7cf09a9d.log (original: limpeza_avancada.log)
+2024-11-02 03:53:31,459 - INFO - Arquivo movido: limpeza_avancada.log → logs\limpeza_avancada_7cf09a9d.log
+2024-11-02 03:53:31,461 - INFO - Arquivo renomeado: limpeza_duplicados_baa04e8d.log (original: limpeza_duplicados.log)
+2024-11-02 03:53:31,462 - INFO - Arquivo movido: limpeza_duplicados.log → logs\limpeza_duplicados_baa04e8d.log
+2024-11-02 03:53:31,464 - INFO - Arquivo renomeado: restauracao_backup_39e92f11.log (original: restauracao_backup.log)
+2024-11-02 03:53:31,464 - INFO - Arquivo movido: restauracao_backup.log → logs\restauracao_backup_39e92f11.log
+2024-11-02 03:53:31,477 - INFO - Iniciando execução: Backup inicial (backup_projeto.py)
+2024-11-02 03:53:31,834 - INFO - Backup inicial concluído com sucesso!
+2024-11-02 03:53:31,834 - INFO - Saída do script backup_projeto.py:
+┌────────────────────────────────────────────┐
+│ 🚀 Iniciando Backup Completo do Projeto 🚀 │
+└────────────────────────────────────────────┘
+  🗜️ Compactando arquivos... ---------------------------------------- 100%
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    📦 Dashboard de Backup do Projeto 📦                     │
+│                                                                             │
+│                                                                             │
+│                                                                             │
+│                                                                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+┌────────────────────────── Estatísticas do Backup ───────────────────────────┐
+│ ┌───────────────────────┬─────────────────────┐                             │
+│ │ Métrica               │               Valor │                             │
+│ ├───────────────────────┼─────────────────────┤                             │
+│ │ 📄 Arquivos Incluídos │                  98 │                             │
+│ │ 🗑️ Arquivos Ignorados  │                  10 │                             │
+│ │ 💾 Tamanho Original   │              3.1 MB │                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ✨ Backup concluído com sucesso! ✨                                         │
+│                                                                             │
+│                                                                             │
+│                                                                             │
+│                                                                             │
+│                                                                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+2024-11-02 03:53:32,847 - INFO - Iniciando execução: Restauração de backup (restaurar_backup.py)
+2024-11-02 03:53:33,382 - INFO - Restauração de backup concluído com sucesso!
+2024-11-02 03:53:34,386 - INFO - Iniciando execução: Remoção de duplicados (remover_duplicados.py)
+2024-11-02 03:53:36,634 - INFO - Remoção de duplicados concluído com sucesso!
+2024-11-02 03:53:37,643 - INFO - Iniciando execução: Limpeza avançada (limpar_duplicados_avancado.py)
+2024-11-02 03:53:37,982 - INFO - Limpeza avançada concluído com sucesso!
+2024-11-02 03:54:38,676 - INFO - ==================================================
+2024-11-02 03:54:38,676 - INFO - Iniciando nova sessão de automação em 02/11/2024 03:54:38
+2024-11-02 03:54:38,677 - INFO - ==================================================
+2024-11-02 03:54:38,691 - INFO - Arquivo renomeado: automacao_backup_8a7205af.log (original: automacao_backup.log)
