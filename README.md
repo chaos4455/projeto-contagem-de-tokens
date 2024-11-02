@@ -358,7 +358,7 @@ Este projeto é uma solução avançada para geração de embeddings vetoriais u
 - 🔄 Backup simples
 - 📊 Métricas básicas
 
-### 🎯 Versão 0.0.0.1 (30/10/2024) ![Status](https://img.shields.io/badge/status-archived-red)
+### 🎯 Vers��o 0.0.0.1 (30/10/2024) ![Status](https://img.shields.io/badge/status-archived-red)
 
 #### 🚀 MVP Inicial
 - 📄 Suporte básico a arquivos
@@ -625,5 +625,5 @@ Este script gera arquivos YAML usando a API do Google Gemini em modo de streamin
 
 ### Versão 0.0.0.2 (01/01/2024 07:33)
 
-- **Atualizações:**  Esta versão inclui todas as alterações realizadas desde o início do projeto até a data de 01/01/2024 07:33.  Uma análise completa do código-fonte é necessária para detalhar as mudanças específicas.  [Inserir aqui um detalhamento das mudanças, se possível].
+- **Atualizações:**  Esta versão inclui todas as alterações realizadas desde o início do projeto até a data de 01/01/2024 07:33.  Uma análise completa do código-fonte é necessária para detalhar as mudanças específicas.  [Inserir aqui um detalhamento das mudanças, se poss��vel].
 
