@@ -1,0 +1,40 @@
+# Bibliotecas Python Utilizadas no Projeto
+
+## Bibliotecas Padrão
+- pathlib
+- sqlite3
+- hashlib
+- datetime
+- logging
+- subprocess
+- time
+- json
+- os
+- sys
+- asyncio
+- threading
+- shutil
+- zipfile
+- uuid
+
+## Bibliotecas Externas
+- rich
+- aiofiles
+- google.generativeai
+- transformers
+- torch
+- numpy
+- pandas
+- tqdm
+- yaml
+- sentence_transformers
+- jsonschema
+- fuzzywuzzy
+- python-Levenshtein
+- colorama
+- termcolor
+- prettytable
+- psutil
+- requests
+- aiohttp
+- beautifulsoup4
