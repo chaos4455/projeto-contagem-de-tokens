@@ -1,0 +1,161 @@
+- cursor_id: 0
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:44.867138'
+  vector_preview: '[ 0.09141069 -0.60806954  0.03757128  0.08063047  0.71945745]...'
+- cursor_id: 1
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:45.119464'
+  vector_preview: '[ 0.04856168 -0.5224364  -0.21915717  0.1930468   0.3997344 ]...'
+- cursor_id: 2
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:45.368796'
+  vector_preview: '[ 0.24472407 -0.00756066 -0.10368402  0.04135551  0.17659715]...'
+- cursor_id: 3
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:45.614140'
+  vector_preview: '[-0.1733756  -0.3661946   0.2338296   0.05426548  0.6450385 ]...'
+- cursor_id: 4
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:45.864021'
+  vector_preview: '[-0.03905186 -0.6569942  -0.16113247  0.05045867  0.5540935 ]...'
+- cursor_id: 5
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:46.099393'
+  vector_preview: '[-0.18424205 -0.3279073  -0.11061393 -0.2328442   0.8733121 ]...'
+- cursor_id: 6
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:46.374652'
+  vector_preview: '[ 0.5189994   0.07874927 -0.5485314   0.29139516  0.14989443]...'
+- cursor_id: 7
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:46.619000'
+  vector_preview: '[ 0.24439701 -0.46364385 -0.35954946 -0.06445801  0.2453408 ]...'
+- cursor_id: 8
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:46.879303'
+  vector_preview: '[ 0.14777553 -0.12262492 -0.25066373  0.142498    0.19262192]...'
+- cursor_id: 9
+  text: Frase para análise vetorial
+  timestamp: '2024-11-02T14:11:47.431828'
+  vector_preview: '[-0.05559997 -0.44468558 -0.5153712  -0.20615333 -0.43625748]...'
+- cursor_id: 10
+  text: Dados convertidos
+  timestamp: '2024-11-02T14:11:47.716067'
+  vector_preview: '[-0.03720897  0.19620927  0.40472826  0.11302155 -0.43754137]...'
+- cursor_id: 11
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:48.352363'
+  vector_preview: '[ 0.17093152 -0.3116087  -0.05703845  0.1234781   0.08415183]...'
+- cursor_id: 12
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:48.884939'
+  vector_preview: '[ 0.27839774 -0.43928272 -0.3784037  -0.31730917  0.16515276]...'
+- cursor_id: 13
+  text: Dados convertidos
+  timestamp: '2024-11-02T14:11:49.635930'
+  vector_preview: '[-0.1253328  -0.23569472  0.24767837  0.18388805 -0.13566351]...'
+- cursor_id: 14
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:49.909198'
+  vector_preview: '[-0.16953519 -0.28269145 -0.5939515  -0.25031105  0.12576623]...'
+- cursor_id: 15
+  text: Texto extraído
+  timestamp: '2024-11-02T14:11:50.519565'
+  vector_preview: '[ 0.19976433  0.08743382 -0.2103116   0.26008263 -0.08999074]...'
+- cursor_id: 16
+  text: Texto extraído
+  timestamp: '2024-11-02T14:11:50.768898'
+  vector_preview: '[ 0.22460833 -0.13578343  0.33383805  0.16949245 -0.1268852 ]...'
+- cursor_id: 17
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:51.036184'
+  vector_preview: '[ 0.07335638 -0.02320871  0.22883457  0.25489187  0.3233075 ]...'
+- cursor_id: 18
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:51.305464'
+  vector_preview: '[ 0.3033553  -0.05030303  0.02232231  0.1504883   0.32399988]...'
+- cursor_id: 19
+  text: Outro texto para comparação
+  timestamp: '2024-11-02T14:11:51.567765'
+  vector_preview: '[-0.13094    -0.11042786 -0.23639277 -0.19271903  0.706801  ]...'
+- cursor_id: 20
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:51.820089'
+  vector_preview: '[ 0.25488243 -0.2287746  -0.3572129   0.17321447  0.4436317 ]...'
+- cursor_id: 21
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:52.066430'
+  vector_preview: '[-0.08062691 -0.7060921  -0.0289056  -0.00789868  0.56437147]...'
+- cursor_id: 22
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:52.324739'
+  vector_preview: '[ 0.2531848  -0.18813862 -0.22471178  0.06508237  0.06289998]...'
+- cursor_id: 23
+  text: Este é um texto de exemplo em português
+  timestamp: '2024-11-02T14:11:52.592022'
+  vector_preview: '[-0.2210167  -0.31365624 -0.23647517 -0.12976712  0.4805458 ]...'
+- cursor_id: 24
+  text: Outro texto para comparação
+  timestamp: '2024-11-02T14:11:52.893215'
+  vector_preview: '[-0.2199703  -0.11090571 -0.30738544 -0.2850253   0.7234661 ]...'
+- cursor_id: 25
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:53.149531'
+  vector_preview: '[-0.06989884 -0.34995794  0.02856941 -0.00378885  0.55936044]...'
+- cursor_id: 26
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:53.403851'
+  vector_preview: '[ 0.27523094 -0.02435092 -0.11140259 -0.10764265  0.67962855]...'
+- cursor_id: 27
+  text: Outro texto para comparação
+  timestamp: '2024-11-02T14:11:53.665151'
+  vector_preview: '[-0.23321271 -0.61714923 -0.25563762  0.17533064  0.4491471 ]...'
+- cursor_id: 28
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:54.034164'
+  vector_preview: '[-0.34891203 -0.70459694 -0.16476902 -0.08299863  0.47590098]...'
+- cursor_id: 29
+  text: Outro texto para comparação
+  timestamp: '2024-11-02T14:11:54.340345'
+  vector_preview: '[-0.27201113 -0.57199645 -0.17705508 -0.22181344  0.44592595]...'
+- cursor_id: 30
+  text: Frase para análise vetorial
+  timestamp: '2024-11-02T14:11:54.617606'
+  vector_preview: '[ 0.3991099  -0.08189926 -0.02346004  0.298337    0.30616564]...'
+- cursor_id: 31
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:54.946723'
+  vector_preview: '[-0.05534446 -0.38205308 -0.6310863  -0.18148223  0.22906661]...'
+- cursor_id: 32
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:55.221987'
+  vector_preview: '[ 0.13604496 -0.09905234 -0.43007305 -0.00212585  0.09371557]...'
+- cursor_id: 33
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:55.508223'
+  vector_preview: "[ 5.2307051e-04 -5.2441013e-01  1.7181523e-01  2.3765389e-03\n\
+    \  3.1924090e-01]..."
+- cursor_id: 34
+  text: Frase para análise vetorial
+  timestamp: '2024-11-02T14:11:55.787196'
+  vector_preview: '[-0.09036434 -0.42055526 -0.46047956 -0.14845306  0.16627453]...'
+- cursor_id: 35
+  text: Frase para análise vetorial
+  timestamp: '2024-11-02T14:11:56.070019'
+  vector_preview: '[ 0.12069976  0.0220706  -0.01359218  0.01439566 -0.08510932]...'
+- cursor_id: 36
+  text: Exemplo de conteúdo textual
+  timestamp: '2024-11-02T14:11:56.365877'
+  vector_preview: '[ 0.20674889 -0.32972518 -0.22007717  0.33882797  0.60025454]...'
+- cursor_id: 37
+  text: Outro texto para comparação
+  timestamp: '2024-11-02T14:11:56.631167'
+  vector_preview: '[ 0.07300098 -0.1663076  -0.10785481  0.24068771  0.47877568]...'
+- cursor_id: 38
+  text: Informação processada
+  timestamp: '2024-11-02T14:11:56.884489'
+  vector_preview: '[-0.01896329 -0.14796382 -0.17080346  0.05235983 -0.02291548]...'
+- cursor_id: 39
+  text: Texto extraído
+  timestamp: '2024-11-02T14:11:57.123848'
+  vector_preview: '[-0.43390495 -0.53059185 -0.3454017  -0.11811331 -0.16922683]...'

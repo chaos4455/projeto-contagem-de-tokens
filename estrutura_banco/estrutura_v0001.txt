@@ -1,0 +1,63 @@
+=== ANÁLISE DE ESTRUTURA DE BANCOS DE DADOS ===
+Data/Hora: 02/11/2024 14:01:28
+Versão: v0001
+
+
+==================================================
+BANCO DE DADOS: tokens_database.db
+==================================================
+
+
+TABELA: tokens
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+id                   INTEGER         Sim      Sim  
+timestamp            TEXT            Sim      Não  
+unique_hash          TEXT            Sim      Não  
+input_text           TEXT            Sim      Não  
+tokens               TEXT            Sim      Não  
+embeddings           BLOB            Sim      Não  
+
+Total de registros: 1
+
+TABELA: sqlite_sequence
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+name                                 Sim      Não  
+seq                                  Sim      Não  
+
+Total de registros: 1
+
+==================================================
+BANCO DE DADOS: vectors.db
+==================================================
+
+
+TABELA: word_vectors
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+id                   INTEGER         Sim      Sim  
+word                 TEXT            Sim      Não  
+vector               BLOB            Sim      Não  
+
+Total de registros: 495
+
+==================================================
+BANCO DE DADOS: vectors_continuo.db
+==================================================
+
+
+TABELA: word_vectors
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+id                   INTEGER         Sim      Sim  
+word                 TEXT            Sim      Não  
+vector               BLOB            Sim      Não  
+palavra_origem       TEXT            Sim      Não  
+timestamp            DATETIME        Sim      Não  
+
+Total de registros: 2756

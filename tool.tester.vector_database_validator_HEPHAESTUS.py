@@ -1,188 +1,222 @@
 import sqlite3
 import numpy as np
-import pandas as pd
-from datetime import datetime
-import hashlib
-import os
-from colorama import Fore, Style, init
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.metrics.pairwise import cosine_similarity
-from rich.console import Console
-from rich.panel import Panel
-from rich.progress import track
-from sentence_transformers import SentenceTransformer
-from transformers import BertTokenizer, BertModel
 import torch
-import emoji
+from transformers import BertTokenizer, BertModel
+from rich.console import Console
+from rich.progress import track
+from rich.panel import Panel
+import yaml
+from pathlib import Path
+from datetime import datetime
+import logging
+from sklearn.metrics.pairwise import cosine_similarity
+import asyncio
+import threading
+from concurrent.futures import ThreadPoolExecutor
+from rich.layout import Layout
+from rich.live import Live
+from rich.table import Table
+from hashlib import sha256
+from queue import Queue
+import json
+import aiofiles
 
-init(autoreset=True)
+# Configuração de logging
+logging.basicConfig(filename='blob_decoder.log', level=logging.ERROR,
+                   format='%(asctime)s - %(levelname)s - %(message)s')
+
 console = Console()
 
-def gerar_nome_arquivo():
-    """Gera nome único para arquivo com timestamp e hash"""
-    agora = datetime.now().strftime("%Y%m%d_%H%M%S")
-    hash_unica = hashlib.md5(str(datetime.now()).encode()).hexdigest()[:8]
-    return f"{agora}_{hash_unica}"
+# Configuração do banco de dados
+DATABASE_PATH = 'vectors_continuo.db'
 
-def salvar_grafico(plt, nome_base):
-    """Salva gráfico na pasta reports-graphics"""
-    os.makedirs('reports-graphics', exist_ok=True)
-    nome_arquivo = f"reports-graphics/{nome_base}_{gerar_nome_arquivo()}.png"
-    plt.savefig(nome_arquivo)
-    plt.close()
+class BlobDecoder:
+    def __init__(self):
+        # Inicializa BERT
+        try:
+            self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+            self.model = BertModel.from_pretrained('bert-base-uncased')
+            self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+            self.model.to(self.device)
+            self.model.eval()
+            console.print(f"[green]Usando dispositivo: {self.device}")
+        except Exception as e:
+            logging.error(f"Erro ao inicializar BERT: {e}")
+            raise RuntimeError("Falha na inicialização do modelo BERT")
 
-def vector_to_text(vector, model, tokenizer):
-    """Converte vetor de volta para texto usando BERT"""
-    try:
-        # Redimensiona o vetor se necessário para corresponder à dimensão do BERT
-        if vector.shape[0] == 512:
-            vector = np.pad(vector, (0, 256), 'constant')
-        
-        # Encontra a sentença mais próxima usando BERT
-        with torch.no_grad():
-            # Exemplo de frases para comparação
-            frases = [
-                "Este é um texto de exemplo em português",
-                "Outro texto para comparação",
-                "Mais uma frase de teste",
-                "Exemplo de conteúdo textual",
-                "Frase para análise vetorial"
-            ]
+        self.processed_queue = Queue()
+        self.metrics = {
+            'total_processed': 0,
+            'successful_decodes': 0,
+            'failed_decodes': 0,
+            'avg_processing_time': 0,
+            'max_similarity_score': 0,
+            'min_similarity_score': 1,
+            'current_batch_size': 0,
+            'memory_usage': 0,
+            'vectors_per_second': 0,
+            'error_rate': 0
+        }
+        self.lock = threading.Lock()
+
+    def create_grid_layout(self):
+        """Cria layout com 4 grids de métricas"""
+        layout = Layout()
+        layout.split_column(
+            Layout(name="upper"),
+            Layout(name="lower")
+        )
+        layout["upper"].split_row(
+            Layout(name="metrics1"),
+            Layout(name="metrics2")
+        )
+        layout["lower"].split_row(
+            Layout(name="metrics3"),
+            Layout(name="metrics4")
+        )
+        return layout
+
+    def create_metrics_table(self, title, metrics_dict):
+        table = Table(title=title)
+        table.add_column("Métrica")
+        table.add_column("Valor")
+        for k, v in metrics_dict.items():
+            table.add_row(k, str(v))
+        return table
+
+    def blob_to_vector(self, blob):
+        """Converte BLOB para vetor numpy"""
+        try:
+            return np.frombuffer(blob, dtype=np.float32)
+        except Exception as e:
+            logging.error(f"Erro ao converter blob para vetor: {e}")
+            return None
+
+    def vector_to_text(self, vector):
+        """Converte vetor para texto usando BERT"""
+        try:
+            # Redimensiona o vetor se necessário
+            if vector.shape[0] == 512:
+                vector = np.pad(vector, (0, 256), 'constant')
             
-            # Codifica as frases de exemplo
-            inputs = tokenizer(frases, padding=True, truncation=True, return_tensors="pt")
-            outputs = model(**inputs)
-            embeddings = outputs.last_hidden_state.mean(dim=1)
+            with torch.no_grad():
+                # Frases de referência para comparação
+                frases_referencia = [
+                    "Este é um texto de exemplo em português",
+                    "Outro texto para comparação",
+                    "Mais uma frase de teste",
+                    "Exemplo de conteúdo textual",
+                    "Frase para análise vetorial",
+                    "Conteúdo do documento",
+                    "Informação processada",
+                    "Dados convertidos",
+                    "Texto extraído",
+                    "Resultado da análise"
+                ]
+                
+                # Codifica as frases de referência
+                inputs = self.tokenizer(frases_referencia, padding=True, truncation=True, return_tensors="pt")
+                outputs = self.model(**inputs)
+                embeddings = outputs.last_hidden_state.mean(dim=1)
+                
+                # Calcula similaridade
+                vector_tensor = torch.tensor(vector).unsqueeze(0)
+                similarities = cosine_similarity(vector_tensor, embeddings.numpy())[0]
+                
+                return frases_referencia[np.argmax(similarities)]
+        except Exception as e:
+            logging.error(f"Erro na conversão do vetor para texto: {e}")
+            return "Erro na conversão"
+
+    async def process_vector(self, vector_blob, cursor_id):
+        try:
+            vector = self.blob_to_vector(vector_blob[0])
+            if vector is not None:
+                text = self.vector_to_text(vector)
+                vector_preview = str(vector[:5]) + "..."
+                
+                with self.lock:
+                    self.metrics['total_processed'] += 1
+                    self.metrics['successful_decodes'] += 1
+                
+                return {
+                    'text': text,
+                    'vector_preview': vector_preview,
+                    'cursor_id': cursor_id,
+                    'timestamp': datetime.now().isoformat()
+                }
+        except Exception as e:
+            logging.error(f"Erro no processamento do vetor {cursor_id}: {e}")
+            with self.lock:
+                self.metrics['failed_decodes'] += 1
+            return None
+
+    async def stream_to_yaml(self, data, output_file):
+        """Grava dados incrementalmente no YAML"""
+        async with aiofiles.open(output_file, 'a') as f:
+            await f.write(yaml.dump([data], allow_unicode=True))
+
+    async def process_database(self):
+        try:
+            conn = sqlite3.connect(DATABASE_PATH)
+            cursor = conn.cursor()
             
-            # Calcula similaridade
-            vector_tensor = torch.tensor(vector).unsqueeze(0)
-            similarities = cosine_similarity(vector_tensor, embeddings.numpy())[0]
+            # Verifica se o banco existe e tem a estrutura correta
+            cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='word_vectors'")
+            if not cursor.fetchone():
+                raise Exception("Tabela word_vectors não encontrada no banco de dados")
             
-            return frases[np.argmax(similarities)]
-    except Exception as e:
-        return f"Erro na conversão: {str(e)}"
+            # Obtém total de registros
+            cursor.execute("SELECT COUNT(*) FROM word_vectors")
+            total_registros = cursor.fetchone()[0]
+            console.print(f"[blue]Total de registros encontrados: {total_registros}")
+            
+            # Obtém todos os vetores
+            cursor.execute("SELECT vector FROM word_vectors")
+            
+            process_hash = sha256(str(datetime.now()).encode()).hexdigest()[:8]
+            output_file = f"decoded_vectors_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{process_hash}.yaml"
 
-def realizar_testes_avancados(df):
-    """Realiza testes expandidos com BERT e análises avançadas"""
-    # Inicialização dos modelos
-    bert_tokenizer = BertTokenizer.from_pretrained('bert-base-multilingual-cased')
-    bert_model = BertModel.from_pretrained('bert-base-multilingual-cased')
-    sentence_model = SentenceTransformer('distiluse-base-multilingual-cased-v2')
+            layout = self.create_grid_layout()
 
-    # === Bloco 1: Análise Vetorial Básica ===
-    console.print(Panel(
-        f"{emoji.emojize(':microscope:')} [bold]Análise Vetorial Básica[/]\n"
-        f"Dimensões: {dict(df['vector'].apply(len).value_counts())}\n"
-        f"Total vetores: {len(df)}\n"
-        f"Média norma L2: {df['vector'].apply(np.linalg.norm).mean():.4f}\n"
-        f"Densidade média: {df['vector'].apply(lambda x: np.count_nonzero(x)/len(x)).mean():.4f}"
-    ))
+            with Live(layout, refresh_per_second=4) as live:
+                with ThreadPoolExecutor(max_workers=4) as executor:
+                    futures = []
+                    for cursor_id, vector_blob in enumerate(cursor.fetchall()):
+                        future = asyncio.create_task(self.process_vector(vector_blob, cursor_id))
+                        futures.append(future)
 
-    # === Bloco 2: Análise Estatística Avançada ===
-    df['entropia'] = df['vector'].apply(lambda x: -np.sum(np.square(x) * np.log2(np.square(x) + 1e-10)))
-    stats_panel = Panel(
-        f"{emoji.emojize(':chart_increasing:')} [bold]Análise Estatística Avançada[/]\n"
-        f"Entropia média: {df['entropia'].mean():.4f}\n"
-        f"Máximo global: {df['vector'].apply(lambda x: np.max(x)).max():.4f}\n"
-        f"Mínimo global: {df['vector'].apply(lambda x: np.min(x)).min():.4f}\n"
-        f"Curtose média: {df['vector'].apply(lambda x: pd.Series(x).kurtosis()):.4f}"
-    )
-    console.print(stats_panel)
+                        if len(futures) >= 10:  # Processa em lotes de 10
+                            completed = await asyncio.gather(*futures)
+                            for result in completed:
+                                if result:
+                                    await self.stream_to_yaml(result, output_file)
+                            
+                            # Atualiza displays
+                            layout["metrics1"].update(self.create_metrics_table("Métricas Gerais", 
+                                dict(list(self.metrics.items())[:3])))
+                            layout["metrics2"].update(self.create_metrics_table("Performance", 
+                                dict(list(self.metrics.items())[3:6])))
+                            layout["metrics3"].update(self.create_metrics_table("Recursos", 
+                                dict(list(self.metrics.items())[6:8])))
+                            layout["metrics4"].update(self.create_metrics_table("Status", 
+                                dict(list(self.metrics.items())[8:])))
+                            
+                            futures = []
 
-    # === Bloco 3: Análise de Tokens ===
-    amostra_vetores = df['vector'].head(5).tolist()
-    token_stats = []
-    for vec in track(amostra_vetores, description="Analisando tokens..."):
-        texto = vector_to_text(vec, bert_model, bert_tokenizer)
-        tokens = bert_tokenizer.tokenize(texto)
-        token_stats.append(len(tokens))
-    
-    console.print(Panel(
-        f"{emoji.emojize(':abacus:')} [bold]Análise de Tokens[/]\n"
-        f"Média de tokens: {np.mean(token_stats):.2f}\n"
-        f"Máximo de tokens: {max(token_stats)}\n"
-        f"Mínimo de tokens: {min(token_stats)}"
-    ))
-
-    # === Bloco 4: Análise de Similaridade ===
-    similarity_matrix = cosine_similarity(amostra_vetores)
-    console.print(Panel(
-        f"{emoji.emojize(':dna:')} [bold]Análise de Similaridade[/]\n"
-        f"Similaridade média: {np.mean(similarity_matrix):.4f}\n"
-        f"Similaridade máxima: {np.max(similarity_matrix[similarity_matrix < 1]):.4f}\n"
-        f"Similaridade mínima: {np.min(similarity_matrix):.4f}"
-    ))
-
-    # === Bloco 5: Visualizações Avançadas ===
-    # Gráfico 1: Distribuição de Entropia
-    plt.figure(figsize=(10, 6))
-    sns.histplot(df['entropia'], kde=True)
-    plt.title('Distribuição de Entropia dos Vetores')
-    salvar_grafico(plt, 'entropia_dist')
-
-    # Gráfico 2: Heatmap de Similaridade
-    plt.figure(figsize=(10, 8))
-    sns.heatmap(similarity_matrix, annot=True, cmap='viridis')
-    plt.title('Matriz de Similaridade entre Vetores')
-    salvar_grafico(plt, 'similarity_matrix')
-
-    # Gráfico 3: PCA dos Vetores
-    from sklearn.decomposition import PCA
-    pca = PCA(n_components=2)
-    pca_result = pca.fit_transform(np.vstack(df['vector'].values))
-    plt.figure(figsize=(10, 8))
-    plt.scatter(pca_result[:, 0], pca_result[:, 1], alpha=0.5)
-    plt.title('PCA dos Vetores')
-    salvar_grafico(plt, 'pca_vectors')
-
-    # Gráfico 4: Distribuição de Valores por Dimensão
-    plt.figure(figsize=(12, 6))
-    sns.boxplot(data=pd.DataFrame(np.vstack(df['vector'].values)[:, :10]))
-    plt.title('Distribuição de Valores por Dimensão (10 primeiras)')
-    salvar_grafico(plt, 'dim_distribution')
-
-    # Gráfico 5: Análise de Componentes
-    explained_variance = pca.explained_variance_ratio_
-    plt.figure(figsize=(10, 6))
-    plt.plot(np.cumsum(explained_variance))
-    plt.title('Variância Explicada Acumulada')
-    plt.xlabel('Número de Componentes')
-    plt.ylabel('Variância Explicada Acumulada')
-    salvar_grafico(plt, 'variance_explained')
-
-    # === Bloco 6: Conversão para Texto ===
-    console.print("\n[bold]🔄 Amostra de Conversões Vetor->Texto[/]")
-    for i in track(range(min(5, len(df))), description="Convertendo vetores..."):
-        texto = vector_to_text(df['vector'].iloc[i], bert_model, bert_tokenizer)
-        tokens = bert_tokenizer.tokenize(texto)
-        console.print(f"Vetor {i}:")
-        console.print(f"  Texto: {texto}")
-        console.print(f"  Tokens: {tokens}")
-        console.print(f"  Quantidade de tokens: {len(tokens)}")
-
-def fetch_vectors():
-    """Recupera vetores do banco de dados vectors.db"""
-    try:
-        conn = sqlite3.connect('vectors.db')
-        df = pd.read_sql_query("SELECT vector FROM word_vectors", conn)
-        conn.close()
-        df['vector'] = df['vector'].apply(lambda x: np.fromstring(x[1:-1], dtype=float, sep=' '))
-        return df
-    except sqlite3.Error as e:
-        console.print(f"[bold red]Erro ao acessar o banco de dados: {e}[/]")
-        return pd.DataFrame()
-    except Exception as e:
-        console.print(f"[bold red]Erro ao processar vetores: {e}[/]")
-        return pd.DataFrame()
-
-def main():
-    console.print(f"\n{emoji.emojize(':rocket:')} [bold cyan]Iniciando análise avançada de vetores...[/]")
-    df = fetch_vectors()
-    realizar_testes_avancados(df)
-    console.print(f"\n{emoji.emojize(':check_mark_button:')} [bold cyan]Análise concluída![/]")
+            console.print(Panel(f"""[green]Processamento concluído com sucesso!
+            - Arquivo YAML: {output_file}
+            - Total de vetores processados: {self.metrics['total_processed']}/{total_registros}
+            - Timestamp: {datetime.now().strftime('%Y%m%d_%H%M%S')}_{process_hash}"""))
+            
+        except Exception as e:
+            logging.error(f"Erro no processamento: {e}")
+            console.print(f"[red]Erro: {e}")
+        finally:
+            if 'conn' in locals():
+                conn.close()
 
 if __name__ == "__main__":
-    main()
-
-# ----HEPHAESTUS----
+    console.print(Panel("[yellow]Iniciando decodificação de vetores do banco de dados"))
+    decoder = BlobDecoder()
+    asyncio.run(decoder.process_database())

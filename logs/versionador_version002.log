@@ -1,0 +1,2 @@
+[2024-11-02 14:23:26] ❌ Erro ao gerar indicadores: type object 'datetime.datetime' has no attribute 'datetime'
+[2024-11-02 14:23:26] ✅ Arquivo 'processor.vector.yaml_vectorization_engine_DAEDALUS.py' versionado para 'processor.vector.yaml_vectorization_engine_DAEDALUS-work--revision-0001.py'
