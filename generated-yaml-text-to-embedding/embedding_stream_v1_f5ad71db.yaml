@@ -1,0 +1,483 @@
+```yaml
+palavras_relacionadas:
+  # Tipos de Veículos
+  tipos:
+    - automóvel
+    - veículo
+    - carro de passeio
+    - carro esporte
+    - SUV
+    - hatchback
+    - sedan
+    - crossover
+    - minivan
+    - picape
+    - caminhão
+    - ônibus
+    - moto
+    - bicicleta
+    - trem
+    - avião
+    - barco
+  # Partes do Carro
+  partes:
+    - chassi
+    - motor
+    - câmbio
+    - suspensão
+    - freios
+    - direção
+    - rodas
+    - pneus
+    - farol
+    - para-brisa
+    - porta
+    - banco
+    - volante
+    - painel
+    - retrovisor
+    - escapamento
+    - tanque de combustível
+    - bateria
+    - alternador
+    - sistema de ar condicionado
+    - sistema de som
+    - GPS
+    - air bag
+    - sensor de estacionamento
+    - câmera de ré
+    - sistema de segurança
+  # Funcionalidades do Carro
+  funcionalidades:
+    - aceleração
+    - frenagem
+    - direção
+    - marcha à ré
+    - estacionamento
+    - conforto
+    - segurança
+    - economia de combustível
+    - desempenho
+    - velocidade
+    - autonomia
+    - capacidade de carga
+  # Processos e Ações
+  processos_acoes:
+    - dirigir
+    - acelerar
+    - frear
+    - virar
+    - estacionar
+    - abastecer
+    - lavar
+    - consertar
+    - revisar
+    - inspecionar
+    - transportar
+    - viajar
+    - alugar
+    - comprar
+    - vender
+  # Conceitos Associados
+  conceitos:
+    - transporte
+    - mobilidade
+    - trânsito
+    - segurança viária
+    - poluição
+    - consumo de combustível
+    - emissões
+    - sustentabilidade
+    - tecnologia automotiva
+    - inovação
+    - design
+    - conforto
+    - luxo
+    - desempenho
+    - esporte
+    - corrida
+    - coleção
+    - história
+    - cultura
+  # Termos Técnicos
+  tecnicos:
+    - cilindrada
+    - potência
+    - torque
+    - cavalos de potência
+    - consumo
+    - autonomia
+    - tração
+    - câmbio automático
+    - câmbio manual
+    - injeção eletrônica
+    - turbo
+    - ABS
+    - ESP
+    - airbags
+    - sensor de estacionamento
+    - câmera de ré
+    - piloto automático
+    - controle de cruzeiro
+    - sistema de som
+    - GPS
+  # Aplicações Práticas
+  aplicacoes:
+    - transporte pessoal
+    - transporte de carga
+    - transporte público
+    - transporte escolar
+    - táxis
+    - aplicativos de transporte
+    - entrega de mercadorias
+    - serviços de emergência
+    - polícia
+    - bombeiros
+    - ambulâncias
+    - corrida de carros
+    - esporte motorizado
+    - turismo
+    - eventos
+  # Marcas e Modelos
+  marcas_modelos:
+    - Ford
+    - Chevrolet
+    - Toyota
+    - Honda
+    - Hyundai
+    - Kia
+    - Volkswagen
+    - Nissan
+    - BMW
+    - Mercedes-Benz
+    - Audi
+    - Porsche
+    - Ferrari
+    - Lamborghini
+    - Tesla
+    - Fiat
+    - Renault
+    - Peugeot
+    - Citroën
+    - Volvo
+    - Mazda
+    - Subaru
+    - Jeep
+    - Land Rover
+    - Cadillac
+    - Lexus
+    - Infiniti
+    - Acura
+  # Sub-Categorias
+  subcategorias:
+    - carros elétricos:
+      - Tesla Model S
+      - Nissan Leaf
+      - Chevrolet Bolt
+      - Hyundai Kona Electric
+      - Audi e-tron
+    - carros híbridos:
+      - Toyota Prius
+      - Honda Insight
+      - Hyundai Ioniq
+      - Ford Fusion Hybrid
+      - Lexus ES 300h
+    - carros esportivos:
+      - Porsche 911
+      - Ferrari 488 GTE
+      - Lamborghini Aventador
+      - McLaren 720S
+      - Aston Martin DB11
+    - carros de luxo:
+      - Rolls-Royce Phantom
+      - Bentley Continental GT
+      - Mercedes-Benz S-Class
+      - BMW 7 Series
+      - Audi A8
+    - carros clássicos:
+      - Ford Mustang
+      - Chevrolet Corvette
+      - Volkswagen Beetle
+      - Mini Cooper
+      - Fiat 500
+    - carros vintage:
+      - Ford Model T
+      - Chevrolet Bel Air
+      - Cadillac Eldorado
+      - Mercedes-Benz 300SL
+      - Jaguar E-Type
+  # Relacionamentos Hierárquicos
+  hierarquia:
+    - transporte:
+      - terrestre:
+        - veículo:
+          - carro:
+            - carro de passeio
+            - carro esporte
+            - SUV
+            - hatchback
+            - sedan
+            - crossover
+            - minivan
+            - picape
+            - caminhão
+      - aéreo:
+        - avião
+      - aquático:
+        - barco
+  # Adjetivos
+  adjetivos:
+    - novo
+    - usado
+    - automático
+    - manual
+    - potente
+    - econômico
+    - veloz
+    - confortável
+    - seguro
+    - moderno
+    - clássico
+    - vintage
+    - luxuoso
+    - esportivo
+    - elegante
+    - robusto
+    - espaçoso
+    - compacto
+    - familiar
+    - urbano
+    - off-road
+    - elétrico
+    - híbrido
+    - potente
+    - eficiente
+    - sustentável
+    - confiável
+    - versátil
+    - acessível
+    - popular
+    - exclusivo
+    - desejável
+    - revolucionário
+  # Verbos
+  verbos:
+    - dirigir
+    - acelerar
+    - frear
+    - estacionar
+    - abastecer
+    - lavar
+    - consertar
+    - revisar
+    - inspecionar
+    - transportar
+    - viajar
+    - alugar
+    - comprar
+    - vender
+    - customizar
+    - modificar
+    - restaurar
+    - modernizar
+    - aprimorar
+    - otimizar
+    - aperfeiçoar
+    - melhorar
+    - evoluir
+  # Expressões Idiomáticas
+  idiomaticas:
+    - carro de corrida
+    - carro de luxo
+    - carro de sonho
+    - carro da moda
+    - carro zero km
+    - carro usado
+    - carro popular
+    - carro de alta performance
+    - carro de baixo consumo
+    - carro de aventura
+    - carro para a família
+    - carro para a cidade
+    - carro para o campo
+    - carro para o trabalho
+    - carro para o lazer
+    - carro para todos os gostos
+    - carro para todas as ocasiões
+    - carro para todas as necessidades
+  # Outros
+  outros:
+    - placa
+    - licença
+    - seguro
+    - IPVA
+    - pedágio
+    - estacionamento
+    - oficina
+    - mecânico
+    - concessionária
+    - revista automotiva
+    - site automotivo
+    - evento automotivo
+    - corrida de carros
+    - rally
+    - drift
+    - tuning
+    - customização
+    - restauração
+    - coleção
+    - história do carro
+    - futuro do carro
+    - impacto ambiental
+    - legislação
+    - segurança
+    - legislação
+    - regulamentação
+    - normas
+    - padrões
+    - certificações
+    - testes
+    - homologação
+    - pesquisa
+    - desenvolvimento
+    - inovação
+    - tecnologia
+    - indústria automotiva
+    - mercado automotivo
+    - economia
+    - política
+    - sociedade
+    - cultura
+    - arte
+    - literatura
+    - música
+    - cinema
+    - televisão
+    - jogos
+    - internet
+    - mídias sociais
+    - publicidade
+    - marketing
+    - design
+    - ergonomia
+    - estética
+    - conforto
+    - segurança
+    - desempenho
+    - economia
+    - sustentabilidade
+    - inovação
+    - tecnologia
+    - futuro
+    - presente
+    - passado
+    - presente
+    - futuro
+    - globalização
+    - urbanização
+    - meio ambiente
+    - recursos naturais
+    - energia
+    - combustíveis
+    - emissões
+    - poluição
+    - clima
+    - saúde
+    - bem-estar
+    - qualidade de vida
+    - progresso
+    - desenvolvimento
+    - crescimento
+    - evolução
+    - revolução
+    - transformação
+    - mudança
+    - adaptação
+    - progresso
+    - desenvolvimento
+    - inovação
+    - tecnologia
+    - futuro
+    - presente
+    - passado
+    - história
+    - cultura
+    - sociedade
+    - economia
+    - política
+    - meio ambiente
+    - ética
+    - moral
+    - valores
+    - crenças
+    - princípios
+    - direitos
+    - deveres
+    - responsabilidade
+    - justiça
+    - equidade
+    - igualdade
+    - liberdade
+    - democracia
+    - cidadania
+    - comunidade
+    - identidade
+    - pertencimento
+    - amor
+    - amizade
+    - família
+    - trabalho
+    - educação
+    - saúde
+    - lazer
+    - felicidade
+    - bem-estar
+    - qualidade de vida
+    - paz
+    - esperança
+    - fé
+    - crença
+    - espiritualidade
+    - transcendência
+    - propósito
+    - significado
+    - existência
+    - consciência
+    - realidade
+    - universo
+    - tempo
+    - espaço
+    - matéria
+    - energia
+    - vida
+    - morte
+    - nascimento
+    - crescimento
+    - desenvolvimento
+    - evolução
+    - transformação
+    - mudança
+    - adaptação
+    - progresso
+    - conhecimento
+    - sabedoria
+    - inteligência
+    - criatividade
+    - imaginação
+    - arte
+    - cultura
+    - ciência
+    - tecnologia
+    - inovação
+    - futuro
+    - presente
+    - passado
+    - história
+    - sociedade
+    - economia
+    - política
+    - meio ambiente
+    - ética
+    - moral
+    - valores
+    
