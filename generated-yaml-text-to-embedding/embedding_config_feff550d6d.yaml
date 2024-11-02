@@ -1,0 +1,288 @@
+---
+"metadata":
+  "timestamp": |-
+    2024-11-02T09:06:39.512032
+  "prompt": |-
+    docker
+  "hash_id": |-
+    feff550d6d
+"embedding_config":
+  "raw_content": |-
+    ```yaml
+    lista_palavras:
+    - docker
+    - container
+    - imagem
+    - containerização
+    - orquestração
+    - microserviços
+    - conteinerização
+    - contêineres
+    - virtualização
+    - isolamento
+    - portabilidade
+    - consistência
+    - reprodutibilidade
+    - Dockerfile
+    - Docker Hub
+    - Docker Compose
+    - Kubernetes
+    - Swarm
+    - contêineres leves
+    - recursos compartilhados
+    - kernel do sistema operacional
+    - namespace
+    - cgroups
+    - isolamento de recursos
+    - gerenciamento de recursos
+    - escalabilidade
+    - alta disponibilidade
+    - desenvolvimento ágil
+    - entrega contínua
+    - implantação
+    - CI/CD
+    - DevOps
+    - desenvolvimento de software
+    - infraestrutura como código
+    - infraestrutura imutável
+    - automação
+    - orquestração de contêineres
+    - gerenciamento de contêineres
+    - plataforma de contêineres
+    - ecossistema de contêineres
+    - ferramentas de contêineres
+    - Docker Desktop
+    - Docker Engine
+    - Docker CLI
+    - Docker API
+    - Docker Registry
+    - Docker Hub Enterprise
+    - Docker Cloud
+    - Docker Swarm Mode
+    - Docker Compose
+    - Docker Machine
+    - Docker Networking
+    - Docker Security
+    - Docker Volumes
+    - Docker Secrets
+    - Docker Build
+    - Docker Run
+    - Docker Push
+    - Docker Pull
+    - Docker Stop
+    - Docker Start
+    - Docker Restart
+    - Docker Remove
+    - Docker Exec
+    - Docker Logs
+    - Docker Stats
+    - Docker Events
+    - Docker Inspect
+    - Docker Version
+    - Docker Info
+    - Docker Search
+    - Docker Pull
+    - Docker Tag
+    - Docker History
+    - Docker Commit
+    - Docker Export
+    - Docker Import
+    - Docker Save
+    - Docker Load
+    - Docker Registry
+    - Docker Hub
+    - Docker Cloud
+    - Docker Enterprise Edition
+    - Docker Community Edition
+    - Docker for Windows
+    - Docker for Mac
+    - Docker for Linux
+    - Docker for ARM
+    - Docker for Raspberry Pi
+    - Docker Compose
+    - Docker Swarm
+    - Kubernetes
+    - Rancher
+    - Mesosphere
+    - Nomad
+    - HashiCorp Vault
+    - Jenkins
+    - GitLab CI/CD
+    - CircleCI
+    - Travis CI
+    - AWS ECS
+    - Google Kubernetes Engine
+    - Azure Kubernetes Service
+    - OpenShift
+    - Cloud Foundry
+    - Heroku
+    - Netlify
+    - Vercel
+    - Serverless
+    - AWS Lambda
+    - Google Cloud Functions
+    - Azure Functions
+    - OpenWhisk
+    - Apache OpenWhisk
+    - IBM Cloud Functions
+    - Alibaba Cloud Functions
+    - Tencent Cloud Functions
+    - Baidu Cloud Functions
+    -  Microserviços
+    -  Arquitetura de Microserviços
+    -  Desenvolvimento de Microserviços
+    -  Implementação de Microserviços
+    -  Gerenciamento de Microserviços
+    -  Monitoramento de Microserviços
+    -  Segurança de Microserviços
+    -  API Gateway
+    -  Message Broker
+    -  Service Discovery
+    -  Configuração Centralizada
+    -  Log Centralizado
+    -  Monitoramento Centralizado
+    -  Gerenciamento de Dependências
+    -  Testes de Microserviços
+    -  Integração Contínua
+    -  Entrega Contínua
+    -  DevOps
+    -  Agile
+    -  Scrum
+    -  Kanban
+    -  Lean
+    -  Extreme Programming
+    -  Test Driven Development
+    -  Continuous Integration
+    -  Continuous Delivery
+    -  Continuous Deployment
+    -  Infrastructure as Code
+    -  Immutable Infrastructure
+    -  Declarative Configuration
+    -  Automation
+    -  Orchestration
+    -  Containerization
+    -  Virtualization
+    -  Cloud Computing
+    -  Serverless Computing
+    -  Edge Computing
+    -  Internet of Things
+    -  Artificial Intelligence
+    -  Machine Learning
+    -  Deep Learning
+    -  Big Data
+    -  Data Science
+    -  Data Engineering
+    -  DevOps as Code
+    -  GitOps
+    -  Infrastructure as Code
+    -  IaC
+    -  Terraform
+    -  Ansible
+    -  Chef
+    -  Puppet
+    -  CloudFormation
+    -  Azure Resource Manager
+    -  Google Cloud Deployment Manager
+    -  Kubernetes YAML
+    -  Helm
+    -  Kustomize
+    -  Container Registry
+    -  Docker Hub
+    -  Google Container Registry
+    -  Amazon ECR
+    -  Azure Container Registry
+    -  Harbor
+    -  JFrog Artifactory
+    -  Nexus Repository Manager
+    -  Security
+    -  Vulnerability Scanning
+    -  Image Scanning
+    -  Security Best Practices
+    -  Compliance
+    -  Network Security
+    -  Data Security
+    -  Identity and Access Management
+    -  Authentication
+    -  Authorization
+    -  Role-Based Access Control
+    -  Multi-Factor Authentication
+    -  Monitoring
+    -  Logging
+    -  Metrics
+    -  Alerts
+    -  Dashboards
+    -  Troubleshooting
+    -  Debugging
+    -  Performance Optimization
+    -  Scalability
+    -  High Availability
+    -  Disaster Recovery
+    -  Load Balancing
+    -  Service Mesh
+    -  Istio
+    -  Linkerd
+    -  Consul
+    -  Service Discovery
+    -  Health Checks
+    -  Traffic Management
+    -  Fault Tolerance
+    -  Resilience
+    -  Observability
+    -  Tracing
+    -  Distributed Tracing
+    -  Jaeger
+    -  Zipkin
+    -  Prometheus
+    -  Grafana
+    -  OpenTelemetry
+    -  Chaos Engineering
+    -  Chaos Monkey
+    -  Chaos Testing
+    -  DevOps Culture
+    -  Collaboration
+    -  Communication
+    -  Automation
+    -  Continuous Improvement
+    -  Agile Development
+    -  Lean Principles
+    -  Value Stream Mapping
+    -  Continuous Integration and Continuous Delivery
+    -  CI/CD
+    -  Pipeline
+    -  Jenkins
+    -  GitLab CI/CD
+    -  CircleCI
+    -  Travis CI
+    -  Azure DevOps
+    -  AWS CodePipeline
+    -  Google Cloud Build
+    -  Infrastructure as Code
+    -  Terraform
+    -  Ansible
+    -  Chef
+    -  Puppet
+    -  CloudFormation
+    -  Azure Resource Manager
+    -  Google Cloud Deployment Manager
+    -  Kubernetes
+    -  Docker
+    -  Containerization
+    -  Microservices
+    -  Serverless
+    -  Cloud Computing
+    -  Edge Computing
+    -  Internet of Things
+    -  Artificial Intelligence
+    -  Machine Learning
+    -  Deep Learning
+    -  Big Data
+    -  Data Science
+    -  Data Engineering
+    -  DevOps
+    -  Agile
+    -  Security
+    -  Monitoring
+    -  Observability
+    -  Chaos Engineering
+    -  DevOps Culture
+    ```
