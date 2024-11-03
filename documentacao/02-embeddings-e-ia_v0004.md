@@ -29,3 +29,7 @@
 - Logging estruturado
 - Rotação de arquivos de log
 - Monitoramento de erros e retentativas
+
+## 🆕 Novidades da Versão 0.0.0.7
+
+- Atualizações: Uma análise mais detalhada seria necessária para descrever completamente as mudanças nesta versão. Novos arquivos e diretórios foram adicionados, e vários arquivos existentes foram modificados. Consulte a lista completa de arquivos para obter mais informações.

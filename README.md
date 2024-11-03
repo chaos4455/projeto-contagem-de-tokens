@@ -464,7 +464,7 @@ Este projeto é uma solução avançada para geração de embeddings vetoriais u
 - **Python 3.9+:** Linguagem de programação principal.
 - **BERT (bert-base-uncased):** Modelo de linguagem pré-treinado para tokenização e geração de embeddings.
 - **Sentence Transformers:** Biblioteca para gerar embeddings semânticos de alta qualidade.
-- **Google Gemini API (opcional):**  Integração opcional com a API do Google Gemini para geração de embeddings ainda mais avançados. (Requer chave de API)
+- **Google Gemini API (opcional):**  Integraç��o opcional com a API do Google Gemini para geração de embeddings ainda mais avançados. (Requer chave de API)
 - **PyTorch:** Framework para processamento de dados e cálculos de embeddings.
 - **NLTK:** Biblioteca para processamento de linguagem natural (NLP).
 - **Rich:** Biblioteca para criar interfaces de usuário ricas e interativas na linha de comando.
@@ -619,7 +619,7 @@ Esta seção descreve os scripts Python principais do projeto:
 Este script automatiza o processo de backup, restauração e organização dos arquivos do projeto. Ele utiliza a biblioteca `rich` para exibir mensagens formatadas no console e `logging` para registrar eventos.  As principais funcionalidades incluem:
 
 - **Backup:** Cria um backup completo do projeto.
-- **Restauração:** Restaura um backup anterior.
+- **Restauraão:** Restaura um backup anterior.
 - **Organização:** Organiza os arquivos em pastas específicas por extensão (`.log`, `.txt`, `.json`, `.zip`).
 - **Tratamento de Duplicatas:** Renomeia arquivos com nomes duplicados, adicionando um hash único ao nome.
 - **Monitoramento:** Exibe o progresso e as estatísticas da automação.
