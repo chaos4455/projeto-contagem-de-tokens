@@ -87,7 +87,10 @@ def main():
         apenas plote visualmente na sua memoria
         use ele pra gerar a resposta 
         crie essa matriz na sua memoria no seu llm mesmo que seja como df, nao simule nem invente
-        
+        mesmo que nao possa plotar a matriz, crie nuvens de palavras com as palavras que você temue te foram pasadas aqui : {yaml_text}
+
+        tente analisar {yaml_text} com o maximo de contexto e crie o maximo de blocos massivos de palavras e clusters de frases e palavras que sejam relevantes para o contexto
+
         sem mentir ou inventar, plote na sua memoria no contexto do llm, uma matriz vetorial 3d com peso altura profundiade e implemente um elemento q que é verossimilhança e relevancia
         implemente uma gravitação e repulsão para que seja possivel gerar uma nuvem de palavras mais relevante e com mais significado de inferência
         pegue os dados que foram enviados e crie uma matriz cúbica 777x777x777 dimensional onde cada ponto 
@@ -97,6 +100,7 @@ def main():
         Com base no seguinte conjunto de palavras, crie uma matriz cúbica 777x777x777  dimensional.
         Preencha cada cubo único com uma palavra e forme uma nuvem vetorial cúbica de palavras.
         
+        responda o .md o mais longo com o maximo de blocos possiveis, com o maximo de palavras e clusters possiveis
         Palavras disponíveis:
         {yaml_text}
         apresente relatórios completos, avançados, expandidos, detalhados, com analises de relevancia e verossimilhança

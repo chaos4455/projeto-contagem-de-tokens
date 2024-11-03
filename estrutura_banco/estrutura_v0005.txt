@@ -1,0 +1,121 @@
+=== ANÁLISE DE ESTRUTURA DE BANCOS DE DADOS ===
+Data/Hora: 03/11/2024 05:22:59
+Versão: v0005
+
+
+==================================================
+BANCO DE DADOS: tokens_database.db
+==================================================
+
+
+TABELA: tokens
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+id                   INTEGER         Sim      Sim  
+timestamp            TEXT            Sim      Não  
+unique_hash          TEXT            Sim      Não  
+input_text           TEXT            Sim      Não  
+tokens               TEXT            Sim      Não  
+embeddings           BLOB            Sim      Não  
+
+Total de registros: 1
+
+TABELA: sqlite_sequence
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+name                                 Sim      Não  
+seq                                  Sim      Não  
+
+Total de registros: 1
+
+==================================================
+BANCO DE DADOS: ultra-speed-words.db
+==================================================
+
+
+TABELA: words
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+id                   INTEGER         Sim      Sim  
+word                 TEXT            Sim      Não  
+chars                INTEGER         Sim      Não  
+created_at           TIMESTAMP       Sim      Não  
+
+Total de registros: 2317
+
+TABELA: sqlite_sequence
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+name                                 Sim      Não  
+seq                                  Sim      Não  
+
+Total de registros: 1
+
+==================================================
+BANCO DE DADOS: vectors.db
+==================================================
+
+
+TABELA: word_vectors
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+id                   INTEGER         Sim      Sim  
+word                 TEXT            Sim      Não  
+vector               BLOB            Sim      Não  
+
+Total de registros: 495
+
+==================================================
+BANCO DE DADOS: vectors_continuo.db
+==================================================
+
+
+TABELA: word_vectors
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+id                   INTEGER         Sim      Sim  
+word                 TEXT            Sim      Não  
+vector               BLOB            Sim      Não  
+palavra_origem       TEXT            Sim      Não  
+timestamp            DATETIME        Sim      Não  
+
+Total de registros: 3543
+
+==================================================
+BANCO DE DADOS: vetor-words-database-index.db
+==================================================
+
+
+TABELA: word_vectors
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+id                   INTEGER         Sim      Sim  
+word                 TEXT            Sim      Não  
+vector               BLOB            Sim      Não  
+tokens               INTEGER         Sim      Não  
+tamanho              INTEGER         Sim      Não  
+tempo_processamento  REAL            Sim      Não  
+embedding_size       INTEGER         Sim      Não  
+created_at           TIMESTAMP       Sim      Não  
+updated_at           TIMESTAMP       Sim      Não  
+palavra_origem       TEXT            Sim      Não  
+contexto             TEXT            Sim      Não  
+batch_id             TEXT            Sim      Não  
+
+Total de registros: 4298
+
+TABELA: sqlite_sequence
+------------------------------
+Nome                 Tipo            Nulo     PK   
+--------------------------------------------------
+name                                 Sim      Não  
+seq                                  Sim      Não  
+
+Total de registros: 1

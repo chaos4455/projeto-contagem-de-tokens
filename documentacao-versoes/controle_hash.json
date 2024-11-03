@@ -46,5 +46,9 @@
     "core-automation-infinity-world-gen-v1.py": "08e8bd45305c147c5742f29646075aab61f39d1c87f80e4fdc050bbc3ede1c05",
     "core-automation-infinity-world-gen-v2.py": "edfe22fa7db0b237ab59bf334210828be0e0a4560eff07d6ed8b852c810cf8b2",
     "export_wordlist.py": "592ba2fd8fc09b7a567a7541da5f726ba95618c50ba6c38bd6e43f8895752ce5",
-    "vector_cube_generator_MINERVA.py": "1160c1369975d82ee48d82489310f7437729e6e8575f1de996c0ac1d2bdfcc4e"
+    "vector_cube_generator_MINERVA.py": "340139d2c14ba7f653b47f65e30c4a329d57f772a6d7fce5c2544f4398f2ef15",
+    "analytics.heatmap.vector_correlations_ATLAS.py": "911b3d6b41158ac4214477b2373277cd12de2fbe27085be86b51b86cb58acd91",
+    "analytics.visualization.word_vectors_HERMES.py": "b954565681a925f96c85b2ae826b4b6e246909512b655b1aaf84e3f84f4d1e41",
+    "core-automation-infinity-world-gen-v3-ultra-speed.py": "8d419560288e4d386342d329b2d50a5c6ec488d765f515d825950821de5049cb",
+    "export_wordlistv2.py": "a59cc4d49b9e90b68ff3f6e7fbf61ee6a05b35e707f39ae486ffd79f01cef9a4"
 }
