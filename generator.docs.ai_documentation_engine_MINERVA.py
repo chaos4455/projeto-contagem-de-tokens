@@ -43,7 +43,7 @@ class DocumentacaoAutomatizadaAvancada:
         try:
             API_KEY = "AIzaSyCEagEEnX-RdkW3-jCAb0H9nrTsgcE-Qqo"
             genai.configure(api_key=API_KEY)
-            self.modelo = genai.GenerativeModel("gemini-1.0-pro")
+            self.modelo = genai.GenerativeModel("gemini-1.5-flash")
         except Exception as e:
             logging.error(f"Erro ao configurar IA: {e}")
 

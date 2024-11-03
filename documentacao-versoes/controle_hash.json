@@ -4,7 +4,7 @@
     "database-structure-export-v1.py": "2d5abcb9a699f5bdf299e93413cc5cfc4018dc0cab071e2b5408a6bd2905b907",
     "db.manager.token_database_controller_HERMES.py": "624d17fdce5af37398c4a63e358c595834703c342a711e09ed04a6c3e4183140",
     "extract_vectors.py": "98165ec5d12a0329fe8e7928f02a8cdc7f069aab2cb9a13743a5cbca13e383e6",
-    "generator.docs.ai_documentation_engine_MINERVA.py": "3955f449bb4bb27bab4112781f961b6c6a71c697783f35d73d6bccb1f321ea16",
+    "generator.docs.ai_documentation_engine_MINERVA.py": "b1c011e391286df94dc3af6241641e1322a01c1896b55e042c66b5ccf66935f7",
     "generator.docs.project_documentation_builder_CLIO.py": "5c57003d321d94e22e88a76143244c106a4a4fb3fd8ff6fe0fc14256cb474aee",
     "gerador_vetorizador_continuo_PROMETHEUS-work--revision-0001.py": "122cfcb49875769bbda7a5cb8985dea54bbfc81db13d9b6847a6a36591f4870f",
     "limparootv1.py": "70292c89844e79ed04af89a4045cc14fda8864548a3213d202a4c19857d1ffcd",
@@ -38,5 +38,11 @@
     "vector_analyzer.py": "8d7cb105fa8c15b36d0d774be695065714d055dc1146e4c36520f3056c1b8772",
     "vector_analyzer_extended.py": "c78744a8b6c71f751840386736d9fe60863ba73e24663d81c3e24630554b016e",
     "evolucao_framework.py": "0ba29c4cf20d5d81814a6ae944105147de97eeb5d2b00b8c8468ab87961d47f7",
-    "teste_framework.py": "b0d7fe1a2170d5cc96acdd0ead8f04db8b432560b583a23cb8a982e27fa4d65d"
+    "teste_framework.py": "b0d7fe1a2170d5cc96acdd0ead8f04db8b432560b583a23cb8a982e27fa4d65d",
+    "vector_client.py": "52a59304a521ee498d802ef483cdf3614d4202ca31b51ca592ee78c01f3f07de",
+    "vector_server.py": "73078651d476fc115c441639e256cee622657eb2d1084a92ad7441cc49332880",
+    "vector_service_pb2.py": "6d72c0b3bbef451d81574a208a0d84ea9eac2040db881f90a7e66b94c5b50083",
+    "vector_service_pb2_grpc.py": "96f8d929736bc4ba251c45436b652ea261068ced3033cac86d787279ec27da4b",
+    "core-automation-infinity-world-gen-v1.py": "08e8bd45305c147c5742f29646075aab61f39d1c87f80e4fdc050bbc3ede1c05",
+    "core-automation-infinity-world-gen-v2.py": "edfe22fa7db0b237ab59bf334210828be0e0a4560eff07d6ed8b852c810cf8b2"
 }
