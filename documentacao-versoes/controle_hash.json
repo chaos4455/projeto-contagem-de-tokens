@@ -44,5 +44,7 @@
     "vector_service_pb2.py": "6d72c0b3bbef451d81574a208a0d84ea9eac2040db881f90a7e66b94c5b50083",
     "vector_service_pb2_grpc.py": "96f8d929736bc4ba251c45436b652ea261068ced3033cac86d787279ec27da4b",
     "core-automation-infinity-world-gen-v1.py": "08e8bd45305c147c5742f29646075aab61f39d1c87f80e4fdc050bbc3ede1c05",
-    "core-automation-infinity-world-gen-v2.py": "edfe22fa7db0b237ab59bf334210828be0e0a4560eff07d6ed8b852c810cf8b2"
+    "core-automation-infinity-world-gen-v2.py": "edfe22fa7db0b237ab59bf334210828be0e0a4560eff07d6ed8b852c810cf8b2",
+    "export_wordlist.py": "592ba2fd8fc09b7a567a7541da5f726ba95618c50ba6c38bd6e43f8895752ce5",
+    "vector_cube_generator_MINERVA.py": "1160c1369975d82ee48d82489310f7437729e6e8575f1de996c0ac1d2bdfcc4e"
 }
